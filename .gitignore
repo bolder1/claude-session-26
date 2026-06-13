@@ -1,0 +1,19 @@
+# Local / editor / dev config
+.claude/
+.vscode/
+.idea/
+
+# Dev-only tooling and extracted GLB texture dumps (not needed to run the site)
+tools/
+
+# OG image build source (the rendered assets/og-cover.png is committed)
+assets/og-cover.html
+
+# OS cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+npm-debug.log*

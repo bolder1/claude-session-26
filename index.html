@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0907">
+  <meta name="robots" content="noindex, nofollow">
+  <script>document.documentElement.classList.remove('no-js');</script>
+  <title>Claude Session '26 — live with Surajit Dutta · miniOrange</title>
+  <meta name="description" content="A live, no-slides Claude session for miniOrange designers. One speaker, seven acts, real shipped work. 48 seats.">
+  <link rel="canonical" href="https://claude-session-26.vercel.app/">
+
+  <!-- Icons -->
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+  <!-- Social share (Open Graph + Twitter) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="miniOrange Design">
+  <meta property="og:title" content="Claude Session '26 — meet your new design intern">
+  <meta property="og:description" content="A live, no-slides Claude session for miniOrange designers. One speaker, seven acts, real shipped work. 48 seats.">
+  <meta property="og:url" content="https://claude-session-26.vercel.app/">
+  <meta property="og:image" content="https://claude-session-26.vercel.app/assets/og-cover.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Claude Session '26 — meet your new design intern">
+  <meta name="twitter:description" content="A live, no-slides Claude session for miniOrange designers. One speaker, seven acts, real shipped work. 48 seats.">
+  <meta name="twitter:image" content="https://claude-session-26.vercel.app/assets/og-cover.png">
+
+  <link rel="stylesheet" href="styles.css?v=26">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://ga.jspm.io" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/una.css?v=27">
+  <link rel="stylesheet" href="css/midnight.css?v=30">
+  <script async src="https://ga.jspm.io/npm:es-module-shims@1.10.0/dist/es-module-shims.js"></script>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body class="midnight">
+
+  <!-- 500vh billboard 3D intro runway -->
+  <div class="threejs-scroll-section">
+    <div id="canvas-container"></div>
+  </div>
+
+  <!-- Fixed overlays during the intro -->
+  <img id="threejs-logo"
+       src="assets/miniorange-logo.svg"
+       alt="miniOrange — Claude Session '26" draggable="false">
+  <div id="scroll-nudge" role="status" aria-label="Scroll to meet your new intern">
+    <span>SCROLL TO MEET YOUR NEW INTERN</span>
+  </div>
+
+  <!-- Floating island nav (appears after the intro) -->
+  <nav class="mnav" id="mnav" aria-label="Session">
+    <a class="mnav__mark" href="#una-hero" aria-label="Claude Session '26">
+      <svg width="30" height="30" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#f25c05"/><path d="M16 46V30c0-5.5 4.2-9 8-9s8 3.5 8 9v16 M32 30c0-5.5 4.2-9 8-9s8 3.5 8 9v16" stroke="#fff" stroke-width="5.5" stroke-linecap="round" fill="none"/></svg>
+      <span>Claude Session '26</span>
+    </a>
+    <a class="mnav__link" href="#una-speaker">Speaker</a>
+    <a class="mnav__link" href="#una-learn">Learn</a>
+    <a class="mnav__link" href="#una-agenda">Agenda</a>
+    <a class="mnav__cta" href="register.html">Reserve seat <i>↗</i></a>
+  </nav>
+
+  <!-- After the intro: the session site takes over -->
+  <main class="page-main una">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero-section" id="una-hero">
+      <div class="una-hero__canvas-wrap" aria-hidden="true">
+        <canvas id="una-hero-canvas"></canvas>
+      </div>
+      <div class="una-hero__fade" aria-hidden="true"></div>
+      <div class="una-hero__vignette" aria-hidden="true"></div>
+
+      <div class="una-hero__top">
+        <div class="una-hero__badges">
+          <span class="ph-badge"><span class="ph-badge__icon ph-badge__icon--live">●</span><span class="ph-badge__text"><em>SOLO SPEAKER · LIVE</em>Surajit Dutta</span></span>
+          <span class="ph-badge ph-badge--compact"><span class="ph-badge__icon">✦</span><span class="ph-badge__text"><em>CLAUDE SESSION '26</em>2 hrs · Live demos · 48 seats</span></span>
+        </div>
+
+        <div class="una-hero__headline-wrap">
+          <div class="una-hero__headline-stack">
+            <h1 class="display una-hero__headline" data-hero-line="order">Meet your new <span class="serif">design intern.</span></h1>
+            <span class="display una-hero__headline" data-hero-line="chaos" aria-hidden="true">Fast. Tireless. <span class="serif">Clueless.</span></span>
+          </div>
+          <div class="una-hero__sub-stack">
+            <p class="una-hero__sub" data-hero-sub="order">Install → Ship&nbsp;&nbsp;·&nbsp;&nbsp;Every Claude surface&nbsp;&nbsp;·&nbsp;&nbsp;Live demos all the way</p>
+            <p class="una-hero__sub" data-hero-sub="chaos" aria-hidden="true">No taste&nbsp;&nbsp;·&nbsp;&nbsp;No context&nbsp;&nbsp;·&nbsp;&nbsp;No memory, unless you give it one</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="una-hero__bottom">
+        <div class="una-hero__panel glass-panel shine">
+          <div class="una-hero__panel-row">
+            <span class="micro-label">On the menu</span>
+            <div class="marquee" aria-hidden="true">
+              <div class="marquee__track" id="una-marquee"></div>
+            </div>
+            <p class="una-hero__synced micro-label"><span>48 seats</span>&nbsp;· studio capacity</p>
+            <a class="btn btn--hero" href="register.html">Reserve your seat <i>↗</i></a>
+          </div>
+        </div>
+        <a class="una-hero__backed" href="#una-speaker">
+          <span class="micro-label">Hosted live by</span>
+          <span class="una-hero__backed-logo">Surajit Dutta <em>· no slides, all demos</em></span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ 01 · THE FRAMING ============ -->
+    <section class="una-section" id="una-problem">
+      <span class="orb" aria-hidden="true"></span>
+      <div class="una-section__inner">
+        <div class="sec-head reveal">
+          <div class="sec-head__main">
+            <span class="eyebrow"><i></i>The framing</span>
+            <h2 class="display una-section__title">
+              Claude isn't a magic <span class="serif">output machine.</span>
+              <span class="una-section__title-dim">It's the most talented, fastest, most forgetful junior intern you've ever hired.</span>
+            </h2>
+          </div>
+          <span class="sec-index" aria-hidden="true">01</span>
+        </div>
+
+        <div class="problem-grid">
+          <article class="problem-card card-glass shine reveal">
+            <div class="problem-card__viz">
+              <svg id="scatter-viz" viewBox="0 0 300 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+            </div>
+            <p class="problem-card__caption"><b>No context.</b> It has never seen your product, your users, or your taste.</p>
+          </article>
+
+          <article class="problem-card card-glass shine reveal" style="--reveal-delay:.08s">
+            <div class="problem-card__viz">
+              <div class="decay" id="decay-viz">
+                <div class="decay__row"><span class="decay__dot"></span><span class="decay__name">hero-critique.chat</span><span class="decay__stale">forgetting</span></div>
+                <div class="decay__row"><span class="decay__dot"></span><span class="decay__name">prd-draft.chat</span><span class="decay__stale">window full</span></div>
+                <div class="decay__row"><span class="decay__dot"></span><span class="decay__name">ux-audit.chat</span><span class="decay__stale">hour two</span></div>
+                <div class="decay__row"><span class="decay__dot"></span><span class="decay__name">everything-thread.chat</span><span class="decay__stale">gone</span></div>
+              </div>
+            </div>
+            <p class="problem-card__caption"><b>No memory.</b> Hour-long chats get dumber.</p>
+          </article>
+
+          <article class="problem-card card-glass shine reveal" style="--reveal-delay:.16s">
+            <div class="problem-card__viz">
+              <div class="sprawl"><div class="sprawl__grid" id="sprawl-viz"></div></div>
+            </div>
+            <p class="problem-card__caption"><b>No taste.</b> It ships 70%. You direct the rest.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 02 · SPEAKER ============ -->
+    <section class="una-section" id="una-speaker">
+      <span class="orb" aria-hidden="true"></span>
+      <div class="una-section__inner">
+        <div class="speaker">
+          <div class="speaker__copy reveal">
+            <span class="eyebrow"><i></i>Your speaker · solo · live</span>
+            <h2 class="display una-section__title" style="margin-top:22px">One speaker.<br><span class="serif">Zero slides.</span></h2>
+            <div class="speaker__name-row">
+              <span class="speaker__name">Surajit Dutta</span>
+              <span class="speaker__role">Product Designer, miniOrange</span>
+            </div>
+            <p class="speaker__bio">For the past months Claude has been my production floor: IAM research, IGA flows, PayOps prototypes, DLP illustration sets, even the spreadsheets. Everything in this session comes from that real work, and every demo runs live. If something breaks, you watch me debug it. That's the honest version of the workflow.</p>
+            <div class="speaker__stats">
+              <div class="speaker__stat"><b data-count="42">0</b><span>requirements ranked from one 6-vendor teardown</span></div>
+              <div class="speaker__stat"><b data-count="9">0</b><span>screens in a single production-ready prototype</span></div>
+              <div class="speaker__stat"><b data-count="7">0</b><span>Claude surfaces toured, installed to shipped</span></div>
+              <div class="speaker__stat"><b>0</b><span>slides. The terminal is the deck</span></div>
+            </div>
+            <p class="speaker__live"><i></i>LIVE FROM THE DESIGN STUDIO · BRING A SCREENSHOT</p>
+          </div>
+
+          <div class="speaker__panel bz reveal" style="--reveal-delay:.1s">
+            <div class="bz__in">
+              <canvas id="speaker-canvas" aria-label="Floating 3D orange, because of course"></canvas>
+              <span class="speaker__chip" style="top:8%; left:7%">IAM</span>
+              <span class="speaker__chip speaker__chip--2" style="top:16%; right:9%">IGA</span>
+              <span class="speaker__chip speaker__chip--3" style="bottom:22%; left:9%">PAYOPS</span>
+              <span class="speaker__chip speaker__chip--4" style="bottom:13%; right:12%">DLP</span>
+              <span class="speaker__panel-label">DRAG TO ORBIT · LIVE WEBGL</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 03 · WHAT YOU'LL LEARN ============ -->
+    <section class="una-section" id="una-learn">
+      <span class="orb" aria-hidden="true"></span>
+      <div class="una-section__inner">
+        <div class="sec-head reveal">
+          <div class="sec-head__main">
+            <span class="eyebrow"><i></i>What you'll learn</span>
+            <h2 class="display una-section__title">Walk out <span class="serif">able to do this.</span></h2>
+            <p class="sec-sub">Not theory. Eight concrete abilities, each demoed live and then practiced on your own laptop before you leave the room.</p>
+          </div>
+          <span class="sec-index" aria-hidden="true">02</span>
+        </div>
+
+        <div class="bento">
+          <div class="lt bz b-7 b-r2 lt-proto reveal">
+            <div class="bz__in">
+              <span class="lt__act">ACT 1 · 5</span>
+              <div class="lt__viz">
+                <div class="proto-win proto-win--before" aria-hidden="true">
+                  <div class="proto-win__bar"><i></i><i></i><i></i></div>
+                  <div class="proto-win__body"><span></span><span></span><span></span></div>
+                </div>
+                <span class="proto-arrow">⟶</span>
+                <div class="proto-win proto-win--after" aria-hidden="true">
+                  <div class="proto-win__bar"><i></i><i></i><i></i></div>
+                  <div class="proto-win__body">
+                    <div class="proto-hero"></div>
+                    <div class="proto-row"><i></i><i></i></div>
+                    <div class="proto-cta"></div>
+                  </div>
+                </div>
+              </div>
+              <h3 class="lt__title">Turn any screenshot into a working prototype</h3>
+              <p class="lt__desc">Paste a screen, get a critique, then watch an interactive React rebuild render in front of you. It's the move that opens the session, and the one you'll repeat all week.</p>
+            </div>
+          </div>
+
+          <div class="lt bz b-5 lt-tokens reveal" style="--reveal-delay:.06s">
+            <div class="bz__in">
+              <span class="lt__act">ACT 2</span>
+              <div class="lt__viz">
+                <div class="tok-line"><b>12,480</b><strong>1,240</strong><em>TOKENS</em></div>
+                <div class="tok-bar"><i></i></div>
+                <span class="tok-chip">same outcome · 10× cheaper</span>
+              </div>
+              <h3 class="lt__title">Spend tokens like a director</h3>
+              <p class="lt__desc">Why hour-long chats get dumber, and the briefing habits that buy the same output for a tenth of the spend.</p>
+            </div>
+          </div>
+
+          <div class="lt bz b-5 lt-mem reveal" style="--reveal-delay:.1s">
+            <div class="bz__in">
+              <span class="lt__act">ACT 3</span>
+              <div class="lt__viz">
+                <div class="mem-stack">
+                  <div class="mem-row"><i></i>PRODUCT.md<em>remembered</em></div>
+                  <div class="mem-row"><i></i>brand-guide-v4.pdf<em>remembered</em></div>
+                  <div class="mem-row"><i></i>critique-playbook.skill<em>installed</em></div>
+                </div>
+              </div>
+              <h3 class="lt__title">Give your intern a permanent memory</h3>
+              <p class="lt__desc">Projects hold your product truth; Skills hold your process. Every new chat starts pre-briefed instead of from zero.</p>
+            </div>
+          </div>
+
+          <div class="lt bz b-4 lt-mcp reveal">
+            <div class="bz__in">
+              <span class="lt__act">ACT 3</span>
+              <div class="lt__viz">
+                <div class="mcp-flow">
+                  <span class="mcp-node">F</span>
+                  <span class="mcp-wire"></span>
+                  <span class="mcp-node mcp-node--claude">✦</span>
+                </div>
+              </div>
+              <h3 class="lt__title">Put Claude inside Figma</h3>
+              <p class="lt__desc">Connectors (MCP) reach into Figma, Notion and Drive. One gets wired live, no copy-paste in sight.</p>
+            </div>
+          </div>
+
+          <div class="lt bz b-4 lt-syn reveal" style="--reveal-delay:.06s">
+            <div class="bz__in">
+              <span class="lt__act">ACT 5 · 6</span>
+              <div class="lt__viz">
+                <div class="syn">
+                  <span class="syn__note"></span>
+                  <span class="syn__note"></span>
+                  <span class="syn__note"></span>
+                  <div class="syn__themes"><span>pricing anxiety</span><span>nav confusion</span></div>
+                </div>
+              </div>
+              <h3 class="lt__title">Compress a week of research into an afternoon</h3>
+              <p class="lt__desc">Five interview snippets become themes, a persona, and three design recommendations.</p>
+            </div>
+          </div>
+
+          <div class="lt bz b-4 lt-curve reveal" style="--reveal-delay:.12s">
+            <div class="bz__in">
+              <span class="lt__act">ACT 6</span>
+              <div class="lt__viz">
+                <div class="curve-wrap" aria-hidden="true">
+                  <svg viewBox="0 0 160 84">
+                    <path d="M10 70 C 50 70, 60 12, 150 12" fill="none" stroke="rgba(255,125,31,.55)" stroke-width="2" stroke-dasharray="5 7"/>
+                    <circle cx="10" cy="70" r="3.5" fill="#ff7d1f"/>
+                    <circle cx="150" cy="12" r="3.5" fill="#ff7d1f"/>
+                    <circle class="curve-ball" r="6" fill="#f3ece2"/>
+                  </svg>
+                </div>
+              </div>
+              <h3 class="lt__title">Get motion specs with real easing values</h3>
+              <p class="lt__desc">Describe the feeling, receive the spring config. Framer Motion specs you can actually tune.</p>
+            </div>
+          </div>
+
+          <div class="lt bz b-6 lt-fan reveal">
+            <div class="bz__in">
+              <span class="lt__act">ACT 6</span>
+              <div class="lt__viz">
+                <div class="fan" aria-hidden="true">
+                  <span><b>✦ UI</b><br>critique vs heuristics</span>
+                  <span><b>✦ UX</b><br>flows &amp; edge cases</span>
+                  <span><b>✦ RES</b><br>snippets → themes</span>
+                </div>
+              </div>
+              <h3 class="lt__title">Run your role's starter prompt card</h3>
+              <p class="lt__desc">UI, UX, research, motion, graphic: every chair gets a first-week playbook written for it, and runs it in the room.</p>
+            </div>
+          </div>
+
+          <div class="lt bz b-6 lt-rules reveal" style="--reveal-delay:.06s">
+            <div class="bz__in">
+              <span class="lt__act">ACT 7</span>
+              <div class="lt__viz">
+                <ul class="mini-rules">
+                  <li><b>01</b>Brief it like a junior, judge it like a director</li>
+                  <li><b>02</b>New task, new chat</li>
+                  <li><b>03</b>Context is currency</li>
+                  <li><b>04</b>The first output is a sketch, never a comp</li>
+                  <li><b>05</b>Your taste is the product</li>
+                </ul>
+              </div>
+              <h3 class="lt__title">Leave with the five operating principles</h3>
+              <p class="lt__desc">A rule set small enough to remember and sharp enough to keep you the director.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 04 · THE METHOD ============ -->
+    <section class="una-section" id="una-how">
+      <div class="una-section__inner">
+        <div class="sec-head sec-head--center reveal">
+          <div class="sec-head__main">
+            <span class="eyebrow"><i></i>The method</span>
+            <h2 class="display una-section__title">Production is over. <span class="serif">Direction begins.</span></h2>
+          </div>
+        </div>
+
+        <div class="how-row reveal" id="how-row">
+          <div class="how-card active" data-how="0" role="button" tabindex="0" aria-pressed="true" aria-label="Step 1: Brief it like a junior">
+            <div class="how-card__graphic">
+              <div class="connect-sim" id="connect-sim">
+                <div class="connect-sim__row"><span class="tool-chip" data-tool="ctx"></span><span class="connect-sim__name">Context — what &amp; who</span><span class="connect-sim__btn"><span class="connect-sim__btn-connect">Add</span><span class="connect-sim__btn-done">✓ Added</span></span></div>
+                <div class="connect-sim__row"><span class="tool-chip" data-tool="rules"></span><span class="connect-sim__name">Constraints — brand, tokens</span><span class="connect-sim__btn"><span class="connect-sim__btn-connect">Add</span><span class="connect-sim__btn-done">✓ Added</span></span></div>
+                <div class="connect-sim__row"><span class="tool-chip" data-tool="refs"></span><span class="connect-sim__name">References — screens, links</span><span class="connect-sim__btn"><span class="connect-sim__btn-connect">Add</span><span class="connect-sim__btn-done">✓ Added</span></span></div>
+              </div>
+            </div>
+            <div class="how-card__body">
+              <span class="how-card__num">01</span>
+              <h3 class="how-card__title">Brief it like a junior.</h3>
+              <p class="how-card__text">A good prompt is a good creative brief: context, constraints, references, deliverable format. You already know how to brief. That's your unfair advantage.</p>
+            </div>
+          </div>
+
+          <div class="how-card" data-how="1" role="button" tabindex="0" aria-pressed="false" aria-label="Step 2: Let it produce at superhuman speed">
+            <div class="how-card__graphic">
+              <div class="token-sim" id="token-sim">
+                <p class="token-sim__hint">One good brief in?<br><span>A working prototype out.</span></p>
+                <span class="token-sim__btn" aria-hidden="true">Generate</span>
+                <div class="token-sim__result">
+                  <p class="token-sim__created">Artifact rendering</p>
+                  <p class="token-sim__note">Iterate on it like a design file.</p>
+                  <code class="token-sim__code"><span id="token-text"></span><span class="token-sim__caret"></span></code>
+                </div>
+              </div>
+            </div>
+            <div class="how-card__body">
+              <span class="how-card__num">02</span>
+              <h3 class="how-card__title">Let it produce at superhuman speed.</h3>
+              <p class="how-card__text">Screenshots become critiques, briefs become interactive React prototypes, rendering live in the chat as Artifacts while you watch.</p>
+            </div>
+          </div>
+
+          <div class="how-card" data-how="2" role="button" tabindex="0" aria-pressed="false" aria-label="Step 3: Judge it like a director">
+            <div class="how-card__graphic">
+              <div class="access-sim" id="access-sim">
+                <p class="access-sim__head">Your director pass</p>
+                <div class="access-sim__row"><div class="access-sim__labels"><span>Spacing &amp; hierarchy</span><em>The grid is yours</em></div><span class="toggle"><span class="toggle__knob"></span></span></div>
+                <div class="access-sim__row"><div class="access-sim__labels"><span>Brand voice</span><em>Sound like miniOrange</em></div><span class="toggle"><span class="toggle__knob"></span></span></div>
+                <div class="access-sim__row"><div class="access-sim__labels"><span>Judgment calls</span><em>Claude can't make these</em></div><span class="toggle"><span class="toggle__knob"></span></span></div>
+                <span class="access-sim__save" aria-hidden="true"><span class="access-sim__save-label">Ship</span><span class="access-sim__saved-label">✓ Shipped</span></span>
+              </div>
+            </div>
+            <div class="how-card__body">
+              <span class="how-card__num">03</span>
+              <h3 class="how-card__title">Judge it like a director.</h3>
+              <p class="how-card__text">Claude gives you 70%. The 30% you add — spacing, hierarchy, brand voice, judgment — is the reason you have a job.</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="how-outro reveal">And repeat. New task, new chat. The first output is a sketch, never a comp.</p>
+      </div>
+    </section>
+
+    <!-- ============ 06 · THE ARC ============ -->
+    <section class="una-section" id="una-agenda">
+      <div class="una-section__inner">
+        <div class="sec-head reveal">
+          <div class="sec-head__main">
+            <span class="eyebrow"><i></i>The arc</span>
+            <h2 class="display una-section__title">Two hours. <span class="serif">Seven acts.</span>
+              <span class="una-section__title-dim">From cold open to operating principles.</span>
+            </h2>
+          </div>
+          <span class="sec-index" aria-hidden="true">03</span>
+        </div>
+
+        <ol class="agenda">
+          <li class="agenda__row reveal">
+            <span class="agenda__num">01</span>
+            <div class="agenda__body">
+              <h3 class="agenda__title">The Cold Open</h3>
+              <p class="agenda__desc">No slides. A real miniOrange screen goes into Claude live: critique this, then rebuild it as an interactive React prototype. By the time intros are done, the artifact is rendering.</p>
+            </div>
+            <span class="agenda__time">5 min · live</span>
+          </li>
+          <li class="agenda__row reveal">
+            <span class="agenda__num">02</span>
+            <div class="agenda__body">
+              <h3 class="agenda__title">How Claude Actually Thinks</h3>
+              <p class="agenda__desc">Tokens, the context window as the intern's whiteboard, and why long chats get dumber. Interactive bit: lazy one-liner vs. proper brief, and you vote on which output came from which.</p>
+            </div>
+            <span class="agenda__time">15 min</span>
+          </li>
+          <li class="agenda__row reveal">
+            <span class="agenda__num">03</span>
+            <div class="agenda__body">
+              <h3 class="agenda__title">The Toolbox Tour</h3>
+              <p class="agenda__desc">Every surface, 30 seconds each: Chat, Artifacts, Projects, Skills, Connectors (MCP) into Figma &amp; Notion, Plugins, Cowork, scheduled tasks &amp; memory, and Claude Code for the curious.</p>
+            </div>
+            <span class="agenda__time">20 min</span>
+          </li>
+          <li class="agenda__row reveal">
+            <span class="agenda__num">04</span>
+            <div class="agenda__body">
+              <h3 class="agenda__title">The Precooked Showcase</h3>
+              <p class="agenda__desc">Real before/after pairs: 6-vendor research → 42 ranked requirements, PRD → 9-screen prototype, animated SVG decks, the --mo-* token spine, and a raw first output next to the shipped version.</p>
+            </div>
+            <span class="agenda__time">25 min</span>
+          </li>
+          <li class="agenda__row reveal">
+            <span class="agenda__num">05</span>
+            <div class="agenda__body">
+              <h3 class="agenda__title">Live Build — You Choose</h3>
+              <p class="agenda__desc">The room decides what gets built: a landing page we critique and iterate together, a rough sketch turned into a working prototype, or interview notes synthesized into themes and a persona.</p>
+            </div>
+            <span class="agenda__time">20 min · audience-driven</span>
+          </li>
+          <li class="agenda__row reveal">
+            <span class="agenda__num">06</span>
+            <div class="agenda__body">
+              <h3 class="agenda__title">Your First Week With Your Intern</h3>
+              <p class="agenda__desc">Hands-on. Everyone opens Claude on their own laptop, runs the starter prompt card written for their role, and a few of us share what came back. This is where it becomes yours.</p>
+            </div>
+            <span class="agenda__time">15 min · hands-on</span>
+          </li>
+          <li class="agenda__row reveal">
+            <span class="agenda__num">07</span>
+            <div class="agenda__body">
+              <h3 class="agenda__title">The Operating Principles</h3>
+              <p class="agenda__desc">The rule set you leave with: brief it like a junior, judge it like a director. New task, new chat. Context is currency. The first output is a sketch, never a comp.</p>
+            </div>
+            <span class="agenda__time">5 min</span>
+          </li>
+        </ol>
+        <p class="agenda__total reveal">TOTAL RUNTIME <b>105 MIN</b> + Q&amp;A UNTIL THE COFFEE RUNS OUT</p>
+      </div>
+    </section>
+
+    <!-- ============ TICKER + FINAL CTA ============ -->
+    <section class="una-section" id="una-close">
+      <div class="ticker" aria-hidden="true">
+        <span>BRIEF IT LIKE A JUNIOR&nbsp;&nbsp;<i class="serif">judge it like a director</i>&nbsp;&nbsp;·&nbsp;&nbsp;NEW TASK, NEW CHAT&nbsp;&nbsp;·&nbsp;&nbsp;CONTEXT IS CURRENCY&nbsp;&nbsp;·&nbsp;&nbsp;THE FIRST OUTPUT IS A SKETCH&nbsp;&nbsp;<i class="serif">never a comp</i>&nbsp;&nbsp;·&nbsp;&nbsp;YOUR TASTE IS THE PRODUCT&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+        <span>BRIEF IT LIKE A JUNIOR&nbsp;&nbsp;<i class="serif">judge it like a director</i>&nbsp;&nbsp;·&nbsp;&nbsp;NEW TASK, NEW CHAT&nbsp;&nbsp;·&nbsp;&nbsp;CONTEXT IS CURRENCY&nbsp;&nbsp;·&nbsp;&nbsp;THE FIRST OUTPUT IS A SKETCH&nbsp;&nbsp;<i class="serif">never a comp</i>&nbsp;&nbsp;·&nbsp;&nbsp;YOUR TASTE IS THE PRODUCT&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+      </div>
+
+      <div class="una-section__inner close-cta reveal">
+        <span class="print-label">Last call</span>
+        <h2 class="display close-cta__title">Your taste is the product.<br><span class="serif">Claude is the production floor.</span></h2>
+        <span class="close-cta__seats"><i></i>48 SEATS · STUDIO CAPACITY</span>
+        <a class="btn btn--orange btn--lg" href="register.html">Reserve your seat <i>↗</i></a>
+        <p class="close-cta__meta">FRI · 26 JUN 2026 · 11:00 · DESIGN STUDIO, MINIORANGE HQ · HOSTED LIVE BY SURAJIT DUTTA</p>
+      </div>
+    </section>
+
+    <footer class="una-footer">
+      <p class="micro-label">MINIORANGE DESIGN · CLAUDE SESSION '26 · EXHIBIT A — THIS PAGE WAS SHIPPED WITH CLAUDE</p>
+      <p class="una-footer__sig">brief it like a junior, judge it like a director · Surajit Dutta</p>
+    </footer>
+  </main>
+
+  <!-- Site loader -->
+  <div id="site-loader" role="status" aria-label="Loading">
+    <img class="loader-logo"
+         src="assets/miniorange-logo.svg"
+         alt="Loading" draggable="false">
+    <div class="loader-track">
+      <div class="loader-bar" id="loader-bar"></div>
+    </div>
+  </div>
+
+  <!-- Loader: min 3s, waits for the GLB, then slides up -->
+  <script>
+  (function () {
+    'use strict';
+    document.body.style.visibility = 'visible';
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow  = 'hidden';
+    document.body.style.position  = 'fixed';
+    document.body.style.width     = '100%';
+    var loader    = document.getElementById('site-loader');
+    var bar       = document.getElementById('loader-bar');
+    var exited    = false;
+    var glbReady  = false;
+    var minReady  = false;
+    var progress  = 0;
+    var rafId     = null;
+    var uiRevealed = false;
+    function revealUI() {
+      if (uiRevealed) return;
+      uiRevealed = true;
+      window.dispatchEvent(new CustomEvent('loaderExited'));
+    }
+    function animateBar(target, speed) {
+      cancelAnimationFrame(rafId);
+      (function tick() {
+        progress += (target - progress) * speed;
+        if (Math.abs(target - progress) < 0.3) progress = target;
+        bar.style.width = progress.toFixed(1) + '%';
+        if (progress < target) rafId = requestAnimationFrame(tick);
+      })();
+    }
+    animateBar(70, 0.04);
+    function tryExit() {
+      if (glbReady && minReady) {
+        animateBar(100, 0.12);
+        setTimeout(exitLoader, 400);
+      }
+    }
+    function exitLoader() {
+      if (exited) return;
+      exited = true;
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          document.documentElement.style.overflow = '';
+          document.body.style.overflow  = '';
+          document.body.style.position  = '';
+          document.body.style.width     = '';
+          window.scrollTo(0, 0);
+          loader.classList.add('is-exiting');
+          loader.addEventListener('transitionend', function onDone(e) {
+            if (e.propertyName !== 'transform') return;
+            loader.removeEventListener('transitionend', onDone);
+            if (loader.parentNode) loader.parentNode.removeChild(loader);
+            revealUI();
+          });
+          setTimeout(function () {
+            if (loader.parentNode) loader.parentNode.removeChild(loader);
+            revealUI();
+          }, 1200);
+        });
+      });
+    }
+    setTimeout(function () {
+      minReady = true;
+      tryExit();
+    }, 1200);
+    var safetyTimer = setTimeout(function () {
+      glbReady = minReady = true;
+      exitLoader();
+    }, 12000);
+    window.addEventListener('glbLoaded', function () {
+      clearTimeout(safetyTimer);
+      setTimeout(function () {
+        glbReady = true;
+        tryExit();
+      }, 400);
+    });
+  })();
+  </script>
+
+  <!-- Logo + scroll nudge visibility while the intro is active -->
+  <script>
+  (function () {
+    'use strict';
+    var logo          = document.getElementById('threejs-logo');
+    var nudge         = document.getElementById('scroll-nudge');
+    var loaderDone    = false;
+    var threeJsActive = false;
+    function show() {
+      if (logo)  logo.style.opacity  = '1';
+      if (nudge) nudge.style.opacity = '1';
+    }
+    function hide() {
+      if (logo)  logo.style.opacity  = '0';
+      if (nudge) nudge.style.opacity = '0';
+    }
+    function updateVisibility() {
+      if (!loaderDone) return;
+      if (!threeJsActive) { hide(); return; }
+      var section       = document.querySelector('.threejs-scroll-section');
+      var sectionHeight = section ? section.offsetHeight : 999999;
+      if (window.scrollY >= sectionHeight * 0.9) {
+        hide();
+      } else {
+        show();
+      }
+    }
+    window.addEventListener('loaderExited', function () {
+      loaderDone = true;
+      updateVisibility();
+    });
+    window.addEventListener('threeJsCanvas', function (e) {
+      threeJsActive = e.detail.active;
+      updateVisibility();
+    });
+    window.addEventListener('scroll', updateVisibility, { passive: true });
+  })();
+  </script>
+
+  <!-- Billboard 3D scroll intro -->
+  <script type="module" src="main.js?v=27"></script>
+
+  <!-- Session chapter (GSAP + Three.js) -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script type="module" src="js/una-hero.js?v=27"></script>
+  <script type="module" src="js/una-speaker.js?v=27"></script>
+  <script src="js/una-main.js?v=28" defer></script>
+  <script src="js/midnight.js?v=28" defer></script>
+
+</body>
+</html>

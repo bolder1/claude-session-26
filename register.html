@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0907">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Register — Claude Session '26 · miniOrange</title>
+  <meta name="description" content="Pick your seat, build your loadout, and claim your VIP ticket for the miniOrange Claude Session '26.">
+  <link rel="canonical" href="https://claude-session-26.vercel.app/register.html">
+
+  <!-- Icons -->
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+  <!-- Social share (Open Graph + Twitter) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="miniOrange Design">
+  <meta property="og:title" content="Reserve your seat — Claude Session '26">
+  <meta property="og:description" content="Pick your seat, build your loadout, and claim your ticket for the miniOrange Claude Session '26. 48 seats.">
+  <meta property="og:url" content="https://claude-session-26.vercel.app/register.html">
+  <meta property="og:image" content="https://claude-session-26.vercel.app/assets/og-cover.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Reserve your seat — Claude Session '26">
+  <meta name="twitter:description" content="Pick your seat, build your loadout, and claim your ticket for the miniOrange Claude Session '26. 48 seats.">
+  <meta name="twitter:image" content="https://claude-session-26.vercel.app/assets/og-cover.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/register.css?v=2">
+  <script async src="https://ga.jspm.io/npm:es-module-shims@1.10.0/dist/es-module-shims.js"></script>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body class="reg">
+
+  <header class="reg-header">
+    <a class="reg-header__brand" href="index.html" aria-label="Back to Claude Session '26">
+      <img src="assets/miniorange-logo.svg" alt="miniOrange — Claude Session '26" draggable="false">
+    </a>
+    <p class="reg-header__meta mono">HOSTED LIVE BY SURAJIT DUTTA · FRI 26 JUN 2026 · 11:00 · DESIGN STUDIO, MINIORANGE HQ</p>
+  </header>
+
+  <nav class="reg-progress" aria-label="Registration steps">
+    <button class="reg-progress__dot is-active" data-goto="seat"><i></i><span>Seat</span></button>
+    <button class="reg-progress__dot" data-goto="you"><i></i><span>You</span></button>
+    <button class="reg-progress__dot" data-goto="loadout"><i></i><span>Loadout</span></button>
+    <button class="reg-progress__dot" data-goto="ticket"><i></i><span>Ticket</span></button>
+  </nav>
+
+  <main class="reg-main" id="reg-main">
+
+    <!-- ================= STEP 1 · SEAT ================= -->
+    <section class="reg-step is-current" data-step="seat">
+      <div class="reg-step__head">
+        <span class="print-label">Step 1 of 4</span>
+        <h1 class="display reg-title">Pick <span class="serif">your seat.</span></h1>
+        <p class="reg-sub">The studio holds 48 — choose where you'll sit for the live session.</p>
+      </div>
+
+      <div class="seat-stage">
+        <div class="seat-stats">
+          <div class="seat-stats__big"><span id="seats-left">—</span><em>seats left</em></div>
+          <div class="seat-stats__bar"><i id="seats-bar"></i></div>
+          <div class="seat-legend">
+            <span class="seat-legend__item"><i class="seat-demo seat-demo--free"></i>Free</span>
+            <span class="seat-legend__item"><i class="seat-demo seat-demo--taken"></i>Taken</span>
+            <span class="seat-legend__item"><i class="seat-demo seat-demo--mine"></i>Yours</span>
+          </div>
+        </div>
+
+        <div class="screen-arc" aria-hidden="true">
+          <svg viewBox="0 0 600 60" preserveAspectRatio="none"><path d="M10 55 Q300 -25 590 55" fill="none" stroke="url(#arcGrad)" stroke-width="3" stroke-linecap="round"/><defs><linearGradient id="arcGrad" x1="0" y1="0" x2="600" y2="0"><stop stop-color="#ff8a2a" stop-opacity=".1"/><stop offset=".5" stop-color="#ff8a2a"/><stop offset="1" stop-color="#ff8a2a" stop-opacity=".1"/></linearGradient></defs></svg>
+          <span class="screen-arc__label mono">STAGE · LIVE DEMOS HAPPEN HERE</span>
+        </div>
+
+        <div class="seat-map" id="seat-map" role="group" aria-label="Seat map"></div>
+
+        <p class="seat-hint mono" id="seat-hint">Front row = best view of the live builds.</p>
+      </div>
+
+      <div class="reg-actions">
+        <a class="reg-back" href="index.html">← Back to the session</a>
+        <button class="btn-cta" id="cta-seat" disabled>Pick a seat to continue</button>
+      </div>
+    </section>
+
+    <!-- ================= STEP 2 · YOU ================= -->
+    <section class="reg-step" data-step="you">
+      <div class="reg-step__head">
+        <span class="print-label">Step 2 of 4</span>
+        <h1 class="display reg-title">Who's taking seat <span class="accent" id="you-seat-label">—</span>?</h1>
+        <p class="reg-sub">Pick your role — your ticket, your badge and your starter prompt card are built from it.</p>
+      </div>
+
+      <div class="reg-cols">
+        <div class="reg-cols__form">
+          <label class="field">
+            <span class="field__label">Your name</span>
+            <input type="text" id="inp-name" placeholder="e.g. Priya Sharma" autocomplete="name" maxlength="40">
+          </label>
+          <label class="field">
+            <span class="field__label">Work email <em>(optional)</em></span>
+            <input type="email" id="inp-email" placeholder="you@miniorange.com" autocomplete="email" maxlength="60">
+          </label>
+
+          <div class="field">
+            <span class="field__label">Your role <em>— choose one</em></span>
+            <div class="role-grid" id="role-grid"></div>
+          </div>
+        </div>
+
+        <aside class="reg-cols__ill">
+          <div class="ill-frame" id="ill-frame">
+            <div class="ill-holder" id="ill-holder"></div>
+            <div class="ill-meta" id="ill-meta">
+              <p class="ill-meta__pick mono">← PICK A ROLE TO SUMMON YOUR AVATAR</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <div class="reg-actions">
+        <button class="reg-back" data-back="seat">← Change seat</button>
+        <button class="btn-cta" id="cta-you" disabled>Name + role to continue</button>
+      </div>
+    </section>
+
+    <!-- ================= STEP 3 · LOADOUT ================= -->
+    <section class="reg-step" data-step="loadout">
+      <div class="reg-step__head">
+        <span class="print-label">Step 3 of 4</span>
+        <h1 class="display reg-title">Build <span class="serif">your loadout.</span></h1>
+        <p class="reg-sub">Pick what you want most from the session — each module powers up your avatar. 3+ unlocks shades. 5+ earns the cape. 7+… you'll see.</p>
+      </div>
+
+      <div class="reg-cols reg-cols--flip">
+        <div class="reg-cols__form">
+          <div class="field">
+            <span class="field__label">Areas of interest <em>— tap to equip</em></span>
+            <div class="interest-grid" id="interest-grid"></div>
+          </div>
+
+          <div class="power-meter">
+            <span class="power-meter__label mono">POWER LEVEL</span>
+            <div class="power-meter__track"><i id="power-bar"></i></div>
+            <span class="power-meter__val mono" id="power-val">0 / 8</span>
+          </div>
+
+          <label class="field">
+            <span class="field__label">One thing Claude should take off your plate first <em>(optional — we'll demo the popular ones)</em></span>
+            <textarea id="inp-wish" rows="2" maxlength="160" placeholder="e.g. turning my Figma critique notes into a redlined spec…"></textarea>
+          </label>
+        </div>
+
+        <aside class="reg-cols__ill">
+          <div class="ill-frame" id="ill-frame-2">
+            <div class="ill-holder" id="ill-holder-2"></div>
+            <div class="ill-meta" id="ill-meta-2"></div>
+          </div>
+        </aside>
+      </div>
+
+      <div class="reg-actions">
+        <button class="reg-back" data-back="you">← Back</button>
+        <button class="btn-cta" id="cta-loadout">Claim my ticket →</button>
+      </div>
+    </section>
+
+    <!-- ================= STEP 4 · TICKET ================= -->
+    <section class="reg-step reg-step--ticket" data-step="ticket">
+      <div class="reg-step__head">
+        <span class="print-label">You're in</span>
+        <h1 class="display reg-title" id="ticket-headline">Front-row brain, confirmed.</h1>
+        <p class="reg-sub">Drag the ticket. Yes, it's real WebGL. No, you can't scalp it.</p>
+      </div>
+
+      <div class="ticket-stage">
+        <div class="ticket-3d" id="ticket-3d" aria-label="Your 3D ticket — drag to rotate"></div>
+        <div class="ticket-actions">
+          <button class="btn-cta btn-cta--ghost" id="btn-download">Download ticket PNG</button>
+          <button class="reg-back" id="btn-reset">Edit registration</button>
+        </div>
+      </div>
+
+      <div class="badge-block">
+        <span class="print-label">Badge earned</span>
+        <div class="badge-row">
+          <div class="badge-wrap" id="badge-wrap"></div>
+          <div class="badge-info">
+            <h2 class="badge-info__name" id="badge-name">—</h2>
+            <p class="badge-info__desc" id="badge-desc">—</p>
+            <div class="badge-info__pips" id="badge-pips" aria-label="Power level"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wait-block">
+        <span class="print-label">The wait</span>
+        <h2 class="display wait-title">Your intern reports for duty in</h2>
+        <div class="countdown" id="countdown">
+          <div class="countdown__cell"><b id="cd-d">—</b><span>days</span></div>
+          <div class="countdown__cell"><b id="cd-h">—</b><span>hours</span></div>
+          <div class="countdown__cell"><b id="cd-m">—</b><span>min</span></div>
+          <div class="countdown__cell"><b id="cd-s">—</b><span>sec</span></div>
+        </div>
+
+        <div class="homework">
+          <p class="homework__head">While you wait — three tiny bits of homework:</p>
+          <label class="homework__item"><input type="checkbox" data-hw="0"><i></i><span>Install the Claude desktop app and sign in with your miniOrange account.</span></label>
+          <label class="homework__item"><input type="checkbox" data-hw="1"><i></i><span>Bring one screenshot of a screen you'd love to fix — it might get rebuilt live in Act 1.</span></label>
+          <label class="homework__item"><input type="checkbox" data-hw="2"><i></i><span>Think of one task you'd hand to a junior intern. That's your first prompt.</span></label>
+        </div>
+
+        <div class="principles-strip mono" aria-hidden="true">
+          <span>BRIEF IT LIKE A JUNIOR · JUDGE IT LIKE A DIRECTOR · NEW TASK, NEW CHAT · CONTEXT IS CURRENCY · THE FIRST OUTPUT IS A SKETCH, NEVER A COMP · YOUR TASTE IS THE PRODUCT ·&nbsp;</span>
+          <span>BRIEF IT LIKE A JUNIOR · JUDGE IT LIKE A DIRECTOR · NEW TASK, NEW CHAT · CONTEXT IS CURRENCY · THE FIRST OUTPUT IS A SKETCH, NEVER A COMP · YOUR TASTE IS THE PRODUCT ·&nbsp;</span>
+        </div>
+
+        <p class="wait-sign">See you in the front row. <em>· Surajit Dutta, your speaker</em></p>
+      </div>
+    </section>
+  </main>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script type="module" src="js/register.js?v=2"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 92" fill="none">
+  <!-- Placeholder mark — swap with the real miniOrange logo file later -->
+  <defs>
+    <linearGradient id="moGrad" x1="0" y1="0" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF9A3D"/>
+      <stop offset="1" stop-color="#F25C05"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="14" width="64" height="64" rx="17" fill="url(#moGrad)"/>
+  <path d="M18 62V42c0-6 4.6-10 9-10s9 4 9 10v20 M36 42c0-6 4.6-10 9-10s9 4 9 10v20"
+        stroke="#fff" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <circle cx="54" cy="26" r="4.5" fill="#fff"/>
+  <text x="84" y="48" font-family="Lexend, 'Segoe UI', system-ui, sans-serif" font-size="31" font-weight="600" fill="#ffffff" letter-spacing="-0.5">mini<tspan fill="#FF8A2A">Orange</tspan></text>
+  <text x="86" y="74" font-family="'JetBrains Mono', Consolas, monospace" font-size="12.5" letter-spacing="5" fill="#ffffff" opacity="0.62">CLAUDE SESSION '26</text>
+</svg>
