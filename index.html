@@ -6,6 +6,7 @@
   <meta name="theme-color" content="#efe6d2">
   <meta name="robots" content="noindex, nofollow">
   <script>document.documentElement.classList.remove('no-js');</script>
+  <script>(function(){var t;try{t=localStorage.getItem('moTheme')||'dark';}catch(e){t='dark';}var d=document.documentElement;d.setAttribute('data-theme',t);d.style.background=(t==='light'?'#F7F3EC':'#14110b');})();</script>
   <title>Claude Session '26 — a field guide to directing your AI intern · miniOrange</title>
   <meta name="description" content="A live, no-slides session for the miniOrange design team on running Claude — your most talented, most forgetful junior designer. Two hours, seven acts, 48 seats.">
   <link rel="canonical" href="https://claude-session-26.vercel.app/">
@@ -32,8 +33,8 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://ga.jspm.io" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=TASA+Orbiter:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/field.css?v=4">
-  <link rel="stylesheet" href="css/v2.css?v=5">
+  <link rel="stylesheet" href="css/field.css?v=5">
+  <link rel="stylesheet" href="css/v2.css?v=6">
   <script async src="https://ga.jspm.io/npm:es-module-shims@1.10.0/dist/es-module-shims.js"></script>
   <script type="importmap">
   {
@@ -47,6 +48,7 @@
 <body class="fg">
 
   <div class="fg-grain" aria-hidden="true"></div>
+  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark or light mode"></button>
 
   <!-- 500vh billboard 3D intro runway (cold open) -->
   <div class="threejs-scroll-section">
@@ -65,7 +67,7 @@
     <a class="fg-nav__link" href="#premise">the premise</a>
     <a class="fg-nav__link" href="#method">the method</a>
     <a class="fg-nav__link" href="#menu">the menu</a>
-    <a class="fg-nav__cta" href="register.html">Reserve ↗</a>
+    <a class="fg-nav__cta" href="register.html" data-reserve>Reserve ↗</a>
   </nav>
 
   <main class="fg-main">
@@ -97,7 +99,7 @@
               <div class="fg-row"><span>Where</span><b>miniOrange HQ</b></div>
               <div class="fg-row"><span>Host</span><b>Surajit Dutta</b></div>
               <div class="fg-row"><span>Seats left</span><b>48</b></div>
-              <a class="fg-cta" href="register.html">Reserve your seat <span class="fg-cta__ar" aria-hidden="true">↗</span></a>
+              <a class="fg-cta" href="register.html" data-reserve>Reserve your seat <span class="fg-cta__ar" aria-hidden="true">↗</span></a>
             </div>
           </div>
         </div>
@@ -270,7 +272,7 @@
         <p class="fg-kick">Last call</p>
         <h2 class="fg-close__title">48 seats. That's the <span class="it">whole studio.</span></h2>
         <p class="fg-close__seats">Pull up a chair — bring a screenshot you're stuck on</p>
-        <a class="fg-cta" href="register.html">Reserve your seat <span class="fg-cta__ar" aria-hidden="true">↗</span></a>
+        <a class="fg-cta" href="register.html" data-reserve>Reserve your seat <span class="fg-cta__ar" aria-hidden="true">↗</span></a>
         <p class="fg-close__meta">Fri 26 Jun 2026 · 11:00 · miniOrange HQ · hosted live by Surajit Dutta</p>
       </div>
     </section>
@@ -283,6 +285,31 @@
       </div>
     </footer>
   </main>
+
+  <!-- Reserve: bold "admit one" ticket bottom-sheet -->
+  <div class="ticket-sheet" id="ticket-sheet" aria-hidden="true">
+    <div class="ticket-sheet__backdrop" data-close></div>
+    <div class="ticket-sheet__panel" role="dialog" aria-modal="true" aria-label="Reserve your seat">
+      <button class="ticket-sheet__grab" data-close type="button" aria-label="Close"></button>
+      <div class="ticket">
+        <div class="ticket__main">
+          <p class="ticket__eyebrow">Admit one · live session</p>
+          <h3 class="ticket__title">Claude Session '26 — <span>your seat's waiting.</span></h3>
+          <div class="ticket__meta">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="#2a1206" stroke-width="2" stroke-linecap="round"><rect x="3" y="4.5" width="18" height="16" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2.5" x2="8" y2="6"/><line x1="16" y1="2.5" x2="16" y2="6"/></svg>Fri 26 Jun 2026</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="#2a1206" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.4 2"/></svg>11:00 IST</span>
+          </div>
+          <a class="ticket__cta" href="register.html">Pick your seat <span aria-hidden="true">→</span></a>
+          <p class="ticket__ps"><b>P.S.</b> 48 seats — the whole studio. Bring a screenshot you're stuck on.</p>
+        </div>
+        <div class="ticket__stub" aria-hidden="true">
+          <div class="ticket__seat"><span>Seat</span><b>YOU</b></div>
+          <div class="ticket__barcode"></div>
+          <div class="ticket__code">CS26 · MINIORANGE</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Site loader -->
   <div id="site-loader" role="status" aria-label="Loading">
@@ -358,7 +385,8 @@
   <!-- Editorial motion + soft-3D specimens -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="js/field.js?v=1" defer></script>
-  <script type="module" src="js/v2.js?v=3"></script>
+  <script src="js/theme.js?v=1" defer></script>
+  <script type="module" src="js/v2.js?v=4"></script>
 
 </body>
 </html>

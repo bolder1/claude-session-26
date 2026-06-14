@@ -220,7 +220,8 @@ function init() {
     const s = key.shadow.camera; s.near = 1; s.far = 24; s.left = -4; s.right = 4; s.top = 4; s.bottom = -4;
     scene.add(key);
     const fill = new THREE.DirectionalLight(0xffe9d4, dark ? 0.25 : 0.5); fill.position.set(-4, 2.5, 2); scene.add(fill);
-    if (dark) { const rim = new THREE.DirectionalLight(0xff8a3a, 1.6); rim.position.set(-1.5, 1.5, -4); scene.add(rim); }
+    // warm rim on every specimen so they read on the dark (default) theme too
+    const rim = new THREE.DirectionalLight(0xff8a3a, dark ? 1.6 : 1.05); rim.position.set(-1.5, 1.5, -4); scene.add(rim);
   }
 
   const specs = els.map((el) => {

@@ -6,6 +6,7 @@
   <meta name="theme-color" content="#efe6d2">
   <meta name="robots" content="noindex, nofollow">
   <script>document.documentElement.classList.remove('no-js');</script>
+  <script>(function(){var t;try{t=localStorage.getItem('moTheme')||'dark';}catch(e){t='dark';}var d=document.documentElement;d.setAttribute('data-theme',t);d.style.background=(t==='light'?'#F7F3EC':'#14110b');})();</script>
   <title>Reserve your seat — Claude Session '26 · miniOrange</title>
   <meta name="description" content="Pick your seat, tell us who's coming, and claim your VIP pass for the miniOrange Claude Session '26. 48 seats.">
   <link rel="canonical" href="https://claude-session-26.vercel.app/register.html">
@@ -26,8 +27,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=TASA+Orbiter:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/field.css?v=4">
-  <link rel="stylesheet" href="css/register.css?v=5">
+  <link rel="stylesheet" href="css/field.css?v=5">
+  <link rel="stylesheet" href="css/register.css?v=6">
   <script async src="https://ga.jspm.io/npm:es-module-shims@1.10.0/dist/es-module-shims.js"></script>
   <script type="importmap">
   { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }
@@ -35,6 +36,7 @@
 </head>
 <body class="fg reg">
   <div class="fg-grain" aria-hidden="true"></div>
+  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark or light mode"></button>
 
   <header class="reg-head">
     <a class="reg-head__back" href="index.html">← <b>miniOrange</b> · Claude Session '26</a>
@@ -171,6 +173,7 @@
   <canvas id="confetti" aria-hidden="true"></canvas>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="js/theme.js?v=1" defer></script>
   <script src="js/register.js?v=4" defer></script>
 </body>
 </html>
