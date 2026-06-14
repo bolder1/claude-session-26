@@ -76,4 +76,23 @@
     });
     host.addEventListener('pointerleave', () => { tilt.style.transform = ''; });
   }
+
+  /* ---- pinned horizontal scroll (the method) ---- */
+  const hTrack = document.getElementById('method-track');
+  const hSec = hTrack ? hTrack.closest('.fg-hpin') : null;
+  if (hTrack && hSec && window.innerWidth > 760) {
+    hSec.classList.add('is-pinned');
+    let hTick = false;
+    const hUpdate = () => {
+      hTick = false;
+      const scrollable = hSec.offsetHeight - window.innerHeight;
+      if (scrollable <= 0) { hTrack.style.transform = ''; return; }
+      const prog = Math.min(Math.max(-hSec.getBoundingClientRect().top / scrollable, 0), 1);
+      const maxX = hTrack.scrollWidth - window.innerWidth;
+      hTrack.style.transform = 'translate3d(' + (-prog * maxX).toFixed(1) + 'px,0,0)';
+    };
+    addEventListener('scroll', () => { if (!hTick) { hTick = true; requestAnimationFrame(hUpdate); } }, { passive: true });
+    addEventListener('resize', () => requestAnimationFrame(hUpdate), { passive: true });
+    hUpdate();
+  }
 })();
