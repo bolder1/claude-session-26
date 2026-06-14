@@ -1,0 +1,115 @@
+/* ==========================================================================
+   field.css — "Field Guide" editorial / riso redesign system
+   Recipe-zine warmth + Swiss grid discipline. Used by the staging page
+   (preview.html) and, once locked, by index.html. Self-contained: no
+   dependency on una.css / midnight.css.
+   ========================================================================== */
+
+:root {
+  --paper:   #efe6d2;
+  --paper-2: #e8dcc1;
+  --ink:     #241c12;
+  --ink-2:   #473b28;
+  --mute:    #5e5440;
+  --faint:   #a99a7c;
+  --orange:  #df4f0c;
+  --orange-d:#c14d14;
+  --teal:    #1d6e6b;
+  --leaf:    #4d9965;
+  --cream:   #f2ead8;
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.fg {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+.fg *, .fg *::before, .fg *::after { box-sizing: border-box; }
+.fg ::selection { background: var(--orange); color: #fff3ea; }
+
+/* paper grain over the whole page */
+.fg-grain {
+  position: fixed; inset: 0; z-index: 80; pointer-events: none;
+  opacity: .38; mix-blend-mode: multiply; background-image: var(--grain);
+}
+
+/* ---------- shared editorial bits ---------- */
+.fg-kick {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: clamp(11px, 1.4vw, 13px); font-weight: 500;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--orange-d);
+}
+.fg-rule { height: 2px; background: var(--ink); position: relative; }
+.fg-rule::after { content: ""; position: absolute; left: 0; top: -3px; width: 64px; height: 8px; background: var(--orange); }
+
+/* ==========================================================================
+   HERO — "the cover"
+   ========================================================================== */
+.fg-hero {
+  position: relative; isolation: isolate; overflow: hidden;
+  min-height: 100vh; min-height: 100dvh;
+  padding: clamp(20px, 3.5vw, 30px) clamp(20px, 5vw, 56px) 46px;
+  display: flex; flex-direction: column;
+}
+.fg-hero__inner { position: relative; width: 100%; max-width: 1200px; margin: 0 auto; flex: 1; display: flex; flex-direction: column; }
+
+.fg-mast {
+  display: flex; justify-content: space-between; align-items: center; gap: 10px 16px; flex-wrap: wrap;
+  font-family: "IBM Plex Mono", monospace; font-size: clamp(10px, 1.3vw, 12px);
+  letter-spacing: .15em; text-transform: uppercase; color: var(--mute);
+  padding-bottom: 11px; border-bottom: 2px solid var(--ink);
+}
+.fg-mast b { color: var(--ink); font-weight: 600; }
+.fg-mast__reg { display: flex; gap: 10px; align-items: center; }
+.fg-ch { width: 12px; height: 12px; flex: 0 0 auto; }
+
+.fg-hero__kick { margin-top: clamp(20px, 3.5vw, 34px); }
+.fg-h1 {
+  font-family: "Fraunces", Georgia, serif; font-weight: 600;
+  font-size: clamp(38px, 8.4vw, 94px); line-height: .92; letter-spacing: -.03em;
+  margin: 14px 0 0; max-width: 13ch;
+}
+.fg-h1 .it { font-style: italic; font-weight: 360; }
+.fg-h1 .or { color: var(--orange); font-style: italic; font-weight: 420; }
+
+.fg-art { width: min(440px, 82vw); margin: 26px auto 6px; display: block; }
+.fg-art svg { width: 100%; height: auto; display: block; }
+
+.fg-lower { display: grid; grid-template-columns: 1fr; gap: 26px; margin-top: auto; padding-top: clamp(24px, 4vw, 38px); align-items: end; }
+.fg-deck { font-size: clamp(16px, 1.9vw, 19px); line-height: 1.5; color: var(--ink-2); max-width: 46ch; font-weight: 300; overflow-wrap: break-word; }
+.fg-deck b { font-weight: 500; color: var(--ink); }
+
+.fg-card { width: 100%; max-width: 340px; justify-self: start; border: 2px solid var(--ink); background: var(--paper-2); box-shadow: 7px 7px 0 var(--ink); }
+.fg-card__h { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: var(--mute); padding: 11px 15px; border-bottom: 1.5px solid var(--ink); display: flex; justify-content: space-between; }
+.fg-card__b { padding: 13px 15px 15px; }
+.fg-row { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-2); display: flex; justify-content: space-between; gap: 10px; padding: 5px 0; }
+.fg-row b { color: var(--ink); font-weight: 600; }
+.fg-cta {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  background: var(--orange); color: #fff3ea; font-family: "Space Grotesk", sans-serif; font-weight: 500; font-size: 16px;
+  padding: 14px 18px; margin-top: 12px; border: 2px solid var(--ink); text-decoration: none;
+  transition: transform .14s ease, box-shadow .14s ease;
+}
+.fg-cta:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--ink); }
+.fg-cta:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.fg-cta__ar { display: grid; place-items: center; width: 27px; height: 27px; border-radius: 50%; background: var(--ink); color: var(--paper); flex: 0 0 auto; }
+
+.fg-marg { display: none; }
+.fg-folio { position: absolute; right: 0; bottom: -34px; font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .2em; color: var(--faint); }
+
+/* ---------- desktop ---------- */
+@media (min-width: 880px) {
+  .fg-h1 { max-width: 11ch; }
+  .fg-art { position: absolute; right: 0; top: 72px; width: clamp(360px, 37vw, 470px); margin: 0; z-index: -1; }
+  .fg-lower { grid-template-columns: 1.1fr .9fr; gap: 44px; }
+  .fg-card { justify-self: end; }
+  .fg-marg { display: block; position: absolute; left: -34px; top: 52%; transform: rotate(-90deg); transform-origin: center; font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--faint); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-cta { transition: none; }
+}
