@@ -1,0 +1,14 @@
+/* v2.css — staging overrides for the soft-3D specimen proof.
+   Loaded AFTER field.css. Keep this minimal; do not re-position .fg-art
+   (field.css owns its desktop absolute placement). */
+
+.fg-art--3d { aspect-ratio: 1 / 1; }
+.fg-art--3d canvas { width: 100% !important; height: 100% !important; display: block; }
+
+/* small staging marker */
+.v2-tag {
+  position: fixed; left: 12px; bottom: 12px; z-index: 90;
+  font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--mute); background: rgba(239, 230, 210, .72); border: 1px solid var(--ink);
+  padding: 5px 9px;
+}
