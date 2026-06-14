@@ -13,6 +13,12 @@
   --orange-d: #c0431b;
 }
 
+/* TASA Orbiter has no true italic — emphasise with upright weight + brand orange
+   instead of a synthesized slant (cleaner for a geometric sans). */
+.fg .it, .fg .or { font-style: normal; }
+.fg .fg-h1 .it, .fg .fg-sec__title .it, .fg .fg-step__title .it, .fg .fg-close__title .it { font-weight: 330; }
+.fg-footer__sig { font-style: normal; }
+
 /* the shared, fixed compositor canvas (also styled inline in v2.js) */
 #v2-gl { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 60; }
 
