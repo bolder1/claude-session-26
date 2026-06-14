@@ -1,23 +1,8 @@
-/* v2.css — staging layer for the soft-3D specimen system.
+/* v2.css — soft-3D specimen layer for the home page.
    Loaded AFTER field.css. Sizes each illustration well so the shared WebGL
-   compositor (js/v2.js) can read its box and render the specimen there.
-   Does NOT re-position .fg-art (field.css owns its desktop placement). */
-
-/* ---- v2 brand: TASA Orbiter (display) + Inter (body/labels), brand orange #EB5424 ----
-   Overrides the field.css tokens for this page only; index.html is untouched. */
-.fg {
-  --font-display: "TASA Orbiter", "Inter", system-ui, sans-serif;
-  --font-body: "Inter", system-ui, sans-serif;
-  --font-mono: "Inter", system-ui, sans-serif;
-  --orange: #EB5424;
-  --orange-d: #c0431b;
-}
-
-/* TASA Orbiter has no true italic — emphasise with upright weight + brand orange
-   instead of a synthesized slant (cleaner for a geometric sans). */
-.fg .it, .fg .or { font-style: normal; }
-.fg .fg-h1 .it, .fg .fg-sec__title .it, .fg .fg-step__title .it, .fg .fg-close__title .it { font-weight: 330; }
-.fg-footer__sig { font-style: normal; }
+   compositor (js/v2.js) can read its box and render the specimen into it.
+   Brand tokens (TASA Orbiter + Inter + #EB5424) and italic handling now live
+   in field.css :root, so they apply to the whole site. */
 
 /* the shared, fixed compositor canvas (also styled inline in v2.js) */
 #v2-gl { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 60; }
@@ -42,11 +27,3 @@
 
 /* last-call accent — centred above the close title */
 .fg-close-spec.spec3d { width: clamp(150px, 40vw, 196px); aspect-ratio: 1.9 / 1; margin: 0 auto 6px; }
-
-/* small staging marker */
-.v2-tag {
-  position: fixed; left: 12px; bottom: 12px; z-index: 90;
-  font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
-  color: var(--mute); background: rgba(239, 230, 210, .72); border: 1px solid var(--ink);
-  padding: 5px 9px;
-}

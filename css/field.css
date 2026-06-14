@@ -12,14 +12,14 @@
   --ink-2:   #473b28;
   --mute:    #5e5440;
   --faint:   #a99a7c;
-  --orange:  #df4f0c;
-  --orange-d:#c14d14;
+  --orange:  #EB5424;
+  --orange-d:#c0431b;
   --teal:    #1d6e6b;
   --leaf:    #4d9965;
   --cream:   #f2ead8;
-  --font-display: "Fraunces", Georgia, serif;
-  --font-body: "Space Grotesk", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-display: "TASA Orbiter", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "Inter", system-ui, sans-serif;
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -243,3 +243,7 @@
   .fg-reveal { opacity: 1 !important; transform: none !important; }
   .fg-cta, .fg-ing, .fg-nav { transition: none !important; }
 }
+
+/* TASA Orbiter ships no true italic — emphasise with weight + brand colour, never a faux slant */
+.fg .it, .fg .or { font-style: normal; }
+.fg-footer__sig { font-style: normal; }
