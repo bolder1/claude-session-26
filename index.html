@@ -3,29 +3,27 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0a0907">
+  <meta name="theme-color" content="#efe6d2">
   <meta name="robots" content="noindex, nofollow">
   <script>document.documentElement.classList.remove('no-js');</script>
-  <title>Claude Session '26 — live with Surajit Dutta · miniOrange</title>
-  <meta name="description" content="A live, no-slides Claude session for miniOrange designers. One speaker, seven acts, real shipped work. 48 seats.">
+  <title>Claude Session '26 — a field guide to directing your AI intern · miniOrange</title>
+  <meta name="description" content="A live, no-slides session for the miniOrange design team on running Claude — your most talented, most forgetful junior designer. Two hours, seven acts, 48 seats.">
   <link rel="canonical" href="https://claude-session-26.vercel.app/">
 
-  <!-- Icons -->
   <link rel="icon" href="assets/favicon.svg?v=2" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/favicon.svg?v=2">
 
-  <!-- Social share (Open Graph + Twitter) -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="miniOrange Design">
-  <meta property="og:title" content="Claude Session '26 — meet your new design intern">
-  <meta property="og:description" content="A live, no-slides Claude session for miniOrange designers. One speaker, seven acts, real shipped work. 48 seats.">
+  <meta property="og:title" content="Claude Session '26 — your most talented hire forgets everything by lunch">
+  <meta property="og:description" content="A live, no-slides field guide to running Claude. Two hours, seven acts, 48 seats. Hosted by Surajit Dutta.">
   <meta property="og:url" content="https://claude-session-26.vercel.app/">
   <meta property="og:image" content="https://claude-session-26.vercel.app/assets/og-cover.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Claude Session '26 — meet your new design intern">
-  <meta name="twitter:description" content="A live, no-slides Claude session for miniOrange designers. One speaker, seven acts, real shipped work. 48 seats.">
+  <meta name="twitter:title" content="Claude Session '26 — your most talented hire forgets everything by lunch">
+  <meta name="twitter:description" content="A live, no-slides field guide to running Claude. Two hours, seven acts, 48 seats.">
   <meta name="twitter:image" content="https://claude-session-26.vercel.app/assets/og-cover.png">
 
   <link rel="stylesheet" href="styles.css?v=26">
@@ -33,9 +31,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://ga.jspm.io" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/una.css?v=27">
-  <link rel="stylesheet" href="css/midnight.css?v=31">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..600&family=Space+Grotesk:wght@300..600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/field.css?v=2">
   <script async src="https://ga.jspm.io/npm:es-module-shims@1.10.0/dist/es-module-shims.js"></script>
   <script type="importmap">
   {
@@ -46,485 +43,351 @@
   }
   </script>
 </head>
-<body class="midnight">
+<body class="fg">
 
-  <!-- 500vh billboard 3D intro runway -->
+  <div class="fg-grain" aria-hidden="true"></div>
+
+  <!-- shared riso defs (halftone) -->
+  <svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs>
+    <pattern id="fgh" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.4" fill="#241c12"/></pattern>
+    <pattern id="fgho" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.4" fill="#df4f0c"/></pattern>
+  </defs></svg>
+
+  <!-- 500vh billboard 3D intro runway (cold open) -->
   <div class="threejs-scroll-section">
     <div id="canvas-container"></div>
   </div>
-
-  <!-- Fixed overlays during the intro -->
-  <img id="threejs-logo"
-       src="assets/miniorange-logo.svg?v=2"
-       alt="miniOrange — Claude Session '26" draggable="false">
+  <img id="threejs-logo" src="assets/miniorange-logo.svg?v=2" alt="miniOrange — Claude Session '26" draggable="false">
   <div id="scroll-nudge" role="status" aria-label="Scroll to meet your new intern">
     <span>SCROLL TO MEET YOUR NEW INTERN</span>
   </div>
 
-  <!-- Floating island nav (appears after the intro) -->
-  <nav class="mnav" id="mnav" aria-label="Session">
-    <a class="mnav__mark" href="#una-hero" aria-label="Claude Session '26">
-      <svg width="30" height="30" viewBox="42.2 1 21 21" aria-hidden="true"><path d="M50.3114 20.6237C46.1311 19.5135 43.2477 15.7693 43.2578 11.47C43.2678 9.02777 44.0558 6.94868 45.6423 5.22277C47.4481 3.25488 49.4035 2.29612 52.0473 2.05388C52.8956 1.9834 54.432 2.14472 54.8411 2.35668C55.2101 2.54853 55.4396 2.93198 55.4396 3.37599C55.4396 3.65868 55.3597 3.82 55.0905 4.09251C54.9452 4.20676 54.7775 4.28768 54.5984 4.32991C54.304 4.39811 53.9132 4.36503 53.9132 4.36503C51.6982 4.13297 50.0023 4.53652 48.416 5.67695C46.6499 6.94868 45.6023 8.90665 45.4927 11.1369C45.3031 14.7297 47.8573 17.939 51.3989 18.5649C51.7982 18.6354 52.5165 18.666 53.135 18.6255C56.3375 18.4639 58.9815 16.1731 59.6797 12.9638C59.8197 12.3178 59.8494 11.904 59.7996 10.9048C59.7996 10.9048 59.7054 10.3786 59.7729 9.97991C59.8161 9.73564 59.9176 9.50587 60.0688 9.3102C60.538 8.83591 61.0866 8.82574 61.5754 9.30028C61.8947 9.60307 61.9247 9.68373 62.0344 10.5517C62.3237 13.0646 61.4059 15.8401 59.65 17.7573C58.7319 18.7565 57.9938 19.3319 56.976 19.8565C55.4396 20.6336 54.4019 20.8758 52.5465 20.8659C51.4587 20.8659 51.0297 20.8257 50.3114 20.6237Z" fill="#F7934D"/><path d="M51.6039 14.3358C51.5411 14.2174 51.5724 13.7248 51.6983 12.9564L51.8978 11.7447L51.4884 11.3999C50.5332 10.5822 50.7536 9.14402 51.9294 8.58245C52.5591 8.27711 53.4411 8.35574 53.9657 8.7598C54.8792 9.43943 54.9527 10.4936 54.1655 11.3211L53.6673 11.7447L53.9133 13.0154C54.0604 13.9317 54.0815 14.2668 53.9868 14.3653C53.9029 14.4637 53.5774 14.5032 52.7797 14.5032C51.8558 14.5032 51.6775 14.4737 51.6039 14.3358Z" fill="#F7934D"/><path d="M56.5061 7.37083C55.4201 6.07875 56.1428 4.79379 57.526 4.03019C58.131 3.63529 58.6745 3.04014 58.9514 2.39868L59.0712 2.03711L59.258 2.45797C59.4659 3.12894 59.6443 4.49405 59.4761 4.54341C58.0616 4.95791 56.5853 7.55836 56.5061 7.37083Z" fill="#4D9965"/><path d="M57.515 8.10197C56.985 7.99662 56.4883 7.66355 56.4883 7.38137C56.4883 7.05899 56.9773 5.91092 57.3727 5.47785C57.7977 4.99415 58.4918 4.60968 59.0946 4.42826C59.4307 4.3275 60.0681 4.31427 60.7526 4.33386C61.4368 4.3537 61.8317 4.40612 61.8317 4.50688C61.8317 4.54709 61.2047 4.89542 61.0368 4.98601C60.4618 5.36819 60.2333 5.80176 59.8478 6.54729C59.4524 7.33328 59.2295 7.66584 58.7944 7.89764C58.4188 8.09916 58.0447 8.20731 57.515 8.10197Z" fill="#9BCE7A"/></svg>
-      <span>Claude Session '26</span>
+  <!-- Floating editorial nav (appears after the intro) -->
+  <nav class="fg-nav" id="fg-nav" aria-label="Session">
+    <a class="fg-nav__mark" href="#hero" aria-label="Top">
+      <svg width="22" height="22" viewBox="42.2 1 21 21" aria-hidden="true"><path d="M50.3114 20.6237C46.1311 19.5135 43.2477 15.7693 43.2578 11.47C43.2678 9.02777 44.0558 6.94868 45.6423 5.22277C47.4481 3.25488 49.4035 2.29612 52.0473 2.05388C52.8956 1.9834 54.432 2.14472 54.8411 2.35668C55.2101 2.54853 55.4396 2.93198 55.4396 3.37599C55.4396 3.65868 55.3597 3.82 55.0905 4.09251C54.9452 4.20676 54.7775 4.28768 54.5984 4.32991C54.304 4.39811 53.9132 4.36503 53.9132 4.36503C51.6982 4.13297 50.0023 4.53652 48.416 5.67695C46.6499 6.94868 45.6023 8.90665 45.4927 11.1369C45.3031 14.7297 47.8573 17.939 51.3989 18.5649C51.7982 18.6354 52.5165 18.666 53.135 18.6255C56.3375 18.4639 58.9815 16.1731 59.6797 12.9638C59.8197 12.3178 59.8494 11.904 59.7996 10.9048C59.7996 10.9048 59.7054 10.3786 59.7729 9.97991C59.8161 9.73564 59.9176 9.50587 60.0688 9.3102C60.538 8.83591 61.0866 8.82574 61.5754 9.30028C61.8947 9.60307 61.9247 9.68373 62.0344 10.5517C62.3237 13.0646 61.4059 15.8401 59.65 17.7573C58.7319 18.7565 57.9938 19.3319 56.976 19.8565C55.4396 20.6336 54.4019 20.8758 52.5465 20.8659C51.4587 20.8659 51.0297 20.8257 50.3114 20.6237Z" fill="#F7934D"/><path d="M51.6039 14.3358C51.5411 14.2174 51.5724 13.7248 51.6983 12.9564L51.8978 11.7447L51.4884 11.3999C50.5332 10.5822 50.7536 9.14402 51.9294 8.58245C52.5591 8.27711 53.4411 8.35574 53.9657 8.7598C54.8792 9.43943 54.9527 10.4936 54.1655 11.3211L53.6673 11.7447L53.9133 13.0154C54.0604 13.9317 54.0815 14.2668 53.9868 14.3653C53.9029 14.4637 53.5774 14.5032 52.7797 14.5032C51.8558 14.5032 51.6775 14.4737 51.6039 14.3358Z" fill="#F7934D"/><path d="M56.5061 7.37083C55.4201 6.07875 56.1428 4.79379 57.526 4.03019C58.131 3.63529 58.6745 3.04014 58.9514 2.39868L59.0712 2.03711L59.258 2.45797C59.4659 3.12894 59.6443 4.49405 59.4761 4.54341C58.0616 4.95791 56.5853 7.55836 56.5061 7.37083Z" fill="#4D9965"/><path d="M57.515 8.10197C56.985 7.99662 56.4883 7.66355 56.4883 7.38137C56.4883 7.05899 56.9773 5.91092 57.3727 5.47785C57.7977 4.99415 58.4918 4.60968 59.0946 4.42826C59.4307 4.3275 60.0681 4.31427 60.7526 4.33386C61.4368 4.3537 61.8317 4.40612 61.8317 4.50688C61.8317 4.54709 61.2047 4.89542 61.0368 4.98601C60.4618 5.36819 60.2333 5.80176 59.8478 6.54729C59.4524 7.33328 59.2295 7.66584 58.7944 7.89764C58.4188 8.09916 58.0447 8.20731 57.515 8.10197Z" fill="#9BCE7A"/></svg>
     </a>
-    <a class="mnav__link" href="#una-speaker">Speaker</a>
-    <a class="mnav__link" href="#una-learn">Learn</a>
-    <a class="mnav__link" href="#una-agenda">Agenda</a>
-    <a class="mnav__cta" href="register.html">Reserve seat <i>↗</i></a>
+    <a class="fg-nav__link" href="#premise">the premise</a>
+    <a class="fg-nav__link" href="#method">the method</a>
+    <a class="fg-nav__link" href="#menu">the menu</a>
+    <a class="fg-nav__cta" href="register.html">Reserve ↗</a>
   </nav>
 
-  <!-- After the intro: the session site takes over -->
-  <main class="page-main una">
+  <main class="fg-main">
 
-    <!-- ============ HERO ============ -->
-    <section class="hero-section" id="una-hero">
-      <div class="una-hero__canvas-wrap" aria-hidden="true">
-        <canvas id="una-hero-canvas"></canvas>
-      </div>
-      <div class="una-hero__fade" aria-hidden="true"></div>
-      <div class="una-hero__vignette" aria-hidden="true"></div>
+    <!-- ============ HERO · the cover ============ -->
+    <section class="fg-hero hero-section" id="hero">
+      <div class="fg-hero__inner">
+        <header class="fg-mast">
+          <div><b>miniOrange</b> design studio</div>
+          <div class="fg-mast__reg">
+            <svg class="fg-ch" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.6" fill="none" stroke="#241c12" stroke-width="1"/><line x1="6" y1="0" x2="6" y2="12" stroke="#241c12"/><line x1="0" y1="6" x2="12" y2="6" stroke="#241c12"/></svg>
+            <span>Claude Session — field guide <b>№ 26</b></span>
+            <svg class="fg-ch" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.6" fill="none" stroke="#241c12" stroke-width="1"/><line x1="6" y1="0" x2="6" y2="12" stroke="#241c12"/><line x1="0" y1="6" x2="12" y2="6" stroke="#241c12"/></svg>
+          </div>
+          <div>Live · no slides · <b>invite only</b></div>
+        </header>
 
-      <div class="una-hero__top">
-        <div class="una-hero__badges">
-          <span class="ph-badge"><span class="ph-badge__icon ph-badge__icon--live">●</span><span class="ph-badge__text"><em>SOLO SPEAKER · LIVE</em>Surajit Dutta</span></span>
-          <span class="ph-badge ph-badge--compact"><span class="ph-badge__icon">✦</span><span class="ph-badge__text"><em>CLAUDE SESSION '26</em>2 hrs · Live demos · 48 seats</span></span>
+        <p class="fg-kick fg-hero__kick">In-house · 48 seats · 26 June 2026</p>
+        <h1 class="fg-h1">Your most talented hire <span class="or">forgets everything</span> <span class="it">by lunch.</span></h1>
+
+        <div class="fg-art" data-tilt aria-hidden="true">
+          <svg viewBox="0 0 478 478" xmlns="http://www.w3.org/2000/svg">
+            <g style="mix-blend-mode:multiply">
+              <rect x="40" y="360" width="398" height="84" rx="6" fill="#1d6e6b"/>
+              <rect x="118" y="120" width="250" height="200" rx="22" fill="#1d6e6b"/>
+              <rect x="108" y="110" width="250" height="200" rx="22" fill="#df4f0c"/>
+            </g>
+            <rect x="40" y="360" width="398" height="84" rx="6" fill="none" stroke="#241c12" stroke-width="2"/>
+            <rect x="108" y="110" width="250" height="200" rx="22" fill="none" stroke="#241c12" stroke-width="2.5"/>
+            <rect x="132" y="134" width="202" height="152" rx="12" fill="#f2ead8" stroke="#241c12" stroke-width="2"/>
+            <circle cx="196" cy="196" r="13" fill="#f2ead8" stroke="#241c12" stroke-width="2.5"/>
+            <path d="M196 188 l2.2 6.2 6.6 .3 -5.2 4.2 1.9 6.3 -5.5-3.6 -5.5 3.6 1.9-6.3 -5.2-4.2 6.6-.3z" fill="#df4f0c"/>
+            <circle cx="270" cy="196" r="12" fill="none" stroke="#241c12" stroke-width="2.5"/><path d="M270 196 l9 -4" stroke="#241c12" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M210 244 q23 16 46 0" fill="none" stroke="#241c12" stroke-width="3" stroke-linecap="round"/>
+            <rect x="214" y="310" width="38" height="56" fill="#241c12"/><path d="M198 366 h82 l-10 -14 h-62z" fill="#241c12"/>
+            <g transform="rotate(-7 250 78)"><rect x="208" y="44" width="84" height="60" rx="3" fill="#f2ead8" stroke="#241c12" stroke-width="2"/><line x1="218" y1="60" x2="282" y2="60" stroke="#241c12" stroke-width="2"/><line x1="218" y1="72" x2="282" y2="72" stroke="#241c12" stroke-width="1.5" opacity=".6"/><line x1="218" y1="82" x2="262" y2="82" stroke="#df4f0c" stroke-width="3"/></g>
+            <line x1="150" y1="40" x2="380" y2="40" stroke="#241c12" stroke-width="1.5"/><circle cx="150" cy="40" r="3" fill="#241c12"/><circle cx="380" cy="40" r="3" fill="#241c12"/>
+            <path d="M392 150 l6 16 17 1 -13 11 5 16 -15 -9 -15 9 5 -16 -13 -11 17 -1z" fill="#ffd27a" stroke="#241c12" stroke-width="2" stroke-linejoin="round"/>
+            <rect x="40" y="360" width="398" height="84" fill="url(#fgh)" opacity=".16"/>
+            <line x1="86" y1="300" x2="40" y2="332" stroke="#241c12" stroke-width="1"/><text x="14" y="350" font-family="IBM Plex Mono, monospace" font-size="13" fill="#241c12">the intern</text>
+            <text x="300" y="36" font-family="IBM Plex Mono, monospace" font-size="13" fill="#c14d14" text-anchor="end">your brief →</text>
+          </svg>
         </div>
 
-        <div class="una-hero__headline-wrap">
-          <div class="una-hero__headline-stack">
-            <h1 class="display una-hero__headline" data-hero-line="order">Meet your new <span class="serif">design intern.</span></h1>
-            <span class="display una-hero__headline" data-hero-line="chaos" aria-hidden="true">Fast. Tireless. <span class="serif">Clueless.</span></span>
-          </div>
-          <div class="una-hero__sub-stack">
-            <p class="una-hero__sub" data-hero-sub="order">Install → Ship&nbsp;&nbsp;·&nbsp;&nbsp;Every Claude surface&nbsp;&nbsp;·&nbsp;&nbsp;Live demos all the way</p>
-            <p class="una-hero__sub" data-hero-sub="chaos" aria-hidden="true">No taste&nbsp;&nbsp;·&nbsp;&nbsp;No context&nbsp;&nbsp;·&nbsp;&nbsp;No memory, unless you give it one</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="una-hero__bottom">
-        <div class="una-hero__panel glass-panel shine">
-          <div class="una-hero__panel-row">
-            <span class="micro-label">On the menu</span>
-            <div class="marquee" aria-hidden="true">
-              <div class="marquee__track" id="una-marquee"></div>
+        <div class="fg-lower">
+          <p class="fg-deck">Claude is a <b>brilliant, tireless, deeply forgetful</b> junior designer. Two hours — live, zero slides — on how to run it: a screenshot becomes a working prototype, a brief becomes a build, a week of research becomes an afternoon. You walk in producing pixels. You leave directing them.</p>
+          <div class="fg-card">
+            <div class="fg-card__h"><span>Reservation</span><span>Nº 001</span></div>
+            <div class="fg-card__b">
+              <div class="fg-row"><span>When</span><b>Fri 26 Jun · 11:00</b></div>
+              <div class="fg-row"><span>Where</span><b>miniOrange HQ</b></div>
+              <div class="fg-row"><span>Host</span><b>Surajit Dutta</b></div>
+              <div class="fg-row"><span>Seats left</span><b>48</b></div>
+              <a class="fg-cta" href="register.html">Reserve your seat <span class="fg-cta__ar" aria-hidden="true">↗</span></a>
             </div>
-            <p class="una-hero__synced micro-label"><span>48 seats</span>&nbsp;· studio capacity</p>
-            <a class="btn btn--hero" href="register.html">Reserve your seat <i>↗</i></a>
           </div>
         </div>
-        <a class="una-hero__backed" href="#una-speaker">
-          <span class="micro-label">Hosted live by</span>
-          <span class="una-hero__backed-logo">Surajit Dutta <em>· no slides, all demos</em></span>
-        </a>
+
+        <span class="fg-marg" aria-hidden="true">No slides — all demos</span>
+        <span class="fg-folio">001 — the cover</span>
       </div>
     </section>
 
-    <!-- ============ 01 · THE FRAMING ============ -->
-    <section class="una-section" id="una-problem">
-      <span class="orb" aria-hidden="true"></span>
-      <div class="una-section__inner">
-        <div class="sec-head reveal">
-          <div class="sec-head__main">
-            <span class="eyebrow"><i></i>The framing</span>
-            <h2 class="display una-section__title">
-              Claude isn't a magic <span class="serif">output machine.</span>
-              <span class="una-section__title-dim">It's the most talented, fastest, most forgetful junior intern you've ever hired.</span>
-            </h2>
-          </div>
-          <span class="sec-index" aria-hidden="true">01</span>
+    <!-- ============ 02 · the premise ============ -->
+    <section class="fg-sec" id="premise">
+      <div class="fg-wrap">
+        <div class="fg-sec__head fg-reveal">
+          <div class="fg-folio-no">02</div>
+          <p class="fg-kick">What you're actually working with</p>
+          <h2 class="fg-sec__title">It isn't a magic output machine. It's a <span class="it">forgetful</span> genius.</h2>
+          <p class="fg-lead">Claude is the most talented, fastest junior you've ever hired — and it ships about <b>70% of the way there</b>. Read the label before you cook with it.</p>
         </div>
 
-        <div class="problem-grid">
-          <article class="problem-card card-glass shine reveal">
-            <div class="problem-card__viz">
-              <svg id="scatter-viz" viewBox="0 0 300 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+        <div class="fg-ing-grid">
+          <article class="fg-ing fg-reveal">
+            <div class="fg-ing__top"><span>Ingredient 01</span><b>raw</b></div>
+            <div class="fg-ing__viz" data-parallax="6">
+              <svg viewBox="0 0 220 150">
+                <ellipse cx="110" cy="92" rx="70" ry="22" fill="#1d6e6b" style="mix-blend-mode:multiply"/>
+                <ellipse cx="106" cy="88" rx="70" ry="22" fill="#df4f0c"/>
+                <ellipse cx="106" cy="84" rx="46" ry="13" fill="#f2ead8" stroke="#241c12" stroke-width="2"/>
+                <ellipse cx="106" cy="88" rx="70" ry="22" fill="none" stroke="#241c12" stroke-width="2"/>
+                <text x="106" y="50" font-family="Fraunces, serif" font-size="38" fill="#241c12" text-anchor="middle" font-style="italic">?</text>
+                <line x1="150" y1="42" x2="170" y2="30" stroke="#241c12" stroke-width="1.5"/><line x1="62" y1="42" x2="42" y2="30" stroke="#241c12" stroke-width="1.5"/>
+              </svg>
             </div>
-            <p class="problem-card__caption"><b>No context.</b> It has never seen your product, your users, or your taste.</p>
+            <div class="fg-ing__body">
+              <h3 class="fg-ing__label">No <span class="or">context.</span></h3>
+              <p class="fg-ing__desc">It has never seen your product, your users, or your taste. The plate arrives empty.</p>
+            </div>
           </article>
 
-          <article class="problem-card card-glass shine reveal" style="--reveal-delay:.08s">
-            <div class="problem-card__viz">
-              <div class="decay" id="decay-viz">
-                <div class="decay__row"><span class="decay__dot"></span><span class="decay__name">hero-critique.chat</span><span class="decay__stale">forgetting</span></div>
-                <div class="decay__row"><span class="decay__dot"></span><span class="decay__name">prd-draft.chat</span><span class="decay__stale">window full</span></div>
-                <div class="decay__row"><span class="decay__dot"></span><span class="decay__name">ux-audit.chat</span><span class="decay__stale">hour two</span></div>
-                <div class="decay__row"><span class="decay__dot"></span><span class="decay__name">everything-thread.chat</span><span class="decay__stale">gone</span></div>
-              </div>
+          <article class="fg-ing fg-reveal">
+            <div class="fg-ing__top"><span>Ingredient 02</span><b>volatile</b></div>
+            <div class="fg-ing__viz" data-parallax="10">
+              <svg viewBox="0 0 220 150">
+                <rect x="58" y="34" width="104" height="86" rx="4" fill="#f2ead8" stroke="#241c12" stroke-width="2" transform="rotate(-4 110 77)"/>
+                <g transform="rotate(-4 110 77)">
+                  <line x1="70" y1="54" x2="150" y2="54" stroke="#241c12" stroke-width="3"/>
+                  <line x1="70" y1="68" x2="150" y2="68" stroke="#241c12" stroke-width="3" opacity=".6"/>
+                  <line x1="70" y1="82" x2="140" y2="82" stroke="#df4f0c" stroke-width="3" opacity=".4" stroke-dasharray="4 5"/>
+                  <line x1="70" y1="96" x2="120" y2="96" stroke="#241c12" stroke-width="3" opacity=".15" stroke-dasharray="3 6"/>
+                </g>
+                <path d="M156 96 a18 18 0 1 1 -6 -13" fill="none" stroke="#1d6e6b" stroke-width="3" stroke-linecap="round"/><path d="M150 79 l2 9 9 -2" fill="none" stroke="#1d6e6b" stroke-width="3" stroke-linecap="round"/>
+              </svg>
             </div>
-            <p class="problem-card__caption"><b>No memory.</b> Hour-long chats get dumber.</p>
+            <div class="fg-ing__body">
+              <h3 class="fg-ing__label">No <span class="or">memory.</span></h3>
+              <p class="fg-ing__desc">An hour into a chat, it's forgotten how the chat began. Long threads quietly get dumber.</p>
+            </div>
           </article>
 
-          <article class="problem-card card-glass shine reveal" style="--reveal-delay:.16s">
-            <div class="problem-card__viz">
-              <div class="sprawl"><div class="sprawl__grid" id="sprawl-viz"></div></div>
+          <article class="fg-ing fg-reveal">
+            <div class="fg-ing__top"><span>Ingredient 03</span><b>70% done</b></div>
+            <div class="fg-ing__viz" data-parallax="14">
+              <svg viewBox="0 0 220 150">
+                <circle cx="110" cy="76" r="44" fill="none" stroke="#241c12" stroke-width="3" stroke-dasharray="4 6" opacity=".5"/>
+                <path d="M110 32 a44 44 0 1 1 -38 66" fill="none" stroke="#df4f0c" stroke-width="11" stroke-linecap="round"/>
+                <path d="M110 32 a44 44 0 1 1 -38 66" fill="none" stroke="#1d6e6b" stroke-width="11" stroke-linecap="round" transform="translate(3,3)" style="mix-blend-mode:multiply" opacity=".55"/>
+                <text x="110" y="84" font-family="Fraunces, serif" font-weight="600" font-size="30" fill="#241c12" text-anchor="middle">70%</text>
+              </svg>
             </div>
-            <p class="problem-card__caption"><b>No taste.</b> It ships 70%. You direct the rest.</p>
+            <div class="fg-ing__body">
+              <h3 class="fg-ing__label">No <span class="or">taste.</span></h3>
+              <p class="fg-ing__desc">It hands you seventy percent. The last thirty — spacing, hierarchy, judgment — is the reason you have a job.</p>
+            </div>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- ============ 02 · SPEAKER ============ -->
-    <section class="una-section" id="una-speaker">
-      <span class="orb" aria-hidden="true"></span>
-      <div class="una-section__inner">
-        <div class="speaker">
-          <div class="speaker__copy reveal">
-            <span class="eyebrow"><i></i>Your speaker · solo · live</span>
-            <h2 class="display una-section__title" style="margin-top:22px">One speaker.<br><span class="serif">Zero slides.</span></h2>
-            <div class="speaker__name-row">
-              <span class="speaker__name">Surajit Dutta</span>
-              <span class="speaker__role">Product Designer, miniOrange</span>
-            </div>
-            <p class="speaker__bio">For the past months Claude has been my production floor: IAM research, IGA flows, PayOps prototypes, DLP illustration sets, even the spreadsheets. Everything in this session comes from that real work, and every demo runs live. If something breaks, you watch me debug it. That's the honest version of the workflow.</p>
-            <div class="speaker__stats">
-              <div class="speaker__stat"><b data-count="42">0</b><span>requirements ranked from one 6-vendor teardown</span></div>
-              <div class="speaker__stat"><b data-count="9">0</b><span>screens in a single production-ready prototype</span></div>
-              <div class="speaker__stat"><b data-count="7">0</b><span>Claude surfaces toured, installed to shipped</span></div>
-              <div class="speaker__stat"><b>0</b><span>slides. The terminal is the deck</span></div>
-            </div>
-            <p class="speaker__live"><i></i>LIVE FROM THE DESIGN STUDIO · BRING A SCREENSHOT</p>
-          </div>
+    <!-- ============ 03 · the method (dark spread) ============ -->
+    <section class="fg-sec fg-method" id="method">
+      <div class="fg-wrap">
+        <div class="fg-sec__head fg-reveal">
+          <div class="fg-folio-no">03</div>
+          <p class="fg-kick">The method</p>
+          <h2 class="fg-sec__title">The whole job now fits in <span class="it">three moves.</span></h2>
+          <p class="fg-lead">Stop making pixels. Start directing them. Each move gets demoed live — then you run it yourself.</p>
+        </div>
 
-          <div class="speaker__panel bz reveal" style="--reveal-delay:.1s">
-            <div class="bz__in">
-              <canvas id="speaker-canvas" aria-label="Floating 3D orange, because of course"></canvas>
-              <span class="speaker__chip" style="top:8%; left:7%">IAM</span>
-              <span class="speaker__chip speaker__chip--2" style="top:16%; right:9%">IGA</span>
-              <span class="speaker__chip speaker__chip--3" style="bottom:22%; left:9%">PAYOPS</span>
-              <span class="speaker__chip speaker__chip--4" style="bottom:13%; right:12%">DLP</span>
-              <span class="speaker__panel-label">DRAG TO ORBIT · LIVE WEBGL</span>
+        <div class="fg-step fg-reveal">
+          <div class="fg-step__viz" data-parallax="12">
+            <svg viewBox="0 0 320 230">
+              <rect x="64" y="30" width="180" height="172" rx="8" fill="#efe6d2" stroke="#0d0a06" stroke-width="2.5"/>
+              <rect x="64" y="30" width="180" height="30" rx="8" fill="#df4f0c"/><rect x="64" y="52" width="180" height="8" fill="#df4f0c"/>
+              <text x="80" y="51" font-family="IBM Plex Mono, monospace" font-size="12" fill="#2a1206">BRIEF.md</text>
+              <g stroke="#241c12" stroke-width="2.5" stroke-linecap="round">
+                <line x1="92" y1="84" x2="216" y2="84"/><line x1="92" y1="108" x2="200" y2="108"/><line x1="92" y1="132" x2="210" y2="132"/><line x1="92" y1="156" x2="180" y2="156"/>
+              </g>
+              <g fill="none" stroke="#1d6e6b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M74 80 l4 5 7 -9"/><path d="M74 104 l4 5 7 -9"/><path d="M74 128 l4 5 7 -9"/><path d="M74 152 l4 5 7 -9"/>
+              </g>
+              <path d="M246 150 l24 18 -4 -14 12 -8z" fill="#241c12"/>
+            </svg>
+          </div>
+          <div class="fg-step__text">
+            <p class="fg-step__no">Move 01</p>
+            <h3 class="fg-step__title">Brief it <span class="it">like a junior.</span></h3>
+            <p class="fg-step__desc">Context, constraints, references, the format you want back. You already know how to write a good creative brief — <b>that's your unfair advantage.</b></p>
+          </div>
+        </div>
+
+        <div class="fg-step fg-step--flip fg-reveal">
+          <div class="fg-step__viz" data-parallax="12">
+            <svg viewBox="0 0 320 230">
+              <rect x="58" y="40" width="204" height="140" rx="12" fill="#1d6e6b" style="mix-blend-mode:multiply"/>
+              <rect x="50" y="32" width="204" height="140" rx="12" fill="#efe6d2" stroke="#0d0a06" stroke-width="2.5"/>
+              <rect x="64" y="46" width="60" height="50" rx="4" fill="#df4f0c"/>
+              <line x1="136" y1="52" x2="240" y2="52" stroke="#241c12" stroke-width="3" stroke-linecap="round"/><line x1="136" y1="66" x2="220" y2="66" stroke="#241c12" stroke-width="3" stroke-linecap="round" opacity=".5"/><line x1="136" y1="80" x2="232" y2="80" stroke="#241c12" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+              <rect x="64" y="110" width="176" height="46" rx="4" fill="none" stroke="#241c12" stroke-width="2"/><rect x="64" y="110" width="60" height="46" rx="4" fill="#241c12"/>
+              <path d="M278 70 l5 14 15 1 -12 10 4 14 -12 -8 -13 8 4 -14 -11 -10 14 -1z" fill="#ffd27a" stroke="#0d0a06" stroke-width="2" stroke-linejoin="round"/>
+              <g stroke="#df4f0c" stroke-width="3" stroke-linecap="round"><line x1="24" y1="70" x2="42" y2="70"/><line x1="20" y1="100" x2="42" y2="100"/><line x1="26" y1="130" x2="42" y2="130"/></g>
+            </svg>
+          </div>
+          <div class="fg-step__text">
+            <p class="fg-step__no">Move 02</p>
+            <h3 class="fg-step__title">Let it <span class="it">produce.</span></h3>
+            <p class="fg-step__desc">At a speed you can't match. Screenshots become critiques; briefs become working React, <b>rendering while you watch.</b> Treat the first output as a sketch, never a comp.</p>
+          </div>
+        </div>
+
+        <div class="fg-step fg-reveal">
+          <div class="fg-step__viz" data-parallax="12">
+            <svg viewBox="0 0 320 230">
+              <rect x="60" y="36" width="200" height="150" rx="10" fill="#efe6d2" stroke="#0d0a06" stroke-width="2.5"/>
+              <rect x="76" y="54" width="168" height="14" rx="4" fill="#241c12" opacity=".15"/>
+              <rect x="76" y="80" width="120" height="14" rx="4" fill="#241c12" opacity=".15"/>
+              <rect x="76" y="106" width="150" height="14" rx="4" fill="#241c12" opacity=".15"/>
+              <path d="M150 70 q30 -4 40 26" fill="none" stroke="#df4f0c" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="196" cy="96" r="6" fill="#df4f0c"/>
+              <text x="120" y="150" font-family="IBM Plex Mono, monospace" font-size="13" fill="#1d6e6b">+ the 30%</text>
+              <g transform="rotate(8 250 150)"><circle cx="250" cy="150" r="34" fill="none" stroke="#df4f0c" stroke-width="3"/><text x="250" y="146" font-family="IBM Plex Mono, monospace" font-size="9" fill="#df4f0c" text-anchor="middle">YOUR</text><text x="250" y="160" font-family="IBM Plex Mono, monospace" font-size="9" fill="#df4f0c" text-anchor="middle">CALL</text></g>
+            </svg>
+          </div>
+          <div class="fg-step__text">
+            <p class="fg-step__no">Move 03</p>
+            <h3 class="fg-step__title">Judge it <span class="it">like a director.</span></h3>
+            <p class="fg-step__desc">Spacing, hierarchy, brand, the call only you can make. <b>That's the thirty percent. That's the point.</b> Then: new task, new chat — context is currency.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 04 · what you'll cook ============ -->
+    <section class="fg-sec" id="learn">
+      <div class="fg-wrap">
+        <div class="fg-sec__head fg-reveal">
+          <div class="fg-folio-no">04</div>
+          <p class="fg-kick">The yield</p>
+          <h2 class="fg-sec__title">Eight things you'll be able to do <span class="it">before the coffee's cold.</span></h2>
+          <p class="fg-lead">Not theory. Each one is demoed live, then run on your own laptop before you leave the room.</p>
+        </div>
+
+        <div class="fg-out-grid fg-reveal">
+          <div class="fg-out"><span class="fg-out__no">01</span><span class="fg-out__title">Turn any screenshot into a working prototype</span><span class="fg-out__act">Act 1·5</span></div>
+          <div class="fg-out"><span class="fg-out__no">02</span><span class="fg-out__title">Spend tokens like a director — same output, a tenth of the cost</span><span class="fg-out__act">Act 2</span></div>
+          <div class="fg-out"><span class="fg-out__no">03</span><span class="fg-out__title">Give your intern a permanent memory</span><span class="fg-out__act">Act 3</span></div>
+          <div class="fg-out"><span class="fg-out__no">04</span><span class="fg-out__title">Put Claude inside Figma</span><span class="fg-out__act">Act 3</span></div>
+          <div class="fg-out"><span class="fg-out__no">05</span><span class="fg-out__title">Compress a week of research into an afternoon</span><span class="fg-out__act">Act 5·6</span></div>
+          <div class="fg-out"><span class="fg-out__no">06</span><span class="fg-out__title">Get motion specs with real, tunable easing values</span><span class="fg-out__act">Act 6</span></div>
+          <div class="fg-out"><span class="fg-out__no">07</span><span class="fg-out__title">Run the starter prompt card written for your role</span><span class="fg-out__act">Act 6</span></div>
+          <div class="fg-out"><span class="fg-out__no">08</span><span class="fg-out__title">Leave with the five operating principles</span><span class="fg-out__act">Act 7</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 05 · the chef ============ -->
+    <section class="fg-sec fg-sec--paper2" id="speaker">
+      <div class="fg-wrap">
+        <div class="fg-sec__head fg-reveal">
+          <div class="fg-folio-no">05</div>
+          <p class="fg-kick">Your host</p>
+          <h2 class="fg-sec__title">No theory. Everything here came off <span class="it">real miniOrange work.</span></h2>
+        </div>
+
+        <div class="fg-speaker">
+          <div class="fg-portrait fg-reveal" data-parallax="8">
+            <svg viewBox="0 0 320 280">
+              <rect width="320" height="280" fill="#e4d8bd"/>
+              <rect x="40" y="170" width="240" height="90" rx="6" fill="#1d6e6b" style="mix-blend-mode:multiply"/>
+              <rect x="48" y="184" width="150" height="76" rx="6" fill="#df4f0c" stroke="#241c12" stroke-width="2.5"/>
+              <rect x="60" y="198" width="126" height="50" rx="3" fill="#f2ead8"/>
+              <g stroke="#241c12" stroke-width="2.5" stroke-linecap="round"><line x1="72" y1="212" x2="174" y2="212"/><line x1="72" y1="224" x2="150" y2="224"/><line x1="72" y1="236" x2="164" y2="236"/></g>
+              <path d="M214 80 l6 16 17 1 -13 11 5 16 -15 -9 -15 9 5 -16 -13 -11 17 -1z" fill="#ffd27a" stroke="#241c12" stroke-width="2" stroke-linejoin="round"/>
+              <circle cx="220" cy="180" r="22" fill="#241c12"/>
+              <rect x="206" y="196" width="28" height="40" rx="10" fill="#241c12"/>
+              <rect x="40" y="40" width="80" height="26" fill="#241c12"/><text x="52" y="58" font-family="IBM Plex Mono, monospace" font-size="12" fill="#efe6d2">IAM</text>
+              <rect x="40" y="72" width="80" height="26" fill="none" stroke="#241c12" stroke-width="2"/><text x="52" y="90" font-family="IBM Plex Mono, monospace" font-size="12" fill="#241c12">IGA</text>
+              <rect x="128" y="40" width="100" height="26" fill="#df4f0c"/><text x="140" y="58" font-family="IBM Plex Mono, monospace" font-size="12" fill="#2a1206">PAYOPS</text>
+            </svg>
+            <div class="fg-portrait__cap"><span>The workstation</span><span>live · webgl off</span></div>
+          </div>
+          <div class="fg-reveal">
+            <div class="fg-speaker__name">Surajit Dutta</div>
+            <div class="fg-speaker__role">Product designer · miniOrange · solo, live, no slides</div>
+            <p class="fg-speaker__bio">For months, Claude has been my production floor — IAM research, IGA flows, PayOps prototypes, DLP illustration sets, even the spreadsheets. <b>Everything in this session comes from that real work, and every demo runs live.</b> If something breaks, you watch me debug it. That's the honest version of the workflow.</p>
+            <div class="fg-stats">
+              <div class="fg-stat"><div class="fg-stat__n">42</div><span class="fg-stat__l">requirements ranked from one 6-vendor teardown</span></div>
+              <div class="fg-stat"><div class="fg-stat__n">9</div><span class="fg-stat__l">screens in a single production-ready prototype</span></div>
+              <div class="fg-stat"><div class="fg-stat__n">7</div><span class="fg-stat__l">Claude surfaces toured, installed to shipped</span></div>
+              <div class="fg-stat"><div class="fg-stat__n">0</div><span class="fg-stat__l">slides — the terminal is the deck</span></div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ============ 03 · WHAT YOU'LL LEARN ============ -->
-    <section class="una-section" id="una-learn">
-      <span class="orb" aria-hidden="true"></span>
-      <div class="una-section__inner">
-        <div class="sec-head reveal">
-          <div class="sec-head__main">
-            <span class="eyebrow"><i></i>What you'll learn</span>
-            <h2 class="display una-section__title">Walk out <span class="serif">able to do this.</span></h2>
-            <p class="sec-sub">Not theory. Eight concrete abilities, each demoed live and then practiced on your own laptop before you leave the room.</p>
-          </div>
-          <span class="sec-index" aria-hidden="true">02</span>
+    <!-- ============ 06 · the menu (agenda) ============ -->
+    <section class="fg-sec" id="menu">
+      <div class="fg-wrap">
+        <div class="fg-sec__head fg-reveal">
+          <div class="fg-folio-no">06</div>
+          <p class="fg-kick">The running order</p>
+          <h2 class="fg-sec__title">Two hours, seven acts — <span class="it">cold open to last principle.</span></h2>
         </div>
 
-        <div class="bento">
-          <div class="lt bz b-7 b-r2 lt-proto reveal">
-            <div class="bz__in">
-              <span class="lt__act">ACT 1 · 5</span>
-              <div class="lt__viz">
-                <div class="proto-win proto-win--before" aria-hidden="true">
-                  <div class="proto-win__bar"><i></i><i></i><i></i></div>
-                  <div class="proto-win__body"><span></span><span></span><span></span></div>
-                </div>
-                <span class="proto-arrow">⟶</span>
-                <div class="proto-win proto-win--after" aria-hidden="true">
-                  <div class="proto-win__bar"><i></i><i></i><i></i></div>
-                  <div class="proto-win__body">
-                    <div class="proto-hero"></div>
-                    <div class="proto-row"><i></i><i></i></div>
-                    <div class="proto-cta"></div>
-                  </div>
-                </div>
-              </div>
-              <h3 class="lt__title">Turn any screenshot into a working prototype</h3>
-              <p class="lt__desc">Paste a screen, get a critique, then watch an interactive React rebuild render in front of you. It's the move that opens the session, and the one you'll repeat all week.</p>
-            </div>
-          </div>
-
-          <div class="lt bz b-5 lt-tokens reveal" style="--reveal-delay:.06s">
-            <div class="bz__in">
-              <span class="lt__act">ACT 2</span>
-              <div class="lt__viz">
-                <div class="tok-line"><b>12,480</b><strong>1,240</strong><em>TOKENS</em></div>
-                <div class="tok-bar"><i></i></div>
-                <span class="tok-chip">same outcome · 10× cheaper</span>
-              </div>
-              <h3 class="lt__title">Spend tokens like a director</h3>
-              <p class="lt__desc">Why hour-long chats get dumber, and the briefing habits that buy the same output for a tenth of the spend.</p>
-            </div>
-          </div>
-
-          <div class="lt bz b-5 lt-mem reveal" style="--reveal-delay:.1s">
-            <div class="bz__in">
-              <span class="lt__act">ACT 3</span>
-              <div class="lt__viz">
-                <div class="mem-stack">
-                  <div class="mem-row"><i></i>PRODUCT.md<em>remembered</em></div>
-                  <div class="mem-row"><i></i>brand-guide-v4.pdf<em>remembered</em></div>
-                  <div class="mem-row"><i></i>critique-playbook.skill<em>installed</em></div>
-                </div>
-              </div>
-              <h3 class="lt__title">Give your intern a permanent memory</h3>
-              <p class="lt__desc">Projects hold your product truth; Skills hold your process. Every new chat starts pre-briefed instead of from zero.</p>
-            </div>
-          </div>
-
-          <div class="lt bz b-4 lt-mcp reveal">
-            <div class="bz__in">
-              <span class="lt__act">ACT 3</span>
-              <div class="lt__viz">
-                <div class="mcp-flow">
-                  <span class="mcp-node">F</span>
-                  <span class="mcp-wire"></span>
-                  <span class="mcp-node mcp-node--claude">✦</span>
-                </div>
-              </div>
-              <h3 class="lt__title">Put Claude inside Figma</h3>
-              <p class="lt__desc">Connectors (MCP) reach into Figma, Notion and Drive. One gets wired live, no copy-paste in sight.</p>
-            </div>
-          </div>
-
-          <div class="lt bz b-4 lt-syn reveal" style="--reveal-delay:.06s">
-            <div class="bz__in">
-              <span class="lt__act">ACT 5 · 6</span>
-              <div class="lt__viz">
-                <div class="syn">
-                  <span class="syn__note"></span>
-                  <span class="syn__note"></span>
-                  <span class="syn__note"></span>
-                  <div class="syn__themes"><span>pricing anxiety</span><span>nav confusion</span></div>
-                </div>
-              </div>
-              <h3 class="lt__title">Compress a week of research into an afternoon</h3>
-              <p class="lt__desc">Five interview snippets become themes, a persona, and three design recommendations.</p>
-            </div>
-          </div>
-
-          <div class="lt bz b-4 lt-curve reveal" style="--reveal-delay:.12s">
-            <div class="bz__in">
-              <span class="lt__act">ACT 6</span>
-              <div class="lt__viz">
-                <div class="curve-wrap" aria-hidden="true">
-                  <svg viewBox="0 0 160 84">
-                    <path d="M10 70 C 50 70, 60 12, 150 12" fill="none" stroke="rgba(255,125,31,.55)" stroke-width="2" stroke-dasharray="5 7"/>
-                    <circle cx="10" cy="70" r="3.5" fill="#ff7d1f"/>
-                    <circle cx="150" cy="12" r="3.5" fill="#ff7d1f"/>
-                    <circle class="curve-ball" r="6" fill="#f3ece2"/>
-                  </svg>
-                </div>
-              </div>
-              <h3 class="lt__title">Get motion specs with real easing values</h3>
-              <p class="lt__desc">Describe the feeling, receive the spring config. Framer Motion specs you can actually tune.</p>
-            </div>
-          </div>
-
-          <div class="lt bz b-6 lt-fan reveal">
-            <div class="bz__in">
-              <span class="lt__act">ACT 6</span>
-              <div class="lt__viz">
-                <div class="fan" aria-hidden="true">
-                  <span><b>✦ UI</b><br>critique vs heuristics</span>
-                  <span><b>✦ UX</b><br>flows &amp; edge cases</span>
-                  <span><b>✦ RES</b><br>snippets → themes</span>
-                </div>
-              </div>
-              <h3 class="lt__title">Run your role's starter prompt card</h3>
-              <p class="lt__desc">UI, UX, research, motion, graphic: every chair gets a first-week playbook written for it, and runs it in the room.</p>
-            </div>
-          </div>
-
-          <div class="lt bz b-6 lt-rules reveal" style="--reveal-delay:.06s">
-            <div class="bz__in">
-              <span class="lt__act">ACT 7</span>
-              <div class="lt__viz">
-                <ul class="mini-rules">
-                  <li><b>01</b>Brief it like a junior, judge it like a director</li>
-                  <li><b>02</b>New task, new chat</li>
-                  <li><b>03</b>Context is currency</li>
-                  <li><b>04</b>The first output is a sketch, never a comp</li>
-                  <li><b>05</b>Your taste is the product</li>
-                </ul>
-              </div>
-              <h3 class="lt__title">Leave with the five operating principles</h3>
-              <p class="lt__desc">A rule set small enough to remember and sharp enough to keep you the director.</p>
-            </div>
-          </div>
+        <div class="fg-menu fg-reveal">
+          <div class="fg-course"><span class="fg-course__no">01</span><div><div class="fg-course__title">The cold open</div><p class="fg-course__desc">No slides. A real miniOrange screen goes into Claude live: critique it, then rebuild it as an interactive prototype. By the time intros are done, the artifact is rendering.</p></div><span class="fg-course__time">5 min · live</span></div>
+          <div class="fg-course"><span class="fg-course__no">02</span><div><div class="fg-course__title">How Claude actually thinks</div><p class="fg-course__desc">Tokens, the context window as the intern's whiteboard, and why long chats get dumber. You vote: lazy one-liner vs. proper brief — which output came from which?</p></div><span class="fg-course__time">15 min</span></div>
+          <div class="fg-course"><span class="fg-course__no">03</span><div><div class="fg-course__title">The toolbox tour</div><p class="fg-course__desc">Every surface, thirty seconds each: Chat, Artifacts, Projects, Skills, Connectors into Figma &amp; Notion, Cowork, scheduled tasks, memory — and Claude Code for the curious.</p></div><span class="fg-course__time">20 min</span></div>
+          <div class="fg-course"><span class="fg-course__no">04</span><div><div class="fg-course__title">The precooked showcase</div><p class="fg-course__desc">Real before/after pairs: 6-vendor research → 42 ranked requirements, a PRD → a 9-screen prototype, and a raw first output next to the shipped version.</p></div><span class="fg-course__time">25 min</span></div>
+          <div class="fg-course"><span class="fg-course__no">05</span><div><div class="fg-course__title">Live build — you choose</div><p class="fg-course__desc">The room decides: a landing page we critique and iterate, a rough sketch turned into a working prototype, or interview notes synthesised into themes and a persona.</p></div><span class="fg-course__time">20 min · live</span></div>
+          <div class="fg-course"><span class="fg-course__no">06</span><div><div class="fg-course__title">Your first week with your intern</div><p class="fg-course__desc">Hands-on. Everyone opens Claude on their own laptop, runs the starter prompt card written for their role, and a few share what came back.</p></div><span class="fg-course__time">15 min · hands-on</span></div>
+          <div class="fg-course"><span class="fg-course__no">07</span><div><div class="fg-course__title">The operating principles</div><p class="fg-course__desc">The rule set you keep: brief it like a junior, judge it like a director. New task, new chat. Context is currency. The first output is a sketch, never a comp.</p></div><span class="fg-course__time">5 min</span></div>
+          <p class="fg-menu__total">Total runtime <b>105 min</b> + Q&amp;A until the coffee runs out</p>
         </div>
       </div>
     </section>
 
-    <!-- ============ 04 · THE METHOD ============ -->
-    <section class="una-section" id="una-how">
-      <div class="una-section__inner">
-        <div class="sec-head sec-head--center reveal">
-          <div class="sec-head__main">
-            <span class="eyebrow"><i></i>The method</span>
-            <h2 class="display una-section__title">Production is over. <span class="serif">Direction begins.</span></h2>
-          </div>
-        </div>
-
-        <div class="how-row reveal" id="how-row">
-          <div class="how-card active" data-how="0" role="button" tabindex="0" aria-pressed="true" aria-label="Step 1: Brief it like a junior">
-            <div class="how-card__graphic">
-              <div class="connect-sim" id="connect-sim">
-                <div class="connect-sim__row"><span class="tool-chip" data-tool="ctx"></span><span class="connect-sim__name">Context — what &amp; who</span><span class="connect-sim__btn"><span class="connect-sim__btn-connect">Add</span><span class="connect-sim__btn-done">✓ Added</span></span></div>
-                <div class="connect-sim__row"><span class="tool-chip" data-tool="rules"></span><span class="connect-sim__name">Constraints — brand, tokens</span><span class="connect-sim__btn"><span class="connect-sim__btn-connect">Add</span><span class="connect-sim__btn-done">✓ Added</span></span></div>
-                <div class="connect-sim__row"><span class="tool-chip" data-tool="refs"></span><span class="connect-sim__name">References — screens, links</span><span class="connect-sim__btn"><span class="connect-sim__btn-connect">Add</span><span class="connect-sim__btn-done">✓ Added</span></span></div>
-              </div>
-            </div>
-            <div class="how-card__body">
-              <span class="how-card__num">01</span>
-              <h3 class="how-card__title">Brief it like a junior.</h3>
-              <p class="how-card__text">A good prompt is a good creative brief: context, constraints, references, deliverable format. You already know how to brief. That's your unfair advantage.</p>
-            </div>
-          </div>
-
-          <div class="how-card" data-how="1" role="button" tabindex="0" aria-pressed="false" aria-label="Step 2: Let it produce at superhuman speed">
-            <div class="how-card__graphic">
-              <div class="token-sim" id="token-sim">
-                <p class="token-sim__hint">One good brief in?<br><span>A working prototype out.</span></p>
-                <span class="token-sim__btn" aria-hidden="true">Generate</span>
-                <div class="token-sim__result">
-                  <p class="token-sim__created">Artifact rendering</p>
-                  <p class="token-sim__note">Iterate on it like a design file.</p>
-                  <code class="token-sim__code"><span id="token-text"></span><span class="token-sim__caret"></span></code>
-                </div>
-              </div>
-            </div>
-            <div class="how-card__body">
-              <span class="how-card__num">02</span>
-              <h3 class="how-card__title">Let it produce at superhuman speed.</h3>
-              <p class="how-card__text">Screenshots become critiques, briefs become interactive React prototypes, rendering live in the chat as Artifacts while you watch.</p>
-            </div>
-          </div>
-
-          <div class="how-card" data-how="2" role="button" tabindex="0" aria-pressed="false" aria-label="Step 3: Judge it like a director">
-            <div class="how-card__graphic">
-              <div class="access-sim" id="access-sim">
-                <p class="access-sim__head">Your director pass</p>
-                <div class="access-sim__row"><div class="access-sim__labels"><span>Spacing &amp; hierarchy</span><em>The grid is yours</em></div><span class="toggle"><span class="toggle__knob"></span></span></div>
-                <div class="access-sim__row"><div class="access-sim__labels"><span>Brand voice</span><em>Sound like miniOrange</em></div><span class="toggle"><span class="toggle__knob"></span></span></div>
-                <div class="access-sim__row"><div class="access-sim__labels"><span>Judgment calls</span><em>Claude can't make these</em></div><span class="toggle"><span class="toggle__knob"></span></span></div>
-                <span class="access-sim__save" aria-hidden="true"><span class="access-sim__save-label">Ship</span><span class="access-sim__saved-label">✓ Shipped</span></span>
-              </div>
-            </div>
-            <div class="how-card__body">
-              <span class="how-card__num">03</span>
-              <h3 class="how-card__title">Judge it like a director.</h3>
-              <p class="how-card__text">Claude gives you 70%. The 30% you add — spacing, hierarchy, brand voice, judgment — is the reason you have a job.</p>
-            </div>
-          </div>
-        </div>
-
-        <p class="how-outro reveal">And repeat. New task, new chat. The first output is a sketch, never a comp.</p>
+    <!-- ============ 07 · last call ============ -->
+    <section class="fg-sec fg-close" id="reserve">
+      <div class="fg-wrap fg-reveal">
+        <p class="fg-kick">Last call</p>
+        <h2 class="fg-close__title">48 seats. That's the <span class="it">whole studio.</span></h2>
+        <p class="fg-close__seats">Pull up a chair — bring a screenshot you're stuck on</p>
+        <a class="fg-cta" href="register.html">Reserve your seat <span class="fg-cta__ar" aria-hidden="true">↗</span></a>
+        <p class="fg-close__meta">Fri 26 Jun 2026 · 11:00 · miniOrange HQ · hosted live by Surajit Dutta</p>
       </div>
     </section>
 
-    <!-- ============ 06 · THE ARC ============ -->
-    <section class="una-section" id="una-agenda">
-      <div class="una-section__inner">
-        <div class="sec-head reveal">
-          <div class="sec-head__main">
-            <span class="eyebrow"><i></i>The arc</span>
-            <h2 class="display una-section__title">Two hours. <span class="serif">Seven acts.</span>
-              <span class="una-section__title-dim">From cold open to operating principles.</span>
-            </h2>
-          </div>
-          <span class="sec-index" aria-hidden="true">03</span>
-        </div>
-
-        <ol class="agenda">
-          <li class="agenda__row reveal">
-            <span class="agenda__num">01</span>
-            <div class="agenda__body">
-              <h3 class="agenda__title">The Cold Open</h3>
-              <p class="agenda__desc">No slides. A real miniOrange screen goes into Claude live: critique this, then rebuild it as an interactive React prototype. By the time intros are done, the artifact is rendering.</p>
-            </div>
-            <span class="agenda__time">5 min · live</span>
-          </li>
-          <li class="agenda__row reveal">
-            <span class="agenda__num">02</span>
-            <div class="agenda__body">
-              <h3 class="agenda__title">How Claude Actually Thinks</h3>
-              <p class="agenda__desc">Tokens, the context window as the intern's whiteboard, and why long chats get dumber. Interactive bit: lazy one-liner vs. proper brief, and you vote on which output came from which.</p>
-            </div>
-            <span class="agenda__time">15 min</span>
-          </li>
-          <li class="agenda__row reveal">
-            <span class="agenda__num">03</span>
-            <div class="agenda__body">
-              <h3 class="agenda__title">The Toolbox Tour</h3>
-              <p class="agenda__desc">Every surface, 30 seconds each: Chat, Artifacts, Projects, Skills, Connectors (MCP) into Figma &amp; Notion, Plugins, Cowork, scheduled tasks &amp; memory, and Claude Code for the curious.</p>
-            </div>
-            <span class="agenda__time">20 min</span>
-          </li>
-          <li class="agenda__row reveal">
-            <span class="agenda__num">04</span>
-            <div class="agenda__body">
-              <h3 class="agenda__title">The Precooked Showcase</h3>
-              <p class="agenda__desc">Real before/after pairs: 6-vendor research → 42 ranked requirements, PRD → 9-screen prototype, animated SVG decks, the --mo-* token spine, and a raw first output next to the shipped version.</p>
-            </div>
-            <span class="agenda__time">25 min</span>
-          </li>
-          <li class="agenda__row reveal">
-            <span class="agenda__num">05</span>
-            <div class="agenda__body">
-              <h3 class="agenda__title">Live Build — You Choose</h3>
-              <p class="agenda__desc">The room decides what gets built: a landing page we critique and iterate together, a rough sketch turned into a working prototype, or interview notes synthesized into themes and a persona.</p>
-            </div>
-            <span class="agenda__time">20 min · audience-driven</span>
-          </li>
-          <li class="agenda__row reveal">
-            <span class="agenda__num">06</span>
-            <div class="agenda__body">
-              <h3 class="agenda__title">Your First Week With Your Intern</h3>
-              <p class="agenda__desc">Hands-on. Everyone opens Claude on their own laptop, runs the starter prompt card written for their role, and a few of us share what came back. This is where it becomes yours.</p>
-            </div>
-            <span class="agenda__time">15 min · hands-on</span>
-          </li>
-          <li class="agenda__row reveal">
-            <span class="agenda__num">07</span>
-            <div class="agenda__body">
-              <h3 class="agenda__title">The Operating Principles</h3>
-              <p class="agenda__desc">The rule set you leave with: brief it like a junior, judge it like a director. New task, new chat. Context is currency. The first output is a sketch, never a comp.</p>
-            </div>
-            <span class="agenda__time">5 min</span>
-          </li>
-        </ol>
-        <p class="agenda__total reveal">TOTAL RUNTIME <b>105 MIN</b> + Q&amp;A UNTIL THE COFFEE RUNS OUT</p>
+    <footer class="fg-footer">
+      <div class="fg-wrap fg-footer__row">
+        <span>miniOrange design · Claude Session '26</span>
+        <span class="fg-footer__sig">brief it like a junior, judge it like a director</span>
+        <span>Exhibit A — <b>shipped with Claude</b></span>
       </div>
-    </section>
-
-    <!-- ============ TICKER + FINAL CTA ============ -->
-    <section class="una-section" id="una-close">
-      <div class="ticker" aria-hidden="true">
-        <span>BRIEF IT LIKE A JUNIOR&nbsp;&nbsp;<i class="serif">judge it like a director</i>&nbsp;&nbsp;·&nbsp;&nbsp;NEW TASK, NEW CHAT&nbsp;&nbsp;·&nbsp;&nbsp;CONTEXT IS CURRENCY&nbsp;&nbsp;·&nbsp;&nbsp;THE FIRST OUTPUT IS A SKETCH&nbsp;&nbsp;<i class="serif">never a comp</i>&nbsp;&nbsp;·&nbsp;&nbsp;YOUR TASTE IS THE PRODUCT&nbsp;&nbsp;·&nbsp;&nbsp;</span>
-        <span>BRIEF IT LIKE A JUNIOR&nbsp;&nbsp;<i class="serif">judge it like a director</i>&nbsp;&nbsp;·&nbsp;&nbsp;NEW TASK, NEW CHAT&nbsp;&nbsp;·&nbsp;&nbsp;CONTEXT IS CURRENCY&nbsp;&nbsp;·&nbsp;&nbsp;THE FIRST OUTPUT IS A SKETCH&nbsp;&nbsp;<i class="serif">never a comp</i>&nbsp;&nbsp;·&nbsp;&nbsp;YOUR TASTE IS THE PRODUCT&nbsp;&nbsp;·&nbsp;&nbsp;</span>
-      </div>
-
-      <div class="una-section__inner close-cta reveal">
-        <span class="print-label">Last call</span>
-        <h2 class="display close-cta__title">Your taste is the product.<br><span class="serif">Claude is the production floor.</span></h2>
-        <span class="close-cta__seats"><i></i>48 SEATS · STUDIO CAPACITY</span>
-        <a class="btn btn--orange btn--lg" href="register.html">Reserve your seat <i>↗</i></a>
-        <p class="close-cta__meta">FRI · 26 JUN 2026 · 11:00 · DESIGN STUDIO, MINIORANGE HQ · HOSTED LIVE BY SURAJIT DUTTA</p>
-      </div>
-    </section>
-
-    <footer class="una-footer">
-      <p class="micro-label">MINIORANGE DESIGN · CLAUDE SESSION '26 · EXHIBIT A — THIS PAGE WAS SHIPPED WITH CLAUDE</p>
-      <p class="una-footer__sig">brief it like a junior, judge it like a director · Surajit Dutta</p>
     </footer>
   </main>
 
   <!-- Site loader -->
   <div id="site-loader" role="status" aria-label="Loading">
-    <img class="loader-logo"
-         src="assets/miniorange-logo.svg?v=2"
-         alt="Loading" draggable="false">
-    <div class="loader-track">
-      <div class="loader-bar" id="loader-bar"></div>
-    </div>
+    <img class="loader-logo" src="assets/miniorange-logo.svg?v=2" alt="Loading" draggable="false">
+    <div class="loader-track"><div class="loader-bar" id="loader-bar"></div></div>
   </div>
 
-  <!-- Loader: min 3s, waits for the GLB, then slides up -->
+  <!-- Loader: min gate, waits for the GLB, then slides up -->
   <script>
   (function () {
     'use strict';
@@ -533,19 +396,10 @@
     document.body.style.overflow  = 'hidden';
     document.body.style.position  = 'fixed';
     document.body.style.width     = '100%';
-    var loader    = document.getElementById('site-loader');
-    var bar       = document.getElementById('loader-bar');
-    var exited    = false;
-    var glbReady  = false;
-    var minReady  = false;
-    var progress  = 0;
-    var rafId     = null;
-    var uiRevealed = false;
-    function revealUI() {
-      if (uiRevealed) return;
-      uiRevealed = true;
-      window.dispatchEvent(new CustomEvent('loaderExited'));
-    }
+    var loader = document.getElementById('site-loader');
+    var bar = document.getElementById('loader-bar');
+    var exited = false, glbReady = false, minReady = false, progress = 0, rafId = null, uiRevealed = false;
+    function revealUI() { if (uiRevealed) return; uiRevealed = true; window.dispatchEvent(new CustomEvent('loaderExited')); }
     function animateBar(target, speed) {
       cancelAnimationFrame(rafId);
       (function tick() {
@@ -556,51 +410,20 @@
       })();
     }
     animateBar(70, 0.04);
-    function tryExit() {
-      if (glbReady && minReady) {
-        animateBar(100, 0.12);
-        setTimeout(exitLoader, 400);
-      }
-    }
+    function tryExit() { if (glbReady && minReady) { animateBar(100, 0.12); setTimeout(exitLoader, 400); } }
     function exitLoader() {
-      if (exited) return;
-      exited = true;
-      requestAnimationFrame(function () {
-        requestAnimationFrame(function () {
-          document.documentElement.style.overflow = '';
-          document.body.style.overflow  = '';
-          document.body.style.position  = '';
-          document.body.style.width     = '';
-          window.scrollTo(0, 0);
-          loader.classList.add('is-exiting');
-          loader.addEventListener('transitionend', function onDone(e) {
-            if (e.propertyName !== 'transform') return;
-            loader.removeEventListener('transitionend', onDone);
-            if (loader.parentNode) loader.parentNode.removeChild(loader);
-            revealUI();
-          });
-          setTimeout(function () {
-            if (loader.parentNode) loader.parentNode.removeChild(loader);
-            revealUI();
-          }, 1200);
-        });
-      });
+      if (exited) return; exited = true;
+      requestAnimationFrame(function () { requestAnimationFrame(function () {
+        document.documentElement.style.overflow = ''; document.body.style.overflow = ''; document.body.style.position = ''; document.body.style.width = '';
+        window.scrollTo(0, 0);
+        loader.classList.add('is-exiting');
+        loader.addEventListener('transitionend', function onDone(e) { if (e.propertyName !== 'transform') return; loader.removeEventListener('transitionend', onDone); if (loader.parentNode) loader.parentNode.removeChild(loader); revealUI(); });
+        setTimeout(function () { if (loader.parentNode) loader.parentNode.removeChild(loader); revealUI(); }, 1200);
+      }); });
     }
-    setTimeout(function () {
-      minReady = true;
-      tryExit();
-    }, 1200);
-    var safetyTimer = setTimeout(function () {
-      glbReady = minReady = true;
-      exitLoader();
-    }, 12000);
-    window.addEventListener('glbLoaded', function () {
-      clearTimeout(safetyTimer);
-      setTimeout(function () {
-        glbReady = true;
-        tryExit();
-      }, 400);
-    });
+    setTimeout(function () { minReady = true; tryExit(); }, 1200);
+    var safetyTimer = setTimeout(function () { glbReady = minReady = true; exitLoader(); }, 12000);
+    window.addEventListener('glbLoaded', function () { clearTimeout(safetyTimer); setTimeout(function () { glbReady = true; tryExit(); }, 400); });
   })();
   </script>
 
@@ -608,51 +431,30 @@
   <script>
   (function () {
     'use strict';
-    var logo          = document.getElementById('threejs-logo');
-    var nudge         = document.getElementById('scroll-nudge');
-    var loaderDone    = false;
-    var threeJsActive = false;
-    function show() {
-      if (logo)  logo.style.opacity  = '1';
-      if (nudge) nudge.style.opacity = '1';
-    }
-    function hide() {
-      if (logo)  logo.style.opacity  = '0';
-      if (nudge) nudge.style.opacity = '0';
-    }
+    var logo = document.getElementById('threejs-logo');
+    var nudge = document.getElementById('scroll-nudge');
+    var loaderDone = false, threeJsActive = false;
+    function show() { if (logo) logo.style.opacity = '1'; if (nudge) nudge.style.opacity = '1'; }
+    function hide() { if (logo) logo.style.opacity = '0'; if (nudge) nudge.style.opacity = '0'; }
     function updateVisibility() {
       if (!loaderDone) return;
       if (!threeJsActive) { hide(); return; }
-      var section       = document.querySelector('.threejs-scroll-section');
+      var section = document.querySelector('.threejs-scroll-section');
       var sectionHeight = section ? section.offsetHeight : 999999;
-      if (window.scrollY >= sectionHeight * 0.9) {
-        hide();
-      } else {
-        show();
-      }
+      if (window.scrollY >= sectionHeight * 0.9) hide(); else show();
     }
-    window.addEventListener('loaderExited', function () {
-      loaderDone = true;
-      updateVisibility();
-    });
-    window.addEventListener('threeJsCanvas', function (e) {
-      threeJsActive = e.detail.active;
-      updateVisibility();
-    });
+    window.addEventListener('loaderExited', function () { loaderDone = true; updateVisibility(); });
+    window.addEventListener('threeJsCanvas', function (e) { threeJsActive = e.detail.active; updateVisibility(); });
     window.addEventListener('scroll', updateVisibility, { passive: true });
   })();
   </script>
 
-  <!-- Billboard 3D scroll intro -->
+  <!-- Billboard 3D scroll intro (cold open) -->
   <script type="module" src="main.js?v=27"></script>
 
-  <!-- Session chapter (GSAP + Three.js) -->
+  <!-- Editorial motion -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-  <script type="module" src="js/una-hero.js?v=27"></script>
-  <script type="module" src="js/una-speaker.js?v=27"></script>
-  <script src="js/una-main.js?v=28" defer></script>
-  <script src="js/midnight.js?v=28" defer></script>
+  <script src="js/field.js?v=1" defer></script>
 
 </body>
 </html>

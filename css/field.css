@@ -1,13 +1,13 @@
 /* ==========================================================================
    field.css — "Field Guide" editorial / riso redesign system
-   Recipe-zine warmth + Swiss grid discipline. Used by the staging page
-   (preview.html) and, once locked, by index.html. Self-contained: no
-   dependency on una.css / midnight.css.
+   Recipe-zine warmth + Swiss grid discipline.
+   Self-contained: no dependency on una.css / midnight.css.
    ========================================================================== */
 
 :root {
   --paper:   #efe6d2;
   --paper-2: #e8dcc1;
+  --paper-3: #e4d8bd;
   --ink:     #241c12;
   --ink-2:   #473b28;
   --mute:    #5e5440;
@@ -30,33 +30,69 @@
 }
 .fg *, .fg *::before, .fg *::after { box-sizing: border-box; }
 .fg ::selection { background: var(--orange); color: #fff3ea; }
-
-/* paper grain over the whole page */
+.fg a { color: inherit; }
 .fg-grain {
   position: fixed; inset: 0; z-index: 80; pointer-events: none;
-  opacity: .38; mix-blend-mode: multiply; background-image: var(--grain);
+  opacity: .36; mix-blend-mode: multiply; background-image: var(--grain);
 }
 
 /* ---------- shared editorial bits ---------- */
+.fg-mono { font-family: "IBM Plex Mono", ui-monospace, monospace; }
 .fg-kick {
-  font-family: "IBM Plex Mono", ui-monospace, monospace;
-  font-size: clamp(11px, 1.4vw, 13px); font-weight: 500;
+  font-family: "IBM Plex Mono", monospace; font-size: clamp(11px, 1.4vw, 13px); font-weight: 500;
   letter-spacing: .2em; text-transform: uppercase; color: var(--orange-d);
 }
-.fg-rule { height: 2px; background: var(--ink); position: relative; }
-.fg-rule::after { content: ""; position: absolute; left: 0; top: -3px; width: 64px; height: 8px; background: var(--orange); }
+.fg-ch { width: 12px; height: 12px; flex: 0 0 auto; }
+
+.fg-reveal { opacity: 0; transform: translateY(22px); }
+.fg-reveal.is-in { opacity: 1; transform: none; transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+.no-js .fg-reveal { opacity: 1; transform: none; }
+
+.fg-wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 56px); }
+
+/* section shell + header */
+.fg-sec { position: relative; padding: clamp(64px, 9vw, 132px) 0; }
+.fg-sec--paper2 { background: var(--paper-2); }
+.fg-sec__head { position: relative; margin-bottom: clamp(36px, 5vw, 64px); }
+.fg-folio-no { font-family: "Fraunces", serif; font-weight: 300; font-size: clamp(56px, 11vw, 132px); line-height: .8; color: var(--ink); opacity: .12; letter-spacing: -.04em; }
+.fg-sec__title { font-family: "Fraunces", serif; font-weight: 600; font-size: clamp(30px, 5.2vw, 58px); line-height: 1; letter-spacing: -.025em; margin: 12px 0 0; max-width: 18ch; }
+.fg-sec__title .it { font-style: italic; font-weight: 380; }
+.fg-sec__title .or { color: var(--orange); }
+.fg-lead { font-size: clamp(16px, 1.9vw, 19px); line-height: 1.55; color: var(--ink-2); max-width: 52ch; margin: 18px 0 0; font-weight: 300; }
+.fg-lead b { font-weight: 500; color: var(--ink); }
+
+/* hairline divider with a tick */
+.fg-hr { height: 2px; background: var(--ink); position: relative; margin: 0; }
+.fg-hr::after { content: ""; position: absolute; left: 0; top: -3px; width: 60px; height: 8px; background: var(--orange); }
+
+/* ==========================================================================
+   FLOATING NAV
+   ========================================================================== */
+.fg-nav {
+  position: fixed; top: 14px; left: 50%; transform: translate(-50%, -150%); z-index: 70;
+  display: flex; align-items: center; gap: 4px; padding: 6px 6px 6px 14px;
+  background: rgba(36, 28, 18, .92); border: 1.5px solid var(--ink);
+  box-shadow: 4px 4px 0 rgba(36,28,18,.35); transition: transform .5s cubic-bezier(.2,.7,.2,1);
+}
+.fg-nav.is-on { transform: translate(-50%, 0); }
+.fg-nav__mark { width: 22px; height: 22px; margin-right: 6px; display: block; }
+.fg-nav a { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: #d9cdb6; text-decoration: none; padding: 8px 10px; transition: color .25s; }
+.fg-nav a:hover { color: #fff; }
+.fg-nav__cta { background: var(--orange); color: #fff3ea !important; font-weight: 600; }
+.fg-nav a:focus-visible, .fg a:focus-visible, .fg button:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+.fg-nav.is-on a:focus-visible { outline-color: #fff; }
+@media (max-width: 640px) { .fg-nav__link { display: none; } }
 
 /* ==========================================================================
    HERO — "the cover"
    ========================================================================== */
 .fg-hero {
   position: relative; isolation: isolate; overflow: hidden;
-  min-height: 100vh; min-height: 100dvh;
-  padding: clamp(20px, 3.5vw, 30px) clamp(20px, 5vw, 56px) 46px;
+  min-height: 100vh; min-height: 100dvh; height: auto; background: var(--paper);
+  padding: clamp(20px, 3.5vw, 30px) clamp(20px, 5vw, 56px) 48px;
   display: flex; flex-direction: column;
 }
-.fg-hero__inner { position: relative; width: 100%; max-width: 1200px; margin: 0 auto; flex: 1; display: flex; flex-direction: column; }
-
+.fg-hero__inner { position: relative; width: 100%; max-width: 1180px; margin: 0 auto; flex: 1; display: flex; flex-direction: column; }
 .fg-mast {
   display: flex; justify-content: space-between; align-items: center; gap: 10px 16px; flex-wrap: wrap;
   font-family: "IBM Plex Mono", monospace; font-size: clamp(10px, 1.3vw, 12px);
@@ -65,20 +101,16 @@
 }
 .fg-mast b { color: var(--ink); font-weight: 600; }
 .fg-mast__reg { display: flex; gap: 10px; align-items: center; }
-.fg-ch { width: 12px; height: 12px; flex: 0 0 auto; }
-
 .fg-hero__kick { margin-top: clamp(20px, 3.5vw, 34px); }
 .fg-h1 {
   font-family: "Fraunces", Georgia, serif; font-weight: 600;
-  font-size: clamp(38px, 8.4vw, 94px); line-height: .92; letter-spacing: -.03em;
+  font-size: clamp(38px, 8.4vw, 92px); line-height: .92; letter-spacing: -.03em;
   margin: 14px 0 0; max-width: 13ch;
 }
 .fg-h1 .it { font-style: italic; font-weight: 360; }
 .fg-h1 .or { color: var(--orange); font-style: italic; font-weight: 420; }
-
 .fg-art { width: min(440px, 82vw); margin: 26px auto 6px; display: block; }
 .fg-art svg { width: 100%; height: auto; display: block; }
-
 .fg-lower { display: grid; grid-template-columns: 1fr; gap: 26px; margin-top: auto; padding-top: clamp(24px, 4vw, 38px); align-items: end; }
 .fg-deck { font-size: clamp(16px, 1.9vw, 19px); line-height: 1.5; color: var(--ink-2); max-width: 46ch; font-weight: 300; overflow-wrap: break-word; }
 .fg-deck b { font-weight: 500; color: var(--ink); }
@@ -95,13 +127,10 @@
   transition: transform .14s ease, box-shadow .14s ease;
 }
 .fg-cta:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--ink); }
-.fg-cta:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
 .fg-cta__ar { display: grid; place-items: center; width: 27px; height: 27px; border-radius: 50%; background: var(--ink); color: var(--paper); flex: 0 0 auto; }
-
 .fg-marg { display: none; }
 .fg-folio { position: absolute; right: 0; bottom: -34px; font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .2em; color: var(--faint); }
 
-/* ---------- desktop ---------- */
 @media (min-width: 880px) {
   .fg-h1 { max-width: 11ch; }
   .fg-art { position: absolute; right: 0; top: 72px; width: clamp(360px, 37vw, 470px); margin: 0; z-index: -1; }
@@ -110,6 +139,104 @@
   .fg-marg { display: block; position: absolute; left: -34px; top: 52%; transform: rotate(-90deg); transform-origin: center; font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--faint); }
 }
 
+/* ==========================================================================
+   02 · INGREDIENTS — "what you're actually working with"
+   ========================================================================== */
+.fg-ing-grid { display: grid; grid-template-columns: 1fr; gap: clamp(18px, 2vw, 26px); }
+@media (min-width: 760px) { .fg-ing-grid { grid-template-columns: repeat(3, 1fr); } }
+.fg-ing { border: 2px solid var(--ink); background: var(--cream); box-shadow: 6px 6px 0 var(--ink); display: flex; flex-direction: column; transition: transform .18s ease, box-shadow .18s ease; }
+.fg-ing:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 var(--ink); }
+.fg-ing__top { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1.5px solid var(--ink); font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+.fg-ing__top b { color: var(--ink); }
+.fg-ing__viz { background: var(--paper-3); border-bottom: 1.5px solid var(--ink); padding: 16px; }
+.fg-ing__viz svg { width: 100%; height: auto; display: block; }
+.fg-ing__body { padding: 16px 16px 18px; }
+.fg-ing__label { font-family: "Fraunces", serif; font-weight: 600; font-size: clamp(21px, 2.6vw, 26px); letter-spacing: -.02em; line-height: 1; }
+.fg-ing__label .or { color: var(--orange); }
+.fg-ing__desc { font-size: 14.5px; line-height: 1.5; color: var(--ink-2); margin: 9px 0 0; font-weight: 300; }
+
+/* ==========================================================================
+   03 · METHOD — "the whole job fits in three moves" (dark spread)
+   ========================================================================== */
+.fg-method { background: var(--ink); color: var(--paper); }
+.fg-method .fg-folio-no { color: var(--paper); opacity: .14; }
+.fg-method .fg-sec__title { color: var(--paper); }
+.fg-method .fg-kick { color: #f6905a; }
+.fg-method .fg-lead { color: #cdbfa6; }
+.fg-method .fg-hr { background: var(--paper); }
+.fg-step { display: grid; grid-template-columns: 1fr; gap: clamp(20px, 3vw, 40px); align-items: center; padding: clamp(30px, 4vw, 48px) 0; border-top: 1.5px solid rgba(239,230,210,.22); }
+.fg-step__viz svg { width: 100%; max-width: 360px; height: auto; display: block; margin: 0 auto; }
+.fg-step__no { font-family: "IBM Plex Mono", monospace; font-size: 13px; letter-spacing: .2em; color: #f6905a; }
+.fg-step__title { font-family: "Fraunces", serif; font-weight: 600; font-size: clamp(26px, 3.6vw, 40px); line-height: 1.02; letter-spacing: -.02em; margin: 8px 0 0; color: var(--paper); }
+.fg-step__title .it { font-style: italic; font-weight: 380; color: #f6b07a; }
+.fg-step__desc { font-size: clamp(15px, 1.7vw, 17px); line-height: 1.55; color: #cdbfa6; margin: 14px 0 0; max-width: 46ch; font-weight: 300; }
+.fg-step__desc b { color: var(--paper); font-weight: 500; }
+@media (min-width: 820px) {
+  .fg-step { grid-template-columns: 0.85fr 1.15fr; }
+  .fg-step--flip .fg-step__viz { order: 2; }
+}
+
+/* ==========================================================================
+   04 · OUTCOMES — "eight things you'll be able to do"
+   ========================================================================== */
+.fg-out-grid { display: grid; grid-template-columns: 1fr; gap: 0; border-top: 1.5px solid var(--ink); }
+@media (min-width: 760px) { .fg-out-grid { grid-template-columns: 1fr 1fr; column-gap: clamp(28px, 4vw, 56px); } }
+.fg-out { display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: baseline; padding: 18px 0; border-bottom: 1.5px solid var(--ink); }
+.fg-out__no { font-family: "IBM Plex Mono", monospace; font-size: 13px; font-weight: 500; color: var(--orange-d); }
+.fg-out__title { font-family: "Fraunces", serif; font-weight: 500; font-size: clamp(18px, 2.1vw, 23px); line-height: 1.1; letter-spacing: -.01em; }
+.fg-out__act { font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); white-space: nowrap; align-self: center; }
+
+/* ==========================================================================
+   05 · SPEAKER — "your chef, live, no slides"
+   ========================================================================== */
+.fg-speaker { display: grid; grid-template-columns: 1fr; gap: clamp(28px, 4vw, 56px); align-items: start; }
+@media (min-width: 820px) { .fg-speaker { grid-template-columns: 0.8fr 1.2fr; } }
+.fg-portrait { border: 2px solid var(--ink); background: var(--cream); box-shadow: 7px 7px 0 var(--ink); }
+.fg-portrait svg { width: 100%; height: auto; display: block; }
+.fg-portrait__cap { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); padding: 10px 14px; border-top: 1.5px solid var(--ink); display: flex; justify-content: space-between; }
+.fg-speaker__name { font-family: "Fraunces", serif; font-weight: 600; font-size: clamp(26px, 3.4vw, 38px); letter-spacing: -.02em; margin: 4px 0 0; }
+.fg-speaker__role { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--orange-d); margin-top: 6px; }
+.fg-speaker__bio { font-size: clamp(15px, 1.8vw, 18px); line-height: 1.6; color: var(--ink-2); max-width: 52ch; margin: 18px 0 0; font-weight: 300; }
+.fg-speaker__bio b { color: var(--ink); font-weight: 500; }
+.fg-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 26px; max-width: 520px; }
+@media (min-width: 520px) { .fg-stats { grid-template-columns: repeat(4, 1fr); } }
+.fg-stat__n { font-family: "Fraunces", serif; font-weight: 600; font-size: clamp(30px, 4vw, 44px); line-height: 1; color: var(--orange); letter-spacing: -.03em; }
+.fg-stat__l { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); line-height: 1.35; margin-top: 8px; display: block; }
+
+/* ==========================================================================
+   06 · AGENDA — "two hours, seven acts" (menu)
+   ========================================================================== */
+.fg-menu { border-top: 2px solid var(--ink); }
+.fg-course { display: grid; grid-template-columns: auto 1fr auto; gap: 14px 20px; padding: clamp(16px, 2.2vw, 24px) 0; border-bottom: 1.5px solid var(--ink); align-items: baseline; }
+.fg-course__no { font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--orange-d); }
+.fg-course__title { font-family: "Fraunces", serif; font-weight: 600; font-size: clamp(19px, 2.4vw, 27px); letter-spacing: -.015em; line-height: 1.05; }
+.fg-course__desc { font-size: 14.5px; line-height: 1.5; color: var(--ink-2); margin: 6px 0 0; max-width: 60ch; font-weight: 300; grid-column: 2; }
+.fg-course__time { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); white-space: nowrap; text-align: right; }
+.fg-menu__total { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); padding-top: 18px; }
+.fg-menu__total b { color: var(--ink); }
+
+/* ==========================================================================
+   07 · CLOSE — "last call" (orange spread)
+   ========================================================================== */
+.fg-close { background: var(--orange); color: #2a1206; text-align: center; }
+.fg-close .fg-kick { color: #4a1c05; }
+.fg-close__title { font-family: "Fraunces", serif; font-weight: 600; font-size: clamp(34px, 6.5vw, 78px); line-height: .98; letter-spacing: -.03em; margin: 16px auto 0; max-width: 16ch; color: #2a1206; }
+.fg-close__title .it { font-style: italic; font-weight: 380; }
+.fg-close__seats { font-family: "IBM Plex Mono", monospace; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: #5a2a0c; margin: 22px 0 0; }
+.fg-close .fg-cta { display: inline-flex; background: var(--ink); color: var(--paper); border-color: var(--ink); margin: 26px auto 0; }
+.fg-close .fg-cta:hover { box-shadow: 4px 4px 0 #2a1206; }
+.fg-close .fg-cta__ar { background: var(--paper); color: var(--ink); }
+.fg-close__meta { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: #5a2a0c; margin: 28px 0 0; }
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.fg-footer { background: var(--ink); color: var(--faint); padding: clamp(40px, 5vw, 64px) 0; }
+.fg-footer__row { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+.fg-footer__row b { color: var(--paper); font-weight: 500; }
+.fg-footer__sig { font-family: "Fraunces", serif; font-style: italic; font-weight: 380; font-size: 17px; color: #d9cdb6; text-transform: none; letter-spacing: 0; }
+
 @media (prefers-reduced-motion: reduce) {
-  .fg-cta { transition: none; }
+  .fg-reveal { opacity: 1 !important; transform: none !important; }
+  .fg-cta, .fg-ing, .fg-nav { transition: none !important; }
 }
