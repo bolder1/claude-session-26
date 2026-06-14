@@ -22,6 +22,7 @@
   --shadow:  rgba(0,0,0,.55);
   --method-bg: #0d0a06;
   --on-dark: #efe6d2;
+  --ring: rgba(255,138,42,.16);
   --font-display: "TASA Orbiter", "Inter", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
   --font-mono: "Inter", system-ui, sans-serif;
@@ -45,6 +46,7 @@
   --line:    var(--ink);
   --shadow:  var(--ink);
   --method-bg: #241c12;
+  --ring:    rgba(36,28,18,.06);
 }
 
 .fg {

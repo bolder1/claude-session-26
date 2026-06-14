@@ -42,23 +42,28 @@ function torusArc(R, t, arc, mat) {
 /* the cover specimen — a glossy toy-terminal with a soft half-awake face */
 function hero(M) {
   const g = new THREE.Group();
-  const base = rbox(1.55, 0.16, 0.95, 0.07, M.cream); base.position.y = -1.18; g.add(base);
-  const stand = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.18, 0.52, 24), M.metal); stand.position.y = -0.85; stand.castShadow = true; g.add(stand);
-  const hinge = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.46, 20), M.metal); hinge.rotation.z = Math.PI / 2; hinge.position.y = -0.6; hinge.castShadow = true; g.add(hinge);
-  const body = rbox(2.7, 2.0, 0.5, 0.2, M.orange); body.position.y = 0.36; g.add(body);
-  const scr = rbox(2.16, 1.46, 0.46, 0.1, M.screen); scr.position.set(0, 0.42, 0.07); g.add(scr);
-  const fz = 0.33;
-  // friendlier face: two round eyes + small smile-ish worried mouth, all glowing
+  // prominent pedestal base — the "base of the vertical thing"
+  const base = new THREE.Mesh(new THREE.CylinderGeometry(0.98, 1.14, 0.24, 48), M.cream);
+  base.position.y = -1.66; base.castShadow = true; base.receiveShadow = true; g.add(base);
+  const baseLip = new THREE.Mesh(new THREE.CylinderGeometry(0.84, 0.92, 0.1, 48), M.metal);
+  baseLip.position.y = -1.5; g.add(baseLip);
+  // tall stand → reads vertical
+  const stand = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.18, 1.05, 24), M.metal); stand.position.y = -0.92; stand.castShadow = true; g.add(stand);
+  const hinge = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.46, 20), M.metal); hinge.rotation.z = Math.PI / 2; hinge.position.y = -0.36; hinge.castShadow = true; g.add(hinge);
+  // monitor head (raised)
+  const body = rbox(2.55, 1.92, 0.5, 0.2, M.orange); body.position.y = 0.52; g.add(body);
+  const scr = rbox(2.04, 1.4, 0.46, 0.1, M.screen); scr.position.set(0, 0.58, 0.07); g.add(scr);
+  // face — relative to the raised screen
+  const fz = 0.33, fy = 0.58;
   const eyeGeo = new THREE.SphereGeometry(0.13, 24, 24);
-  const eL = new THREE.Mesh(eyeGeo, M.glow); eL.scale.set(1, 1, 0.5); eL.position.set(-0.42, 0.6, fz); g.add(eL);
-  const eR = new THREE.Mesh(eyeGeo, M.glow); eR.scale.set(1, 1, 0.5); eR.position.set(0.42, 0.6, fz); g.add(eR);
-  // sleepy half-lid over the right eye
-  const lid = torusArc(0.17, 0.03, Math.PI, M.ink); lid.position.set(0.42, 0.62, fz + 0.04); g.add(lid);
-  // small worried mouth
-  const mouth = torusArc(0.2, 0.032, Math.PI * 0.6, M.glow); mouth.position.set(0.02, 0.06, fz); mouth.rotation.z = Math.PI * 0.7; g.add(mouth);
-  // floating "brief" note
-  const note = rbox(0.84, 0.84, 0.05, 0.05, M.cream); note.position.set(1.82, 1.04, 0.22); note.rotation.z = -0.17; g.add(note);
-  const line = rbox(0.5, 0.07, 0.02, 0.03, M.orangeGloss); line.position.set(1.74, 0.82, 0.26); line.rotation.z = -0.17; g.add(line);
+  const eL = new THREE.Mesh(eyeGeo, M.glow); eL.scale.set(1, 1, 0.5); eL.position.set(-0.42, fy + 0.16, fz); g.add(eL);
+  const eR = new THREE.Mesh(eyeGeo, M.glow); eR.scale.set(1, 1, 0.5); eR.position.set(0.42, fy + 0.16, fz); g.add(eR);
+  const lid = torusArc(0.17, 0.03, Math.PI, M.ink); lid.position.set(0.42, fy + 0.18, fz + 0.04); g.add(lid);
+  const mouth = torusArc(0.2, 0.032, Math.PI * 0.6, M.glow); mouth.position.set(0.02, fy - 0.32, fz); mouth.rotation.z = Math.PI * 0.7; g.add(mouth);
+  // floating "brief" note accent
+  const note = rbox(0.8, 0.8, 0.05, 0.05, M.cream); note.position.set(1.72, fy + 0.54, 0.22); note.rotation.z = -0.17; g.add(note);
+  const line = rbox(0.46, 0.07, 0.02, 0.03, M.orangeGloss); line.position.set(1.65, fy + 0.34, 0.26); line.rotation.z = -0.17; g.add(line);
+  g.position.y = 0.42;
   return g;
 }
 
@@ -169,7 +174,7 @@ function lastcall(M) {
 }
 
 const CONFIG = {
-  hero:     { build: hero,     dist: 4.9, target: [0, 0.15, 0], dark: false },
+  hero:     { build: hero,     dist: 6.4, target: [0, 0.2, 0],  dark: false },
   ctx:      { build: ctx,      dist: 3.4, target: [0, 0.05, 0], dark: false },
   mem:      { build: mem,      dist: 3.6, target: [0.12, 0.12, 0], dark: false },
   taste:    { build: taste,    dist: 3.2, target: [0, 0, 0],    dark: false },

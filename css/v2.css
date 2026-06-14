@@ -7,6 +7,37 @@
 /* the shared, fixed compositor canvas (also styled inline in v2.js) */
 #v2-gl { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 60; }
 
+/* ==========================================================================
+   HERO — centred stage, concentric-circle pattern, vertical 3D totem
+   ========================================================================== */
+.fg-hero { text-align: center; padding-bottom: clamp(28px, 4vw, 44px); }
+.fg-hero__rings {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 52%, rgba(235,84,36,.22), transparent 40%),
+    repeating-radial-gradient(circle at 50% 52%, transparent 0 46px, var(--ring) 46px 48px);
+  -webkit-mask-image: radial-gradient(circle at 50% 52%, #000 26%, transparent 75%);
+  mask-image: radial-gradient(circle at 50% 52%, #000 26%, transparent 75%);
+}
+[data-theme="light"] .fg-hero__rings {
+  background:
+    radial-gradient(circle at 50% 52%, rgba(235,84,36,.12), transparent 40%),
+    repeating-radial-gradient(circle at 50% 52%, transparent 0 46px, var(--ring) 46px 48px);
+}
+.fg-hero__inner { position: relative; z-index: 1; }
+.fg-hero__stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(8px, 1.6vw, 16px); padding: clamp(16px, 3vw, 30px) 0; }
+.fg-hero .fg-hero__kick { margin-top: 0; }
+.fg-hero .fg-h1 { max-width: 22ch; margin: 4px auto 0; }
+.fg-hero__sub { font-family: var(--font-mono); font-size: clamp(10.5px, 1.4vw, 12.5px); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); max-width: 64ch; margin: 2px auto 0; }
+.fg-hero__sub b { color: var(--ink); font-weight: 600; }
+.fg-art--hero { position: static; width: min(340px, 58vw); aspect-ratio: 1 / 1; margin: clamp(2px, 1.2vw, 10px) auto 0; }
+@media (min-width: 880px) {
+  .fg-hero .fg-art--hero { position: static; right: auto; top: auto; z-index: 1; width: min(380px, 36vw); }
+}
+.fg-cta--hero { display: inline-flex; width: auto; min-width: 260px; margin: clamp(8px, 1.6vw, 16px) auto 0; box-shadow: 5px 5px 0 var(--shadow); }
+.fg-cta--hero:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--shadow); }
+.fg-hero .fg-folio { left: 50%; right: auto; transform: translateX(-50%); }
+
 /* hero well — square footprint, same placement as the old SVG */
 .fg-art--3d { aspect-ratio: 1 / 1; }
 
