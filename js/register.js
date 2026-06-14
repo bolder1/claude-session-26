@@ -90,7 +90,7 @@ import * as THREE from 'three';
       ],
     },
     {
-      id: 'product', label: 'Product Designer', tag: 'Strategy to screens', color: '#ff8a2a',
+      id: 'product', label: 'Product Designer', tag: 'Strategy to screens', color: '#ff7d1f',
       badge: 'Ship Captain',
       expects: [
         'Drop a one-line idea — Claude interviews you with 5 questions, then writes the mini-PRD.',
@@ -155,6 +155,7 @@ import * as THREE from 'three';
 
   const $ = (sel) => document.querySelector(sel);
   const hasGsap = typeof window.gsap !== 'undefined';
+  const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function toast(html, ms = 3600) {
     const wrap = $('#toasts');
@@ -300,7 +301,7 @@ import * as THREE from 'three';
     const prev = parseInt(el.textContent, 10);
     el.textContent = left;
     if (hasGsap && !Number.isNaN(prev) && prev !== left) {
-      gsap.fromTo(el, { scale: 1.3, color: '#fff' }, { scale: 1, color: '#ff8a2a', duration: 0.5, ease: 'power2.out', clearProps: 'color' });
+      gsap.fromTo(el, { scale: 1.3, color: '#fff' }, { scale: 1, color: '#ff7d1f', duration: 0.5, ease: 'power2.out', clearProps: 'color' });
     }
     $('#seats-bar').style.width = `${((TOTAL - left) / TOTAL) * 100}%`;
   }
@@ -716,7 +717,7 @@ import * as THREE from 'three';
     goto('ticket');
     $('#ticket-headline').textContent = `${firstName(state.name)}, you're in. Seat ${state.seat}.`;
     if (fresh) {
-      setTimeout(confettiBurst, 450);
+      if (!REDUCE) setTimeout(confettiBurst, 450);
       toast(`Locked. <b>${state.seat}</b> is officially yours.`);
     }
   }
@@ -803,7 +804,7 @@ import * as THREE from 'three';
     x.fillStyle = '#ffffff';
     x.font = '600 58px Lexend, sans-serif';
     x.fillText(clip(x, data.name, 820), 64, 318);
-    x.fillStyle = '#ff8a2a';
+    x.fillStyle = '#ff7d1f';
     x.font = '400 27px Lexend, sans-serif';
     x.fillText(`${data.roleLabel}  ·  ${data.badge}`, 64, 362);
     x.fillStyle = 'rgba(255,255,255,0.5)';
@@ -1145,7 +1146,7 @@ import * as THREE from 'three';
     canvas.height = innerHeight * DPR;
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
 
-    const COLORS = ['#ff8a2a', '#f25c05', '#ffd166', '#ffffff', '#d97757', '#4ade80'];
+    const COLORS = ['#ff7d1f', '#f25c05', '#ffd166', '#ffffff', '#d97757', '#4ade80'];
     const parts = [];
     for (let i = 0; i < 150; i++) {
       const a = -Math.PI / 2 + (Math.random() - 0.5) * 1.5;

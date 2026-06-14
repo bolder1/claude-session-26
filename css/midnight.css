@@ -15,6 +15,8 @@
   --cream: #f3ece2;
   --amber: #ff7d1f;
   --amber-soft: rgba(255, 125, 31, 0.14);
+  --r-card: 20px;
+  --r-card-outer: 27px;
   --glass-bg: rgba(255, 248, 240, 0.045);
   --glass-border: rgba(255, 248, 240, 0.1);
   --glass-nav-bg: rgba(42, 36, 28, 0.4);
@@ -100,14 +102,14 @@ body.midnight::after {
 .una .bz {
   position: relative;
   padding: 7px;
-  border-radius: 26px;
+  border-radius: var(--r-card-outer);
   background: rgba(255, 244, 232, 0.028);
   border: 1px solid rgba(255, 244, 232, 0.07);
 }
 .una .bz__in {
   position: relative;
   height: 100%;
-  border-radius: 19px;
+  border-radius: var(--r-card);
   background: var(--card);
   border: 1px solid rgba(255, 244, 232, 0.05);
   box-shadow: inset 0 1px 0 rgba(255, 248, 240, 0.06);
@@ -220,7 +222,7 @@ body.midnight::after {
   background: rgba(26, 18, 11, 0.8);
 }
 .una .ph-badge__icon--live { animation: eyePulse 1.6s ease-in-out infinite; }
-.una .una-hero__panel { border-radius: 20px; }
+.una .una-hero__panel { border-radius: var(--r-card); }
 .una .btn { transition: transform 0.45s var(--ease-lux), filter 0.45s var(--ease-lux), background 0.45s var(--ease-lux); }
 .una .btn:active { transform: scale(0.97); }
 .una .btn--hero {
@@ -248,8 +250,8 @@ body.midnight::after {
 #una-problem .orb { width: 540px; height: 540px; left: -200px; top: 60px; background: rgba(255, 125, 31, 0.1); }
 .una .problem-grid { grid-template-columns: 1fr; }
 @media (min-width: 700px) { .una .problem-grid { grid-template-columns: 1.25fr 1fr 1fr; } }
-.una .problem-card { border-radius: 22px; background: var(--card); border-color: rgba(255, 244, 232, 0.07); }
-.una .problem-card__caption { text-align: left; padding: 6px 26px 26px; font-size: 15.5px; }
+.una .problem-card { border-radius: var(--r-card); background: var(--card); border-color: rgba(255, 244, 232, 0.07); }
+.una .problem-card__caption { text-align: left; padding: 6px 26px 26px; font-size: 15.5px; line-height: 1.5; max-width: 46ch; }
 .una .problem-card__caption b { font-weight: 500; color: var(--amber); }
 
 /* ---------- speaker ---------- */
@@ -272,7 +274,7 @@ body.midnight::after {
   margin-top: 16px;
   font-size: 15px;
   font-weight: 300;
-  line-height: 1.8;
+  line-height: 1.7;
   color: rgba(243, 236, 226, 0.66);
   max-width: 56ch;
 }
@@ -398,7 +400,7 @@ body.midnight::after {
 }
 .una .lt__viz { flex: 1; min-height: 120px; display: flex; align-items: center; justify-content: center; padding: 12px 0 18px; }
 .una .lt__title { font-size: 17.5px; font-weight: 500; line-height: 1.35; color: var(--cream); }
-.una .lt__desc { margin-top: 7px; font-size: 12.5px; font-weight: 300; line-height: 1.65; color: var(--muted); }
+.una .lt__desc { margin-top: 7px; font-size: 12.5px; font-weight: 300; line-height: 1.65; color: var(--muted); max-width: 38ch; }
 
 /* tile 1 — screenshot → prototype */
 .una .lt-proto .lt__viz { gap: 14px; }
