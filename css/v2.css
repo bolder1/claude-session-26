@@ -1,9 +1,31 @@
-/* v2.css — staging overrides for the soft-3D specimen proof.
-   Loaded AFTER field.css. Keep this minimal; do not re-position .fg-art
-   (field.css owns its desktop absolute placement). */
+/* v2.css — staging layer for the soft-3D specimen system.
+   Loaded AFTER field.css. Sizes each illustration well so the shared WebGL
+   compositor (js/v2.js) can read its box and render the specimen there.
+   Does NOT re-position .fg-art (field.css owns its desktop placement). */
 
+/* the shared, fixed compositor canvas (also styled inline in v2.js) */
+#v2-gl { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 60; }
+
+/* hero well — square footprint, same placement as the old SVG */
 .fg-art--3d { aspect-ratio: 1 / 1; }
-.fg-art--3d canvas { width: 100% !important; height: 100% !important; display: block; }
+
+/* premise trio — keep the paper panel + divider, drop the padding */
+.fg-ing__viz.spec3d { aspect-ratio: 220 / 150; padding: 0; }
+
+/* method trio (dark spread) */
+.fg-step__viz.spec3d { width: 100%; max-width: 360px; aspect-ratio: 320 / 230; margin: 0 auto; }
+
+/* host workstation — fills the portrait card's image area */
+.fg-portrait__viz.spec3d { aspect-ratio: 320 / 280; }
+
+/* small head accents for the yield + menu sections (desktop only) */
+.fg-head-spec.spec3d { display: none; }
+@media (min-width: 880px) {
+  .fg-head-spec.spec3d { display: block; position: absolute; right: 0; top: 6px; width: 132px; height: 132px; }
+}
+
+/* last-call accent — centred above the close title */
+.fg-close-spec.spec3d { width: clamp(150px, 40vw, 196px); aspect-ratio: 1.9 / 1; margin: 0 auto 6px; }
 
 /* small staging marker */
 .v2-tag {
