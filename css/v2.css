@@ -78,6 +78,8 @@
 .fg-hpanel--intro { gap: 8px; }
 .fg-hpanel .fg-step__viz.spec3d { width: min(360px, 70vw); max-width: none; aspect-ratio: 320 / 230; margin: 0; }
 .fg-hpanel .fg-step__text { max-width: 44ch; }
+.fg-step__big { display: block; font-family: var(--font-display); font-weight: 600; font-size: clamp(54px, 8vw, 110px); line-height: .8; letter-spacing: -.04em; color: var(--on-dark); opacity: .12; margin-bottom: 2px; }
+.fg-step__take { margin-top: 16px; font-family: var(--font-display); font-weight: 600; font-size: clamp(16px, 2vw, 21px); letter-spacing: -.01em; color: #f6b07a; }
 .fg-hpin__hint { font-family: var(--font-mono); font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: #f6905a; margin-top: 14px; }
 
 /* JS-enhanced horizontal pin */

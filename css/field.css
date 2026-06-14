@@ -7,8 +7,8 @@
 :root {
   /* DARK is the default theme (the cold-open / ticket vibe) */
   --paper:   #14110b;
-  --paper-2: #1d1811;
-  --paper-3: #262017;
+  --paper-2: #221b10;
+  --paper-3: #2a2216;
   --ink:     #f4ece0;
   --ink-2:   #c9bca4;
   --mute:    #978a72;

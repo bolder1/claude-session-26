@@ -30,8 +30,8 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://ga.jspm.io" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=TASA+Orbiter:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/field.css?v=6">
-  <link rel="stylesheet" href="css/v2.css?v=9">
+  <link rel="stylesheet" href="css/field.css?v=7">
+  <link rel="stylesheet" href="css/v2.css?v=10">
   <style>@keyframes pageIn { from { opacity: 0; } to { opacity: 1; } } .fg { animation: pageIn .45s ease; }</style>
   <script async src="https://ga.jspm.io/npm:es-module-shims@1.10.0/dist/es-module-shims.js"></script>
   <script type="importmap">
@@ -155,27 +155,30 @@
           <div class="fg-hpanel">
             <div class="fg-step__viz spec3d" data-spec="brief" aria-hidden="true"></div>
             <div class="fg-step__text">
-              <p class="fg-step__no">Move 01</p>
+              <span class="fg-step__big" aria-hidden="true">01</span>
               <h3 class="fg-step__title">Brief it <span class="it">like a junior.</span></h3>
               <p class="fg-step__desc">Context, constraints, references, the format you want back. You already know how to write a good creative brief — <b>that's your unfair advantage.</b></p>
+              <p class="fg-step__take">Your brief is the product.</p>
             </div>
           </div>
 
           <div class="fg-hpanel">
             <div class="fg-step__viz spec3d" data-spec="produce" aria-hidden="true"></div>
             <div class="fg-step__text">
-              <p class="fg-step__no">Move 02</p>
+              <span class="fg-step__big" aria-hidden="true">02</span>
               <h3 class="fg-step__title">Let it <span class="it">produce.</span></h3>
-              <p class="fg-step__desc">At a speed you can't match. Screenshots become critiques; briefs become working React, <b>rendering while you watch.</b> Treat the first output as a sketch, never a comp.</p>
+              <p class="fg-step__desc">At a speed you can't match. Screenshots become critiques; briefs become working React, <b>rendering while you watch.</b></p>
+              <p class="fg-step__take">First output is a sketch, never a comp.</p>
             </div>
           </div>
 
           <div class="fg-hpanel">
             <div class="fg-step__viz spec3d" data-spec="judge" aria-hidden="true"></div>
             <div class="fg-step__text">
-              <p class="fg-step__no">Move 03</p>
+              <span class="fg-step__big" aria-hidden="true">03</span>
               <h3 class="fg-step__title">Judge it <span class="it">like a director.</span></h3>
-              <p class="fg-step__desc">Spacing, hierarchy, brand, the call only you can make. <b>That's the thirty percent. That's the point.</b> Then: new task, new chat — context is currency.</p>
+              <p class="fg-step__desc">Spacing, hierarchy, brand, the call only you can make. Then: new task, new chat — context is currency.</p>
+              <p class="fg-step__take">The last 30% is the whole job.</p>
             </div>
           </div>
         </div>
@@ -184,18 +187,18 @@
     </section>
 
     <!-- ============ live showcase · cursor-distortion ============ -->
-    <section class="fg-sec fg-showcase" id="showcase">
+    <section class="fg-sec fg-sec--paper2 fg-showcase" id="showcase">
       <div class="fg-wrap">
         <div class="fg-sec__head fg-reveal">
           <div class="fg-folio-no">✦</div>
           <p class="fg-kick">See it live</p>
-          <h2 class="fg-sec__title">A rough screen, <span class="it">reworked under your cursor.</span></h2>
-          <p class="fg-lead">Drag across the screen below — that's the loop: you point, it responds. Directing, not pixel-pushing.</p>
+          <h2 class="fg-sec__title">A rough first output, <span class="it">swept into the finished thing.</span></h2>
+          <p class="fg-lead">Move across the screen. Everything the laser passes goes from Claude's raw first draft to the call only you can make.</p>
         </div>
         <div class="fg-shader fg-reveal" id="shader-stage">
           <canvas id="shader-canvas" aria-hidden="true"></canvas>
           <div class="fg-shader__fallback" aria-hidden="true"></div>
-          <span class="fg-shader__hint">move your cursor</span>
+          <span class="fg-shader__hint">sweep across to polish</span>
         </div>
       </div>
     </section>
@@ -345,7 +348,7 @@
   <script src="js/field.js?v=3" defer></script>
   <script src="js/theme.js?v=1" defer></script>
   <script type="module" src="js/v2.js?v=5"></script>
-  <script type="module" src="js/showcase.js?v=1"></script>
+  <script type="module" src="js/showcase.js?v=2"></script>
 
 </body>
 </html>
