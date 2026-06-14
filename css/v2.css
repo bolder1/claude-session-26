@@ -3,6 +3,16 @@
    compositor (js/v2.js) can read its box and render the specimen there.
    Does NOT re-position .fg-art (field.css owns its desktop placement). */
 
+/* ---- v2 brand: TASA Orbiter (display) + Inter (body/labels), brand orange #EB5424 ----
+   Overrides the field.css tokens for this page only; index.html is untouched. */
+.fg {
+  --font-display: "TASA Orbiter", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "Inter", system-ui, sans-serif;
+  --orange: #EB5424;
+  --orange-d: #c0431b;
+}
+
 /* the shared, fixed compositor canvas (also styled inline in v2.js) */
 #v2-gl { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 60; }
 

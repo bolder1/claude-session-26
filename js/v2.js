@@ -16,8 +16,8 @@ const TAU = Math.PI * 2;
 /* ---------------- shared material library (one renderer → reuse freely) -------- */
 function materials() {
   return {
-    orange:      new THREE.MeshPhysicalMaterial({ color: 0xff5a0a, roughness: 0.40, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.22, envMapIntensity: 1.0 }),
-    orangeGloss: new THREE.MeshPhysicalMaterial({ color: 0xff6412, roughness: 0.16, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.04, envMapIntensity: 1.25 }),
+    orange:      new THREE.MeshPhysicalMaterial({ color: 0xf5602a, roughness: 0.40, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.22, envMapIntensity: 1.0 }),
+    orangeGloss: new THREE.MeshPhysicalMaterial({ color: 0xff6c38, roughness: 0.16, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.04, envMapIntensity: 1.25 }),
     cream:       new THREE.MeshPhysicalMaterial({ color: 0xeae0c8, roughness: 0.60, metalness: 0, clearcoat: 0.30, clearcoatRoughness: 0.40, envMapIntensity: 0.6 }),
     screen:      new THREE.MeshPhysicalMaterial({ color: 0x181106, roughness: 0.09, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.05, envMapIntensity: 1.3 }),
     metal:       new THREE.MeshStandardMaterial({ color: 0xc7b89a, roughness: 0.34, metalness: 0.6, envMapIntensity: 1.0 }),
@@ -237,17 +237,20 @@ function init() {
     const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
     camera.position.set(1.7, 1.05, cfg.dist);
     camera.lookAt(cfg.target[0], cfg.target[1], cfg.target[2]);
-    return { el, scene, camera, obj, baseY: obj.position.y, phase: 0 };
+    return { el, scene, camera, obj, baseY: obj.position.y, baseRX: obj.rotation.x, baseRY: obj.rotation.y, phase: 0, hover: 0, hoverTarget: 0 };
   });
   // stable per-spec idle phase
   specs.forEach((s, i) => { s.phase = i * 1.7; });
 
-  let px = 0, py = 0, gx = 0, gy = 0, t = 0, dirty = true;
+  let t = 0, dirty = true;
   const mark = () => { dirty = true; };
   addEventListener('scroll', mark, { passive: true });
+  // hover-only interaction — the well beneath the (pointer-events:none) canvas receives these
   if (!REDUCE && FINE) {
-    addEventListener('pointermove', (e) => { px = e.clientX / innerWidth - 0.5; py = e.clientY / innerHeight - 0.5; }, { passive: true });
-    addEventListener('pointerleave', () => { px = 0; py = 0; });
+    specs.forEach((s) => {
+      s.el.addEventListener('pointerenter', () => { s.hoverTarget = 1; dirty = true; });
+      s.el.addEventListener('pointerleave', () => { s.hoverTarget = 0; dirty = true; });
+    });
   }
   addEventListener('resize', () => { renderer.setSize(innerWidth, innerHeight); dirty = true; }, { passive: true });
 
@@ -256,7 +259,6 @@ function init() {
     renderer.clear();
     renderer.setScissorTest(true);
     const vh = innerHeight;
-    gx += (px - gx) * 0.07; gy += (py - gy) * 0.07;
     for (const s of specs) {
       const r = s.el.getBoundingClientRect();
       if (r.bottom < -40 || r.top > vh + 40 || r.width < 2) continue;
@@ -264,12 +266,14 @@ function init() {
       renderer.setViewport(left, bottom, w, h);
       renderer.setScissor(left, bottom, w, h);
       s.camera.aspect = w / h; s.camera.updateProjectionMatrix();
-      const idle = REDUCE ? 0 : Math.sin(t + s.phase) * 0.07;
+      s.hover += ((s.hoverTarget || 0) - s.hover) * 0.12;
+      const idle = REDUCE ? 0 : Math.sin(t + s.phase) * 0.06;
       // scroll-linked turn: object rotates as its well travels up the viewport
-      const scrollTurn = REDUCE ? 0 : (((r.top + h / 2) - vh / 2) / vh) * -0.5;
-      s.obj.rotation.y = gx * 0.8 + idle + scrollTurn;
-      s.obj.rotation.x = gy * 0.45 + (REDUCE ? 0 : Math.sin(t * 0.7 + s.phase) * 0.02);
-      s.obj.position.y = s.baseY + (REDUCE ? 0 : Math.sin(t * 0.9 + s.phase) * 0.07);
+      const scrollTurn = REDUCE ? 0 : (((r.top + h / 2) - vh / 2) / vh) * -0.45;
+      s.obj.rotation.y = s.baseRY + idle + scrollTurn + s.hover * 0.6;
+      s.obj.rotation.x = s.baseRX + (REDUCE ? 0 : Math.sin(t * 0.7 + s.phase) * 0.02);
+      s.obj.position.y = s.baseY + (REDUCE ? 0 : Math.sin(t * 0.9 + s.phase) * 0.06) + s.hover * 0.18;
+      s.obj.scale.setScalar(1 + s.hover * 0.09);
       const spin = s.obj.userData && s.obj.userData.spin;
       if (spin && !REDUCE) spin.rotation.y = Math.sin(t * 0.6 + s.phase) * 0.45;
       renderer.render(s.scene, s.camera);
