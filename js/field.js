@@ -82,6 +82,7 @@
   const hSec = hTrack ? hTrack.closest('.fg-hpin') : null;
   if (hTrack && hSec && window.innerWidth > 760) {
     hSec.classList.add('is-pinned');
+    const hBar = document.getElementById('method-bar');
     let hTick = false;
     const hUpdate = () => {
       hTick = false;
@@ -90,6 +91,7 @@
       const prog = Math.min(Math.max(-hSec.getBoundingClientRect().top / scrollable, 0), 1);
       const maxX = hTrack.scrollWidth - window.innerWidth;
       hTrack.style.transform = 'translate3d(' + (-prog * maxX).toFixed(1) + 'px,0,0)';
+      if (hBar) hBar.style.width = (prog * 100).toFixed(1) + '%';
     };
     addEventListener('scroll', () => { if (!hTick) { hTick = true; requestAnimationFrame(hUpdate); } }, { passive: true });
     addEventListener('resize', () => requestAnimationFrame(hUpdate), { passive: true });

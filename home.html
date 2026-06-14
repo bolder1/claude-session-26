@@ -31,7 +31,7 @@
   <link rel="preconnect" href="https://ga.jspm.io" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=TASA+Orbiter:wght@400..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/field.css?v=6">
-  <link rel="stylesheet" href="css/v2.css?v=8">
+  <link rel="stylesheet" href="css/v2.css?v=9">
   <style>@keyframes pageIn { from { opacity: 0; } to { opacity: 1; } } .fg { animation: pageIn .45s ease; }</style>
   <script async src="https://ga.jspm.io/npm:es-module-shims@1.10.0/dist/es-module-shims.js"></script>
   <script type="importmap">
@@ -56,6 +56,7 @@
     <a class="fg-nav__link" href="#premise">the premise</a>
     <a class="fg-nav__link" href="#method">the method</a>
     <a class="fg-nav__link" href="#menu">the menu</a>
+    <a class="fg-nav__link" href="#academy">the academy</a>
     <a class="fg-nav__cta" href="/register" data-reserve>Reserve ↗</a>
   </nav>
 
@@ -178,6 +179,7 @@
             </div>
           </div>
         </div>
+        <div class="fg-hpin__progress" aria-hidden="true"><i id="method-bar"></i></div>
       </div>
     </section>
 
@@ -274,7 +276,26 @@
       </div>
     </section>
 
-    <!-- ============ 07 · last call ============ -->
+    <!-- ============ 07 · the academy ============ -->
+    <section class="fg-sec fg-sec--paper2" id="academy">
+      <div class="fg-wrap">
+        <div class="fg-sec__head fg-reveal">
+          <div class="fg-folio-no">07</div>
+          <p class="fg-kick">After the session</p>
+          <h2 class="fg-sec__title">Keep your intern sharp in <span class="it">Orange Academy.</span></h2>
+          <p class="fg-lead">The session is two hours — the learning doesn't have to stop there. Orange Academy is an always-on app for the studio: ask anything and get the one video that matters, then run role-based courses on Claude, design craft, and our own products — with quizzes, a study plan, and 1:1 coaching.</p>
+        </div>
+        <div class="fg-out-grid fg-reveal">
+          <div class="fg-out"><span class="fg-out__no">01</span><span class="fg-out__title">Ask anything — get a how-to, the right resources, and the single best video</span><span class="fg-out__act">AI</span></div>
+          <div class="fg-out"><span class="fg-out__no">02</span><span class="fg-out__title">Role-based courses with chapters, quizzes &amp; progress</span><span class="fg-out__act">Courses</span></div>
+          <div class="fg-out"><span class="fg-out__no">03</span><span class="fg-out__title">A learning calendar and 1:1 coaching sessions</span><span class="fg-out__act">Schedule</span></div>
+          <div class="fg-out"><span class="fg-out__no">04</span><span class="fg-out__title">Connectors into Figma, Notion, Slack &amp; Claude</span><span class="fg-out__act">Connect</span></div>
+        </div>
+        <a class="fg-cta" href="https://orange-academy-nu.vercel.app/" target="_blank" rel="noopener" style="display:inline-flex; margin-top:28px;">Open Orange Academy <span class="fg-cta__ar" aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
+    <!-- ============ 08 · last call ============ -->
     <section class="fg-sec fg-close" id="reserve">
       <div class="fg-wrap fg-reveal">
         <div class="fg-close-spec spec3d" data-spec="lastcall" aria-hidden="true"></div>
@@ -321,7 +342,7 @@
   </div>
 
   <!-- Editorial motion + soft-3D specimens + theme/ticket -->
-  <script src="js/field.js?v=2" defer></script>
+  <script src="js/field.js?v=3" defer></script>
   <script src="js/theme.js?v=1" defer></script>
   <script type="module" src="js/v2.js?v=5"></script>
   <script type="module" src="js/showcase.js?v=1"></script>

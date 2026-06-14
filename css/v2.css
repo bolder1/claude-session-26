@@ -92,6 +92,9 @@
   .fg-hpin.is-pinned .fg-hpanel { flex-direction: column; text-align: center; gap: 20px; }
   .fg-hpin.is-pinned .fg-hpanel .fg-step__viz.spec3d { width: min(300px, 64vw); }
 }
+.fg-hpin__progress { display: none; }
+.fg-hpin.is-pinned .fg-hpin__progress { display: block; position: absolute; bottom: clamp(22px, 6vh, 48px); left: 50%; transform: translateX(-50%); width: min(440px, 56vw); height: 3px; background: rgba(246,144,90,.22); border-radius: 2px; overflow: hidden; z-index: 2; }
+.fg-hpin__progress i { display: block; height: 100%; width: 0; background: #f6905a; }
 
 /* ==========================================================================
    RESERVE — bold glowing "admit one" ticket, as a bottom-sheet (Figma)
