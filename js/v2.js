@@ -169,17 +169,17 @@ function lastcall(M) {
 }
 
 const CONFIG = {
-  hero:     { build: hero,     dist: 5.3, target: [0, 0.15, 0], dark: false },
-  ctx:      { build: ctx,      dist: 3.7, target: [0, 0.05, 0], dark: false },
-  mem:      { build: mem,      dist: 4.0, target: [0.15, 0.15, 0], dark: false },
-  taste:    { build: taste,    dist: 3.5, target: [0, 0, 0],    dark: false },
-  brief:    { build: brief,    dist: 4.3, target: [0, 0.05, 0], dark: true },
-  produce:  { build: produce,  dist: 4.3, target: [0.1, 0.05, 0], dark: true },
-  judge:    { build: judge,    dist: 4.3, target: [0.05, 0.05, 0], dark: true },
-  host:     { build: host,     dist: 4.8, target: [0, -0.08, 0], dark: false },
-  yield:    { build: yield_,   dist: 4.0, target: [0, 0, 0],    dark: false },
-  menu:     { build: menu,     dist: 3.9, target: [0, 0, 0],    dark: false },
-  lastcall: { build: lastcall, dist: 4.0, target: [0, 0, 0],    dark: false },
+  hero:     { build: hero,     dist: 4.9, target: [0, 0.15, 0], dark: false },
+  ctx:      { build: ctx,      dist: 3.4, target: [0, 0.05, 0], dark: false },
+  mem:      { build: mem,      dist: 3.6, target: [0.12, 0.12, 0], dark: false },
+  taste:    { build: taste,    dist: 3.2, target: [0, 0, 0],    dark: false },
+  brief:    { build: brief,    dist: 3.9, target: [0, 0.05, 0], dark: true },
+  produce:  { build: produce,  dist: 3.9, target: [0.08, 0.05, 0], dark: true },
+  judge:    { build: judge,    dist: 3.9, target: [0.05, 0.05, 0], dark: true },
+  host:     { build: host,     dist: 4.4, target: [0, -0.06, 0], dark: false },
+  yield:    { build: yield_,   dist: 3.7, target: [0, 0, 0],    dark: false },
+  menu:     { build: menu,     dist: 3.6, target: [0, 0, 0],    dark: false },
+  lastcall: { build: lastcall, dist: 3.6, target: [0, 0, 0],    dark: false },
 };
 
 /* ---------------- single shared renderer + scissor compositor ----------------- */
@@ -264,12 +264,14 @@ function init() {
       renderer.setViewport(left, bottom, w, h);
       renderer.setScissor(left, bottom, w, h);
       s.camera.aspect = w / h; s.camera.updateProjectionMatrix();
-      const idle = REDUCE ? 0 : Math.sin(t + s.phase) * 0.05;
-      s.obj.rotation.y = gx * 0.6 + idle;
-      s.obj.rotation.x = gy * 0.32;
-      s.obj.position.y = s.baseY + (REDUCE ? 0 : Math.sin(t * 0.9 + s.phase) * 0.05);
+      const idle = REDUCE ? 0 : Math.sin(t + s.phase) * 0.07;
+      // scroll-linked turn: object rotates as its well travels up the viewport
+      const scrollTurn = REDUCE ? 0 : (((r.top + h / 2) - vh / 2) / vh) * -0.5;
+      s.obj.rotation.y = gx * 0.8 + idle + scrollTurn;
+      s.obj.rotation.x = gy * 0.45 + (REDUCE ? 0 : Math.sin(t * 0.7 + s.phase) * 0.02);
+      s.obj.position.y = s.baseY + (REDUCE ? 0 : Math.sin(t * 0.9 + s.phase) * 0.07);
       const spin = s.obj.userData && s.obj.userData.spin;
-      if (spin && !REDUCE) spin.rotation.y = Math.sin(t * 0.6 + s.phase) * 0.3;
+      if (spin && !REDUCE) spin.rotation.y = Math.sin(t * 0.6 + s.phase) * 0.45;
       renderer.render(s.scene, s.camera);
     }
   }

@@ -9,6 +9,9 @@ tools/
 # OG image build source (the rendered assets/og-cover.png is committed)
 assets/og-cover.html
 
+# v2 verification mirror (no-intro; local visual checks only)
+v2test.html
+
 # OS cruft
 .DS_Store
 Thumbs.db
