@@ -62,6 +62,16 @@
 .fg-close-spec.spec3d { width: clamp(150px, 40vw, 196px); aspect-ratio: 1.9 / 1; margin: 0 auto 6px; }
 
 /* ==========================================================================
+   ACADEMY — feature-card grid (distinct from the numbered "yield" list)
+   ========================================================================== */
+.fg-feat-grid { display: grid; grid-template-columns: 1fr; gap: clamp(14px, 2vw, 20px); }
+@media (min-width: 720px) { .fg-feat-grid { grid-template-columns: 1fr 1fr; } }
+.fg-feat { border: 2px solid var(--line); background: var(--cream); box-shadow: 5px 5px 0 var(--shadow); padding: clamp(18px, 2.5vw, 28px); display: flex; flex-direction: column; gap: 12px; transition: transform .18s ease, box-shadow .18s ease; }
+.fg-feat:hover { transform: translate(-3px, -3px); box-shadow: 8px 8px 0 var(--shadow); }
+.fg-feat__tag { align-self: flex-start; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--orange-d); border: 1.5px solid var(--line); padding: 4px 10px; border-radius: 30px; }
+.fg-feat__title { font-family: var(--font-display); font-weight: 500; font-size: clamp(17px, 2vw, 21px); line-height: 1.2; letter-spacing: -.01em; color: var(--ink); margin: 0; }
+
+/* ==========================================================================
    SHOWCASE — interactive cursor-distortion screen
    ========================================================================== */
 .fg-shader { position: relative; max-width: 1000px; margin: clamp(24px, 4vw, 44px) auto 0; aspect-ratio: 16 / 9; border: 2px solid var(--line); box-shadow: 8px 8px 0 var(--shadow); overflow: hidden; background: var(--paper-3); cursor: crosshair; }
