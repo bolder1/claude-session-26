@@ -8,7 +8,7 @@
 /* ---------- header ---------- */
 .reg-head {
   display: flex; justify-content: space-between; align-items: center; gap: 10px 16px; flex-wrap: wrap;
-  max-width: 1120px; margin: 0 auto; padding: clamp(18px, 3vw, 28px) clamp(20px, 5vw, 48px) 14px;
+  max-width: var(--page-max); margin: 0 auto; padding: clamp(18px, 3vw, 28px) var(--page-margin) 14px;
   font-family: "IBM Plex Mono", monospace; font-size: clamp(10px, 1.3vw, 12px);
   letter-spacing: .14em; text-transform: uppercase; color: var(--mute);
   border-bottom: 2px solid var(--ink);
@@ -19,7 +19,7 @@
 .reg-head__reg { display: flex; align-items: center; gap: 9px; }
 
 /* ---------- progress ---------- */
-.reg-progress { display: flex; align-items: center; justify-content: center; gap: 6px; max-width: 1120px; margin: 22px auto 6px; padding: 0 clamp(20px,5vw,48px); }
+.reg-progress { display: flex; align-items: center; justify-content: center; gap: 6px; max-width: var(--page-max); margin: 22px auto 6px; padding: 0 var(--page-margin); }
 .reg-progress__dot { display: inline-flex; align-items: center; gap: 8px; background: none; border: 0; cursor: pointer; padding: 6px 8px; font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
 .reg-progress__dot i { width: 12px; height: 12px; border: 2px solid var(--faint); border-radius: 50%; transition: background .25s, border-color .25s; }
 .reg-progress__dot.is-active { color: var(--ink); } .reg-progress__dot.is-active i { border-color: var(--orange); background: var(--orange); }
@@ -28,7 +28,7 @@
 .reg-progress__dot:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
 
 /* ---------- step shell ---------- */
-.reg-main { max-width: 1120px; margin: 0 auto; padding: clamp(28px, 5vw, 56px) clamp(20px, 5vw, 48px) 80px; }
+.reg-main { max-width: var(--page-max); margin: 0 auto; padding: clamp(28px, 5vw, 56px) var(--page-margin) 80px; }
 .reg-step { display: none; }
 .reg-step.is-current { display: block; animation: regIn .5s cubic-bezier(.2,.7,.2,1); }
 @keyframes regIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }

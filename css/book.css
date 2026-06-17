@@ -107,12 +107,12 @@
 .bk-panel a { pointer-events: auto; }
 
 /* section-02 label (names the book "what you'll learn" experience) — JS fades it in with the book */
-.bk-seclabel { position: absolute; top: clamp(68px, 9vh, 92px); left: clamp(20px, 6vw, 84px); z-index: 3; font-family: var(--font-mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--orange-d); opacity: 0; pointer-events: none; }
+.bk-seclabel { position: absolute; top: clamp(68px, 9vh, 92px); left: var(--page-margin); z-index: 3; font-family: var(--font-mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--orange-d); opacity: 0; pointer-events: none; }
 
 /* hero split: 2-line headline on the LEFT, reservation card on the RIGHT.
    Both dissolve outward (driven by the JS --out var) as the book materialises. */
 .bk-panel--left {
-  left: clamp(20px, 6vw, 84px); top: 50%; max-width: min(600px, 46vw); text-align: left;
+  left: var(--edge); top: 50%; max-width: min(600px, 46vw); text-align: left;
   transform: translateY(-50%) translateX(calc(var(--out, 0) * -42px)) scale(calc(1 - var(--out, 0) * .04));
 }
 .bk-kick { color: var(--orange-d); }
@@ -127,7 +127,7 @@
 
 /* the reserve CTA appears on the RIGHT at the finale (drifts in via --in) */
 .bk-panel--right {
-  right: clamp(20px, 6vw, 84px); left: auto; top: 50%;
+  right: var(--edge); left: auto; top: 50%;
   transform: translateY(-50%) translateX(calc((1 - var(--in, 0)) * 44px));
 }
 .bk-card {
@@ -203,7 +203,8 @@
 /* ==========================================================================
    REGISTRATION
    ========================================================================== */
-.bk-reg { position: relative; z-index: 4; --reg-bg: #070810; background: linear-gradient(180deg, #05060d, var(--paper)); border-top: 1px solid var(--line); padding: clamp(64px, 10vw, 130px) clamp(20px, 5vw, 56px) 0; }
+.bk-reg { position: relative; z-index: 4; --reg-bg: #070810; background: linear-gradient(180deg, #05060d, var(--paper)); border-top: 1px solid var(--line); padding: clamp(64px, 10vw, 130px) var(--page-margin) 0; }
+.bk-footer__row { max-width: var(--page-max); margin-inline: auto; }
 .bk-reg__inner { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; gap: clamp(28px, 4vw, 48px); }
 .bk-reg__title { font-family: var(--font-display); font-weight: 600; font-size: clamp(32px, 5.4vw, 58px); line-height: 1; letter-spacing: -.025em; margin: 10px 0 0; }
 .bk-reg__title .it { font-style: italic; font-weight: 380; color: var(--orange); }

@@ -26,6 +26,13 @@
   --font-display: "TASA Orbiter", "Inter", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
   --font-mono: "Inter", system-ui, sans-serif;
+  /* ---- one shared 12-column page grid (margins · gutters · max-width) ---- */
+  --page-max:    1200px;                          /* content cap, centred       */
+  --page-margin: clamp(20px, 5vw, 64px);          /* consistent L/R page padding */
+  --gutter:      clamp(14px, 1.6vw, 26px);        /* 12-col gutter              */
+  /* left/right inset that lines up with the centred container's content edge,
+     so full-bleed (absolutely-positioned) elements share the same gridline */
+  --edge: max(var(--page-margin), calc((100% - var(--page-max)) / 2 + var(--page-margin)));
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -77,7 +84,11 @@
 .fg-reveal.is-in { opacity: 1; transform: none; transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
 .no-js .fg-reveal { opacity: 1; transform: none; }
 
-.fg-wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 56px); }
+/* the one shared page container + 12-col grid (see tokens in :root) */
+.fg-container { width: 100%; max-width: var(--page-max); margin-inline: auto; padding-inline: var(--page-margin); }
+.fg-grid12 { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gutter); }
+
+.fg-wrap { width: 100%; max-width: var(--page-max); margin: 0 auto; padding: 0 var(--page-margin); }
 
 /* section shell + header */
 .fg-sec { position: relative; padding: clamp(64px, 9vw, 132px) 0; }
