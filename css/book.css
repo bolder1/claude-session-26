@@ -1,0 +1,367 @@
+/* ==========================================================================
+   book.css — Interactive 3D Book main page (Claude Session '26)
+   Midnight palette on a strict 60 / 30 / 10 rule:
+     60%  midnight base ......... --paper / --paper-2  (deep blue-black)
+     30%  slate surfaces + ink .. cards, panels, body + heading text
+     10%  brand orange .......... CTAs, folio, accents, the book's edge-glow
+   Loaded AFTER field.css; it re-points the shared tokens to midnight so the
+   reused .fg-* atoms recolour automatically.
+   ========================================================================== */
+
+.book {
+  /* ---- 60 · the dominant midnight field ---- */
+  --paper:   #070912;   /* page background            */
+  --paper-2: #0c1020;   /* raised midnight            */
+  --paper-3: #121830;   /* deepest panel inset        */
+  /* ---- 30 · slate surfaces + text ---- */
+  --surface: #141a30;
+  --surface-2:#1b2340;
+  --ink:     #e9edf8;
+  --ink-2:   #aab4d0;
+  --mute:    #7e89a8;
+  --faint:   #515c7e;
+  --line:    rgba(180,196,236,.16);
+  --line-2:  rgba(180,196,236,.28);
+  --shadow:  rgba(0,0,0,.62);
+  /* ---- 10 · the accent ---- */
+  --orange:  #EB5424;
+  --orange-d:#ff8a4d;
+  --glow:    rgba(255,124,64,.40);
+  /* book paper (the focal "light" object glowing in the midnight) */
+  --book-paper:#efe9dd;
+  --book-ink:#1b1c24;
+
+  background: var(--paper);
+  color: var(--ink);
+}
+.book .fg-grain { opacity: .26; mix-blend-mode: soft-light; }
+
+/* a soft vignette + cool-to-warm wash so the midnight reads as depth, not flat */
+.book::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(120% 90% at 78% 18%, rgba(60,84,170,.16), transparent 55%),
+    radial-gradient(80% 70% at 50% 60%, rgba(235,84,36,.07), transparent 60%),
+    radial-gradient(120% 120% at 50% 120%, #05060d, transparent 60%),
+    var(--paper);
+}
+
+/* ==========================================================================
+   NAV
+   ========================================================================== */
+.bk-nav {
+  position: fixed; top: 14px; left: 50%; transform: translate(-50%, -150%);
+  z-index: 70; display: flex; align-items: center; gap: 10px;
+  padding: 7px 8px 7px 12px; border: 1px solid var(--line);
+  background: rgba(12,16,32,.82); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border-radius: 40px; box-shadow: 0 10px 30px rgba(0,0,0,.45);
+  transition: transform .5s cubic-bezier(.2,.7,.2,1);
+}
+.bk-nav.is-on { transform: translate(-50%, 0); }
+.bk-nav__mark { width: 22px; height: 22px; display: block; }
+.bk-nav__title { font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); }
+.bk-nav__title b { color: var(--ink); }
+.bk-nav__cta { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; color: #fff3ea; background: var(--orange); padding: 8px 14px; border-radius: 30px; font-weight: 600; }
+.bk-nav__cta:hover { background: var(--orange-d); }
+@media (max-width: 620px) { .bk-nav__title { display: none; } }
+
+/* subtle "replay the cold-open loader" cue — only at the very top of the page */
+.bk-loader-cue {
+  position: fixed; top: clamp(16px, 3vh, 26px); left: 50%; transform: translate(-50%, -16px);
+  z-index: 71; display: inline-flex; align-items: center; gap: 9px;
+  padding: 8px 16px 8px 11px; border-radius: 40px; text-decoration: none;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-2); background: rgba(12,16,32,.6); border: 1px solid var(--line);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  opacity: 0; pointer-events: none; transition: opacity .5s ease, transform .5s cubic-bezier(.2,.7,.2,1);
+}
+.bk-loader-cue.is-on { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+.bk-loader-cue:hover { color: var(--ink); border-color: var(--line-2); background: rgba(18,24,44,.7); }
+.bk-loader-cue:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+.bk-loader-cue__ring { width: 15px; height: 15px; position: relative; display: inline-block; flex: 0 0 auto; }
+.bk-loader-cue__ring::before, .bk-loader-cue__ring::after { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid var(--orange-d); }
+.bk-loader-cue__ring::before { opacity: .3; }
+.bk-loader-cue__ring::after { border-top-color: transparent; border-left-color: transparent; animation: bkspin 1.4s linear infinite; }
+@keyframes bkspin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .bk-loader-cue__ring::after { animation: none; } }
+
+/* ==========================================================================
+   STAGE + PIN
+   ========================================================================== */
+.bk-stage { position: relative; height: 760vh; }
+.bk-pin { position: sticky; top: 0; height: 100vh; height: 100dvh; overflow: hidden; }
+
+.bk-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 2; }
+
+/* the glow behind the book — intensified by JS via --aura (0..1) */
+.bk-aura {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: var(--aura, .25);
+  background:
+    radial-gradient(42% 46% at 50% 52%, rgba(255,150,90,.20), transparent 70%),
+    radial-gradient(70% 80% at 50% 50%, rgba(40,60,140,.12), transparent 70%);
+  transition: opacity .2s linear;
+}
+
+/* ----- side content panels (driven by JS opacity/transform) ----- */
+.bk-panel { position: absolute; z-index: 3; pointer-events: none; will-change: opacity, transform; }
+.bk-panel a { pointer-events: auto; }
+
+/* section-02 label (names the book "what you'll learn" experience) — JS fades it in with the book */
+.bk-seclabel { position: absolute; top: clamp(68px, 9vh, 92px); left: clamp(20px, 6vw, 84px); z-index: 3; font-family: var(--font-mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--orange-d); opacity: 0; pointer-events: none; }
+
+/* hero split: 2-line headline on the LEFT, reservation card on the RIGHT.
+   Both dissolve outward (driven by the JS --out var) as the book materialises. */
+.bk-panel--left {
+  left: clamp(20px, 6vw, 84px); top: 50%; max-width: min(600px, 46vw); text-align: left;
+  transform: translateY(-50%) translateX(calc(var(--out, 0) * -42px)) scale(calc(1 - var(--out, 0) * .04));
+}
+.bk-kick { color: var(--orange-d); }
+.bk-h1 {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: clamp(26px, 3.2vw, 42px); line-height: 1.1; letter-spacing: -.02em;
+  margin: 14px 0 0; color: var(--ink); text-wrap: balance;
+}
+.bk-h1 .or { color: var(--orange); font-style: italic; font-weight: 420; }
+.bk-scrollcue { display: inline-block; margin-top: 24px; font-family: var(--font-mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--orange-d); animation: bkcue 2s ease-in-out infinite; }
+@keyframes bkcue { 0%,100% { opacity: .5; transform: translateY(0); } 50% { opacity: 1; transform: translateY(4px); } }
+
+/* the reserve CTA appears on the RIGHT at the finale (drifts in via --in) */
+.bk-panel--right {
+  right: clamp(20px, 6vw, 84px); left: auto; top: 50%;
+  transform: translateY(-50%) translateX(calc((1 - var(--in, 0)) * 44px));
+}
+.bk-card {
+  width: min(360px, 42vw); background: linear-gradient(180deg, var(--surface), var(--surface-2));
+  border: 1px solid var(--line-2); border-radius: 18px; overflow: hidden;
+  box-shadow: 0 36px 90px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03), inset 0 1px 0 rgba(255,255,255,.06);
+}
+.bk-reserve__h { font-family: var(--font-display); font-weight: 600; font-size: clamp(20px, 2.2vw, 26px); line-height: 1.05; letter-spacing: -.02em; margin: 6px 0 14px; color: var(--ink); }
+.bk-reserve__h .or { color: var(--orange); font-style: italic; font-weight: 420; }
+.bk-reserve .bk-cta { margin-top: 18px; }
+.bk-reg--footer { padding-top: clamp(36px, 6vw, 64px); }
+@media (max-width: 760px) {
+  .bk-panel--left { left: 50%; right: auto; top: clamp(11%, 14vh, 17%); max-width: 90vw; text-align: center;
+    transform: translateX(-50%) translateY(calc(var(--out, 0) * -26px)); }
+  .bk-panel--right { left: 50%; right: auto; top: auto; bottom: clamp(16px, 5vh, 50px);
+    transform: translate(-50%, 0) translateY(calc((1 - var(--in, 0)) * 24px)); }
+  .bk-card { width: min(360px, 88vw); }
+}
+.bk-card__h { display: flex; justify-content: space-between; padding: 13px 18px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); border-bottom: 1px solid var(--line); }
+.bk-card__b { padding: 8px 18px 18px; }
+.bk-row { display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.bk-row span { color: var(--mute); font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.bk-row b { color: var(--ink); font-weight: 500; }
+
+.bk-cta {
+  display: inline-flex; align-items: center; gap: 9px; margin-top: 16px;
+  background: var(--orange); color: #fff3ea; text-decoration: none; font-weight: 600;
+  font-size: 15px; padding: 13px 20px; border-radius: 10px; width: 100%; justify-content: center;
+  box-shadow: 0 10px 24px rgba(235,84,36,.32); transition: transform .15s ease, box-shadow .15s ease, background .15s;
+}
+.bk-cta:hover { transform: translateY(-2px); background: var(--orange-d); box-shadow: 0 14px 30px rgba(235,84,36,.42); }
+.bk-cta--lg { width: auto; padding: 16px 26px; font-size: 16px; }
+
+/* ----- reading caption ----- */
+.bk-caption { position: absolute; left: 50%; bottom: clamp(46px, 9vh, 92px); transform: translateX(-50%); z-index: 3; display: flex; align-items: baseline; gap: 12px; opacity: 0; pointer-events: none; }
+.bk-caption__no { font-family: var(--font-display); font-weight: 600; font-size: 14px; color: var(--orange); letter-spacing: .04em; }
+.bk-caption__txt { font-family: var(--font-mono); font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-2); }
+
+/* ----- progress rail ----- */
+.bk-rail { position: absolute; left: 50%; bottom: clamp(20px, 4vh, 34px); transform: translateX(-50%); z-index: 3; width: min(360px, 50vw); height: 2px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.bk-rail i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--orange), var(--orange-d)); }
+
+/* ==========================================================================
+   BENTO — the book lands here as the hero tile (Act 6)
+   ========================================================================== */
+.bk-bento { position: absolute; inset: 0; z-index: 3; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; }
+.bk-bento.is-live { pointer-events: auto; }
+.bk-bento__grid {
+  width: min(1060px, 94vw); display: grid; gap: clamp(10px, 1.3vw, 15px);
+  grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, minmax(116px, 1fr));
+  grid-template-areas:
+    "hero hero a"
+    "hero hero b"
+    "hero hero c";
+}
+/* the designated box the 3D book lands centered inside (kept near-transparent so the book reads through it) */
+.bk-bento__hero { grid-area: hero; position: relative; border: 1px solid var(--line-2); border-radius: 20px; background: rgba(255,255,255,.025); box-shadow: inset 0 1px 0 rgba(255,255,255,.06), inset 0 0 70px rgba(20,28,56,.45); overflow: hidden; }
+.bk-bento__herocap { position: absolute; left: 16px; bottom: 14px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-2); }
+.bk-tile {
+  border: 1px solid var(--line); border-radius: 18px; padding: clamp(14px, 1.8vw, 22px);
+  background: linear-gradient(180deg, var(--surface), rgba(12,16,32,.7));
+  display: flex; flex-direction: column; gap: 10px; box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+}
+.bk-tile--a { grid-area: a; } .bk-tile--b { grid-area: b; } .bk-tile--c { grid-area: c; }
+.bk-tile__tag { align-self: flex-start; font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--orange-d); border: 1px solid var(--line-2); padding: 4px 10px; border-radius: 30px; }
+.bk-tile__t { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: clamp(15px, 1.5vw, 18px); line-height: 1.22; color: var(--ink); letter-spacing: -.01em; }
+.bk-tile__link { font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--orange-d); text-decoration: none; margin-top: auto; }
+@media (max-width: 760px) {
+  .bk-bento__grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; grid-template-areas: "hero hero" "a b" "c c"; }
+  .bk-bento__hero { aspect-ratio: 16 / 11; }
+}
+
+/* ==========================================================================
+   REGISTRATION
+   ========================================================================== */
+.bk-reg { position: relative; z-index: 4; --reg-bg: #070810; background: linear-gradient(180deg, #05060d, var(--paper)); border-top: 1px solid var(--line); padding: clamp(64px, 10vw, 130px) clamp(20px, 5vw, 56px) 0; }
+.bk-reg__inner { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; gap: clamp(28px, 4vw, 48px); }
+.bk-reg__title { font-family: var(--font-display); font-weight: 600; font-size: clamp(32px, 5.4vw, 58px); line-height: 1; letter-spacing: -.025em; margin: 10px 0 0; }
+.bk-reg__title .it { font-style: italic; font-weight: 380; color: var(--orange); }
+.bk-reg__sub { font-size: clamp(15px, 1.8vw, 18px); color: var(--ink-2); line-height: 1.55; max-width: 46ch; margin: 16px auto 0; font-weight: 300; }
+.bk-reg__meta { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .04em; color: var(--mute); margin: 0; }
+
+/* ===== Admission ticket — matched to Figma "Stop 05 · Your Ticket" ===== */
+.bk-ticket {
+  position: relative; display: flex; align-items: stretch; width: min(556px, 94vw); color: #fff;
+  border-radius: 20px; font-family: "Gabarito", var(--font-body), sans-serif;
+  background: linear-gradient(152deg, #c13d14 10.7%, #ee5a24 50%, #f2682a 82%);
+  box-shadow: 0 30px 46px -8px rgba(181,57,28,.7), 0 0 70px rgba(238,90,36,.22), inset 0 1px 0 rgba(255,255,255,.3);
+  transform: rotate(.8deg); transition: transform .45s cubic-bezier(.2,.7,.2,1);
+}
+.bk-ticket:hover { transform: rotate(0deg) translateY(-3px); }
+.bk-ticket__main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 30px 24px 26px 30px; text-align: left; }
+.bk-ticket__eyebrow { margin: 0; font-weight: 800; font-size: 9.5px; letter-spacing: 3.2px; text-transform: uppercase; color: #ffd3bd; }
+.bk-ticket__title { margin: 0; font-weight: 800; font-size: clamp(18px, 3.3vw, 21px); line-height: 1.26; color: #fff; letter-spacing: -.004em; }
+.bk-ticket__when { display: flex; gap: 18px; flex-wrap: wrap; }
+.bk-ticket__when-item { display: inline-flex; align-items: center; gap: 7px; font-weight: 700; font-size: 12.5px; color: #fff; }
+.bk-ticket__when-item svg { width: 14px; height: 14px; flex: 0 0 auto; }
+/* .book prefix beats field.css `.fg a { color: inherit }` (else the label is white-on-white) */
+.book .bk-ticket__cta { align-self: flex-start; display: inline-flex; background: #fff; color: #ee5a24; font-weight: 800; font-size: 15px; padding: 13px 30px; border-radius: 999px; text-decoration: none; box-shadow: 0 16px 30px -12px rgba(60,12,0,.55); transition: transform .15s ease, box-shadow .15s ease; }
+.bk-ticket__cta:hover { transform: translateY(-2px); box-shadow: 0 20px 36px -12px rgba(60,12,0,.6); }
+.bk-ticket__cta:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.bk-ticket__ps { margin: 2px 0 0; font-family: "Outfit", var(--font-body), sans-serif; font-weight: 400; font-size: 11.5px; line-height: 1.55; color: #ffd9c8; max-width: 330px; }
+.bk-ticket__ps b { font-weight: 700; color: #fff; }
+.bk-ticket__perf { position: relative; flex: 0 0 2px; width: 2px; align-self: stretch; background-image: repeating-linear-gradient(to bottom, rgba(255,255,255,.55) 0 6px, transparent 6px 13px); }
+.bk-ticket__notch { position: absolute; left: 50%; transform: translateX(-50%); border-radius: 50%; background: var(--reg-bg); }
+.bk-ticket__notch--t { top: -11px; width: 22px; height: 22px; }
+.bk-ticket__notch--b { bottom: -15px; width: 30px; height: 30px; }
+.bk-ticket__stub { flex: 0 0 148px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 14px; padding: 26px 16px; }
+.bk-ticket__seat { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.bk-ticket__seat span { font-family: "Outfit", sans-serif; font-weight: 700; font-size: 9px; letter-spacing: 2.3px; text-transform: uppercase; color: #ffc8ac; }
+.bk-ticket__seat b { font-weight: 900; font-size: 24px; color: #fff; }
+.bk-ticket__barcode { width: 102px; height: 34px; background-image: repeating-linear-gradient(90deg, #ffe6da 0 2px, transparent 2px 3.4px, #ffe6da 3.4px 6px, transparent 6px 8px, #ffe6da 8px 9.6px, transparent 9.6px 12px); }
+.bk-ticket__code { font-family: "Outfit", sans-serif; font-weight: 700; font-size: 9px; letter-spacing: 1.8px; text-transform: uppercase; color: #ffc8ac; }
+@media (max-width: 460px) {
+  .bk-ticket { transform: none; }
+  .bk-ticket__main { padding: 22px 18px; }
+  .bk-ticket__stub { flex-basis: 116px; padding: 22px 10px; }
+}
+
+.bk-footer { margin-top: clamp(56px, 8vw, 96px); border-top: 1px solid var(--line); padding: 22px 0 40px; }
+.bk-footer__row { display: flex; justify-content: space-between; gap: 12px 28px; flex-wrap: wrap; font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+.bk-footer__sig { color: var(--orange-d); }
+.bk-footer__row b { color: var(--ink); }
+
+/* reveal helper for the registration block */
+.book .fg-reveal { opacity: 0; transform: translateY(22px); }
+.book .fg-reveal.is-in { opacity: 1; transform: none; transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+.no-js .book .fg-reveal { opacity: 1; transform: none; }
+.bk-reg__sub .bk-reg__alt { color: var(--orange-d); }
+
+/* ==========================================================================
+   IN-BOOK REGISTRATION — overlay (seat | form) centred over the flat book,
+   then the 3D ticket reveal after submit
+   ========================================================================== */
+.bk-reg-overlay { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 4; width: min(880px, 95vw); opacity: 0; pointer-events: none; transition: opacity .4s ease, transform .5s ease; }
+.bk-reg-overlay.is-live { pointer-events: auto; }
+.bk-reg-overlay.is-out { opacity: 0 !important; pointer-events: none; transform: translate(-50%, -54%) scale(.97); }
+/* two page-panels with a gap → the book's gutter/binding shows between them,
+   so the form reads as printed on the open book's two pages */
+.bk-rg { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(22px, 4.4vw, 62px); align-items: stretch; }
+.bk-rg__col {
+  display: flex; flex-direction: column; min-width: 0;
+  background: linear-gradient(180deg, rgba(13,17,34,.85), rgba(6,8,18,.9));
+  border: 1px solid var(--line-2); border-radius: 16px; padding: clamp(16px, 2.2vw, 26px);
+  box-shadow: 0 30px 72px rgba(0,0,0,.52), inset 0 1px 0 rgba(255,255,255,.05);
+  -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px);
+}
+.bk-rg__h { font-family: var(--font-display); font-weight: 600; font-size: clamp(18px, 2.1vw, 25px); line-height: 1.05; letter-spacing: -.02em; margin: 8px 0 14px; color: var(--ink); }
+.bk-rg__h .or { color: var(--orange); font-style: italic; font-weight: 420; }
+.bk-rg__screen { text-align: center; font-family: var(--font-mono); font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: var(--orange-d); border-bottom: 2px solid rgba(235,84,36,.5); padding-bottom: 6px; margin: 0 4px 12px; border-radius: 50% 50% 0 0 / 16px 16px 0 0; }
+.bk-seatgrid { display: grid; grid-template-columns: repeat(5, 1fr); gap: clamp(5px, .7vw, 9px); }
+.bk-seat { aspect-ratio: 1 / 1; min-width: 0; padding: 0; border-radius: 6px 6px 4px 4px; cursor: pointer; background: var(--surface-2); border: 1px solid var(--line); border-bottom-width: 2px; color: var(--mute); font-family: var(--font-mono); font-size: 8px; transition: transform .12s ease, background .15s, border-color .15s, color .15s; }
+.bk-seat:hover:not(.is-taken):not(.is-sel) { transform: translateY(-2px); border-color: var(--orange); color: var(--ink); background: rgba(235,84,36,.16); }
+.bk-seat.is-sel { background: var(--orange); border-color: #fff; color: #fff3ea; transform: translateY(-2px); }
+.bk-seat.is-taken { background: rgba(255,255,255,.05); border-color: transparent; color: var(--faint); opacity: .55; cursor: not-allowed; }
+.bk-seat:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+.bk-rg__legend { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 13px 0 0; font-family: var(--font-mono); font-size: 10px; letter-spacing: .04em; text-transform: uppercase; color: var(--mute); }
+.bk-seat--demo { width: 13px; height: 13px; aspect-ratio: auto; display: inline-block; cursor: default; pointer-events: none; }
+.bk-rg__field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.bk-rg__field span { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
+.bk-rg__field em { color: var(--faint); font-style: normal; text-transform: none; letter-spacing: 0; }
+.bk-rg__field input { width: 100%; height: 46px; padding: 0 14px; background: var(--paper-2); border: 1px solid var(--line-2); border-radius: 10px; color: var(--ink); font-family: var(--font-body); font-size: 15px; }
+.bk-rg__field input::placeholder { color: var(--faint); }
+.bk-rg__field input:focus-visible { outline: 2px solid var(--orange); outline-offset: 1px; border-color: var(--orange); }
+.bk-rg__submit { margin-top: auto; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 50px; background: var(--orange); color: #fff3ea; border: 0; border-radius: 10px; font-family: var(--font-body); font-weight: 600; font-size: 15px; cursor: pointer; box-shadow: 0 12px 26px rgba(235,84,36,.34); transition: transform .15s ease, background .15s, box-shadow .15s; }
+.bk-rg__submit:hover:not(:disabled) { transform: translateY(-2px); background: var(--orange-d); }
+.bk-rg__submit:disabled { background: var(--surface-2); color: var(--faint); box-shadow: none; cursor: not-allowed; }
+.bk-rg__submit:focus-visible { outline: 3px solid var(--line-2); outline-offset: 3px; }
+.bk-rg__note { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .04em; color: var(--mute); margin: 10px 0 0; text-align: center; }
+
+/* the 3D ticket reveal (after the book closes) */
+.bk-ticket-stage { --reg-bg: #0a0c18; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 18px; opacity: 0; pointer-events: none; perspective: 1200px; }
+.bk-ticket-stage.is-revealed { opacity: 1; pointer-events: auto; }
+.bk-ticket-stage .bk-ticket { transform: rotateY(-65deg) scale(.72); opacity: 0; transform-style: preserve-3d; transition: transform .9s cubic-bezier(.2,.8,.25,1), opacity .55s ease; }
+.bk-ticket-stage.is-revealed .bk-ticket { transform: rotateY(0deg) scale(1); opacity: 1; }
+.bk-ticket-stage__cap { font-family: var(--font-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); opacity: 0; transition: opacity .5s ease .5s; }
+.bk-ticket-stage.is-revealed .bk-ticket-stage__cap { opacity: 1; }
+.bk-ticket__role { margin: 4px 0 0; font-family: "Outfit", var(--font-body), sans-serif; font-weight: 700; font-size: 13px; color: #ffd9c8; }
+
+@media (max-width: 720px) {
+  .bk-reg-overlay { width: 92vw; }
+  .bk-rg { grid-template-columns: 1fr; gap: 14px; max-height: 80vh; overflow-y: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bk-ticket-stage .bk-ticket { transition: opacity .4s ease; transform: scale(1); }
+  .bk-ticket-stage.is-revealed .bk-ticket { transform: scale(1); }
+}
+
+/* ==========================================================================
+   FALLBACKS — no WebGL / reduced motion: collapse the pin into a readable page
+   ========================================================================== */
+.book.is-nogl .bk-stage { height: auto; }
+.book.is-nogl .bk-pin { position: static; height: auto; min-height: 0; padding: clamp(40px,8vw,90px) 0; }
+.book.is-nogl .bk-canvas, .book.is-nogl .bk-aura, .book.is-nogl .bk-rail, .book.is-nogl .bk-caption { display: none; }
+.book.is-nogl .bk-panel { position: static; transform: none; opacity: 1 !important; max-width: 100%; margin: 0 auto; padding: 0 clamp(20px,5vw,56px); }
+.book.is-nogl .bk-panel--right { margin-top: 30px; }
+.book.is-nogl .bk-reg-overlay { position: static; transform: none; opacity: 1 !important; pointer-events: auto; width: auto; padding: clamp(30px,6vw,70px) clamp(20px,5vw,56px); }
+.book.is-nogl .bk-ticket-stage { position: static; transform: none; margin: 0 auto clamp(30px,6vw,70px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .bk-scrollcue { animation: none; }
+}
+
+/* ==========================================================================
+   /register page — slot (left) + form (right) → 3D ticket. Midnight theme,
+   reuses .bk-rg / .bk-seat / .bk-ticket components.
+   ========================================================================== */
+.reg2 { min-height: 100dvh; }
+.reg2-head { display: flex; justify-content: space-between; align-items: center; gap: 10px 16px; flex-wrap: wrap; max-width: 1080px; margin: 0 auto; padding: clamp(18px,3vw,28px) clamp(20px,5vw,48px) 14px; font-family: var(--font-mono); font-size: clamp(10px,1.3vw,12px); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); border-bottom: 1px solid var(--line); }
+.reg2-back { text-decoration: none; color: var(--mute); } .reg2-back b { color: var(--ink); } .reg2-back:hover { color: var(--ink); }
+.reg2-main { max-width: 1000px; margin: 0 auto; padding: clamp(28px,5vw,56px) clamp(20px,5vw,48px) 80px; transition: opacity .4s ease, transform .4s ease; }
+.reg2-main.is-out { opacity: 0; transform: translateY(-16px); pointer-events: none; }
+.reg2-lead { text-align: center; max-width: 60ch; margin: 0 auto clamp(28px,4vw,46px); }
+.reg2-title { font-family: var(--font-display); font-weight: 600; font-size: clamp(30px,5vw,54px); line-height: 1; letter-spacing: -.025em; margin: 10px 0 0; color: var(--ink); }
+.reg2-title .or { color: var(--orange); font-style: italic; font-weight: 420; }
+.reg2-sub { font-size: clamp(15px,1.8vw,18px); color: var(--ink-2); line-height: 1.55; margin: 14px auto 0; font-weight: 300; }
+.reg2-cols { max-width: 920px; margin: 0 auto; max-height: none; overflow: visible; }
+
+.reg2-ticket { --reg-bg: #07091a; position: fixed; inset: 0; z-index: 60; display: flex; align-items: center; justify-content: center; padding: 24px; perspective: 1200px; opacity: 0; pointer-events: none; transition: opacity .5s ease; background: radial-gradient(circle at 50% 38%, rgba(22,30,60,.55), #05060d 72%); }
+.reg2-ticket.is-on { opacity: 1; pointer-events: auto; }
+.reg2-ticket__inner { display: flex; flex-direction: column; align-items: center; gap: 22px; }
+.reg2-ticket__kick { text-align: center; }
+.reg2-ticket .bk-ticket { transform: rotateY(-70deg) scale(.72); opacity: 0; transform-style: preserve-3d; transition: transform 1s cubic-bezier(.2,.8,.25,1) .12s, opacity .6s ease .12s; }
+.reg2-ticket.is-on .bk-ticket { transform: rotateY(0deg) scale(1); opacity: 1; }
+.reg2-ticket__actions { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.reg2-ticket__actions a, .reg2-link { color: var(--orange-d); background: none; border: 0; cursor: pointer; font: inherit; text-transform: uppercase; letter-spacing: .08em; text-decoration: none; }
+.reg2-ticket__actions a:hover, .reg2-link:hover { color: var(--orange); }
+.reg2-link:focus-visible, .reg2-ticket__actions a:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+@media (max-width: 720px) {
+  .reg2-cols.bk-rg { grid-template-columns: 1fr; max-height: none; overflow: visible; }
+  .reg2-ticket .bk-ticket { transform: rotateY(0deg) scale(.84); }
+  .reg2-ticket.is-on .bk-ticket { transform: rotateY(0deg) scale(.9); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reg2-ticket .bk-ticket { transition: opacity .4s ease; transform: scale(1); }
+  .reg2-ticket.is-on .bk-ticket { transform: scale(1); }
+}
