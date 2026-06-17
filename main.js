@@ -367,13 +367,18 @@ try {
           hp.add(pad);
         });
         hp.traverse((m) => { if (m.isMesh) m.frustumCulled = false; });
-        // hooked in the hand: the band top overlaps the palm where the bag
-        // handle used to sit, so the avatar visibly holds it
+        // held FROM THE MIDDLE: raise so the headphone's centre (not the band
+        // top) sits in the palm where the bag handle used to be — the cups hang
+        // evenly below the grip instead of the whole thing dangling off the top
         hp.rotation.y = Math.PI / 2;
-        hp.position.set(c.x, bb.max.y - R + 0.045, c.z);
+        hp.position.set(c.x, bb.max.y - R + 0.125, c.z);
         root.add(hp);
         root.updateMatrixWorld(true);
         bone.attach(hp);
+        // grip the CENTRE: slide the headphone half a cup-offset along its band
+        // axis so the hand holds the headband's apex (midpoint between the two
+        // cups), not an ear-cup end — tuned live against the deployed scene
+        hp.position.add(new THREE.Vector3(0.215, -0.03, 0).applyQuaternion(hp.quaternion).multiplyScalar(0.5));
         bag.visible = false;
       }
 
