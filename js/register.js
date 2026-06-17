@@ -7,9 +7,9 @@
   const $ = (s) => document.querySelector(s);
 
   const SESSION_DATE = new Date('2026-06-26T11:00:00+05:30');
-  const ROWS = ['A', 'B', 'C', 'D', 'E', 'F'];
-  const COLS = 8;                       // 4 + aisle + 4
-  const TOTAL = ROWS.length * COLS;     // 48
+  const ROWS = ['A', 'B', 'C', 'D', 'E'];
+  const COLS = 4;                       // 2 + aisle + 2
+  const TOTAL = ROWS.length * COLS;     // 20
   const INITIAL_TAKEN = 0;              // honest seat map — no fake fill
   const STORE_KEY = 'moClaudeReg';
   const HW_KEY = 'moClaudeHomework';
@@ -66,7 +66,7 @@
       const lab = document.createElement('span'); lab.className = 'seat-row__label'; lab.textContent = row;
       rowEl.appendChild(lab);
       for (let c = 1; c <= COLS; c++) {
-        if (c === 5) { const aisle = document.createElement('span'); aisle.className = 'seat-aisle'; rowEl.appendChild(aisle); }
+        if (c === 3) { const aisle = document.createElement('span'); aisle.className = 'seat-aisle'; rowEl.appendChild(aisle); }
         const id = row + c;
         const btn = document.createElement('button');
         btn.className = 'seat'; btn.dataset.seat = id; btn.type = 'button';
@@ -264,7 +264,6 @@
     function frame(now) {
       three.raf = requestAnimationFrame(frame);
       const dt = Math.min((now - last) / 1000, 0.05); last = now;
-      if (document.hidden) return;
       t += dt;
       if (REDUCE) { renderer.render(scene, camera); return; }
       if (!dragging) { targetRY += (Math.sin(t * 0.5) * 0.22 - targetRY) * dt * 0.7; targetRX += (Math.sin(t * 0.7) * 0.07 - targetRX) * dt * 0.7; }

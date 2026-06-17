@@ -34,8 +34,8 @@ try {
 /* ===========================================================================
    constants
    =========================================================================== */
-const PAGE_W = 1.55, PAGE_H = 2.13, OVER = 0;     // flush magazine cover (no hardcover lip)
-const TEX_W = 864, TEX_H = 1188;
+const PAGE_W = 1.55, PAGE_H = 2.26, OVER = 0;     // taller codex proportion (~0.686), flush cover
+const TEX_W = 864, TEX_H = 1260;                  // aspect matches PAGE_W/PAGE_H so the art isn't stretched
 const N_LEAVES = 6, N_FLIP = 5, CURL = 0.24, GUTTER = 0.012;
 
 /* ===========================================================================
@@ -216,19 +216,99 @@ function wrapCentre(ctx, text, cx, y, max, lh) {
 function rrect(ctx, x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
 
 /* ---- special pages -------------------------------------------------------- */
+/* ---- illuminated-manuscript cover helpers ---- */
+const CINZEL = '"Cinzel", serif';
+const CINZEL_D = '"Cinzel Decorative", "Cinzel", serif';
+function goldGrad(ctx, x0, y0, x1, y1) {
+  const g = ctx.createLinearGradient(x0, y0, x1, y1);
+  g.addColorStop(0.00, '#8a6a22'); g.addColorStop(0.26, '#e7c66a'); g.addColorStop(0.50, '#fbeeb0');
+  g.addColorStop(0.74, '#d9ab44'); g.addColorStop(1.00, '#94701d');
+  return g;
+}
+function fleuron(ctx, cx, cy, s, rot) {
+  ctx.save(); ctx.translate(cx, cy); ctx.rotate(rot);
+  const gold = goldGrad(ctx, -s, -s, s, s);
+  ctx.strokeStyle = gold; ctx.fillStyle = gold; ctx.lineWidth = 3.5; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.moveTo(0, 0); ctx.quadraticCurveTo(s * 0.9, -s * 0.15, s, -s); ctx.stroke();
+  ctx.beginPath(); ctx.arc(s, -s, s * 0.2, 0, 7); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(0, 0); ctx.quadraticCurveTo(-s * 0.15, s * 0.9, -s, s); ctx.stroke();
+  ctx.beginPath(); ctx.arc(-s, s, s * 0.2, 0, 7); ctx.fill();
+  ctx.beginPath(); ctx.arc(0, 0, s * 0.13, 0, 7); ctx.fill();
+  ctx.restore();
+}
+function jewel(ctx, cx, cy, r, color) {
+  const g = ctx.createRadialGradient(cx - r * 0.32, cy - r * 0.32, r * 0.1, cx, cy, r);
+  g.addColorStop(0, 'rgba(255,255,255,0.95)'); g.addColorStop(0.3, color); g.addColorStop(1, 'rgba(0,0,0,0.55)');
+  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, r, 0, 7); ctx.fill();
+  ctx.lineWidth = 3; ctx.strokeStyle = goldGrad(ctx, cx - r, cy - r, cx + r, cy + r);
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, 7); ctx.stroke();
+}
+
 function L_cover(ctx) {
-  const g = ctx.createLinearGradient(0, 0, TEX_W, TEX_H);
-  g.addColorStop(0, '#16203f'); g.addColorStop(.5, '#0d1530'); g.addColorStop(1, '#0a0f22');
-  ctx.fillStyle = g; ctx.fillRect(0, 0, TEX_W, TEX_H);
-  ctx.save(); ctx.translate(TEX_W * 0.5, TEX_H * 0.64);
-  for (let i = 8; i >= 1; i--) { ctx.strokeStyle = i === 2 ? 'rgba(255,138,77,.9)' : 'rgba(190,205,255,.10)'; ctx.lineWidth = i === 2 ? 5 : 2; ctx.beginPath(); ctx.arc(0, 0, i * 36, 0, 7); ctx.stroke(); }
-  ctx.fillStyle = '#ff8a4d'; ctx.beginPath(); ctx.arc(0, 0, 15, 0, 7); ctx.fill(); ctx.restore();
-  ctx.fillStyle = '#ff8a4d'; ctx.font = '600 22px ' + SANS; ls(ctx, '4px'); ctx.fillText('MINIORANGE DESIGN STUDIO', M, 156); ls(ctx, '0px');
-  ctx.fillStyle = '#f4ece0'; ctx.font = '700 96px ' + DISP; ctx.fillText('Claude', M, 300); ctx.fillText('Session ’26', M, 396);
-  ctx.fillStyle = '#aab4d0'; ctx.font = '300 36px ' + SANS; ctx.fillText('The Field Guide', M, 462);
-  rule(ctx, M, TEX_H - 150, TEX_W - M, 'rgba(190,205,255,.22)');
-  ctx.fillStyle = '#aab4d0'; ctx.font = '500 22px ' + SANS; ls(ctx, '2px'); ctx.fillText('FIELD GUIDE', M, TEX_H - 102); ls(ctx, '0px');
-  ctx.textAlign = 'right'; ctx.fillStyle = '#ff8a4d'; ctx.font = '700 42px ' + DISP; ctx.fillText('№ 26', TEX_W - M, TEX_H - 96); ctx.textAlign = 'left';
+  const W = TEX_W, H = TEX_H, CX = W / 2;
+  // ---- deep lapis jewel ground + glow + vellum speckle + vignette ----
+  const g = ctx.createLinearGradient(0, 0, W * 0.3, H);
+  g.addColorStop(0, '#242c80'); g.addColorStop(0.5, '#161b58'); g.addColorStop(1, '#0b0f36');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  const rg = ctx.createRadialGradient(CX, H * 0.33, 20, CX, H * 0.33, W);
+  rg.addColorStop(0, 'rgba(150,170,255,0.18)'); rg.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = rg; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = 'rgba(255,238,200,0.05)';
+  for (let i = 0; i < 520; i++) ctx.fillRect(Math.random() * W, Math.random() * H, 1.3, 1.3);
+  const vg = ctx.createRadialGradient(CX, H / 2, H * 0.32, CX, H / 2, H * 0.78);
+  vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,0.42)');
+  ctx.fillStyle = vg; ctx.fillRect(0, 0, W, H);
+
+  // ---- gold double border + corner fleurons ----
+  const m = 54;
+  ctx.strokeStyle = goldGrad(ctx, 0, 0, W, H); ctx.lineWidth = 7; ctx.strokeRect(m, m, W - 2 * m, H - 2 * m);
+  ctx.lineWidth = 2.5; ctx.strokeRect(m + 13, m + 13, W - 2 * m - 26, H - 2 * m - 26);
+  const fm = m + 13;
+  fleuron(ctx, fm + 8, fm + 8, 30, 0);
+  fleuron(ctx, W - fm - 8, fm + 8, 30, Math.PI / 2);
+  fleuron(ctx, W - fm - 8, H - fm - 8, 30, Math.PI);
+  fleuron(ctx, fm + 8, H - fm - 8, 30, -Math.PI / 2);
+
+  ctx.textAlign = 'center';
+  // ---- top label + rule (height-relative so it recentres at any TEX_H) ----
+  const topY = Math.round(H * 0.122);
+  ctx.fillStyle = goldGrad(ctx, CX - 220, 0, CX + 220, 0); ctx.font = '700 25px ' + CINZEL; ls(ctx, '7px');
+  ctx.fillText('MINIORANGE · ANNO MMXXVI', CX, topY); ls(ctx, '0px');
+  ctx.strokeStyle = goldGrad(ctx, CX - 90, 0, CX + 90, 0); ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(CX - 92, topY + 24); ctx.lineTo(CX + 92, topY + 24); ctx.stroke();
+
+  // ---- illuminated initial "C" (vermilion panel, gold diaper + frame) ----
+  const ps = 150, py = Math.round(H * 0.27), x0 = CX - ps / 2, y0 = py - ps / 2;
+  ctx.fillStyle = '#9c241c'; ctx.fillRect(x0, y0, ps, ps);
+  ctx.save(); ctx.beginPath(); ctx.rect(x0, y0, ps, ps); ctx.clip();   // keep the diaper + initial inside the panel
+  ctx.strokeStyle = 'rgba(255,214,150,0.28)'; ctx.lineWidth = 1.5;
+  for (let d = -ps; d < ps; d += 20) { ctx.beginPath(); ctx.moveTo(x0 + d, y0); ctx.lineTo(x0 + d + ps, y0 + ps); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x0 + d + ps, y0); ctx.lineTo(x0 + d, y0 + ps); ctx.stroke(); }
+  ctx.fillStyle = goldGrad(ctx, x0, y0, x0 + ps, y0 + ps); ctx.font = '900 168px ' + CINZEL_D;
+  ctx.textBaseline = 'middle'; ctx.fillText('C', CX, py + 8); ctx.textBaseline = 'alphabetic'; ctx.restore();
+  ctx.strokeStyle = goldGrad(ctx, x0, y0, x0 + ps, y0 + ps); ctx.lineWidth = 5; ctx.strokeRect(x0, y0, ps, ps);
+
+  // ---- gilded title ----
+  ctx.fillStyle = goldGrad(ctx, CX - 300, 0, CX + 300, 0);
+  ctx.font = '900 76px ' + CINZEL; ls(ctx, '3px');
+  ctx.fillText('CLAUDE', CX, py + 192); ctx.fillText('SESSION', CX, py + 276); ls(ctx, '0px');
+  ctx.font = '700 40px ' + CINZEL; ctx.fillText('· MMXXVI ·', CX, py + 336);
+  ctx.fillStyle = 'rgba(247,237,208,0.85)'; ctx.font = '500 30px ' + CINZEL; ls(ctx, '4px');
+  ctx.fillText('THE FIELD GUIDE', CX, py + 396); ls(ctx, '0px');
+
+  // ---- jewel ornament row ----
+  const oy = H - 244;
+  ctx.strokeStyle = goldGrad(ctx, CX - 200, 0, CX + 200, 0); ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(CX - 200, oy); ctx.lineTo(CX - 30, oy); ctx.moveTo(CX + 30, oy); ctx.lineTo(CX + 200, oy); ctx.stroke();
+  jewel(ctx, CX - 64, oy, 11, '#1f7a52');   // emerald
+  jewel(ctx, CX, oy, 15, '#c4302a');         // ruby
+  jewel(ctx, CX + 64, oy, 11, '#2a52c4');    // sapphire
+
+  // ---- bottom folio ----
+  ctx.fillStyle = goldGrad(ctx, CX - 90, 0, CX + 90, 0); ctx.font = '700 42px ' + CINZEL;
+  ctx.fillText('№ XXVI', CX, H - 128);
+  ctx.fillStyle = 'rgba(247,237,208,0.62)'; ctx.font = '500 19px ' + CINZEL; ls(ctx, '4px');
+  ctx.fillText('A LIVE FIELD GUIDE TO DIRECTING CLAUDE', CX, H - 94); ls(ctx, '0px');
+  ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
 }
 function L_title(ctx, T) {
   paper(ctx, T); masthead(ctx, T, 'colophon');
@@ -353,8 +433,8 @@ const ease = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
 // the story: book ON THE RIGHT (hero) → travels to CENTRE + opens (reads) →
 // closes and slides to the LEFT while the reserve CTA appears on the right
 const FIT_ASPECT = 1.18;   // below this aspect, dolly back so the book fits (see apply)
-const HERO = { pos: [1.95, -0.05, 0], rot: [0.16, -0.62, 0.06], scl: 1.0, cam: 7.2 };
-const READ = { pos: [0, 0, 0], rot: [-0.30, 0, 0], scl: 1.2, cam: 5.35 };
+const HERO = { pos: [1.95, -0.05, 0], rot: [0.16, -0.62, 0.06], scl: 1.14, cam: 7.2 };
+const READ = { pos: [0, 0, 0], rot: [-0.30, 0, 0], scl: 1.2, cam: 5.7 };
 const CLOSED_LEFT = { pos: [-1.62, 0.0, 0], rot: [0.12, -0.5, 0.05], scl: 0.92, cam: 6.6 };
 function mix(a, b, k) {
   return { pos: a.pos.map((v, i) => lerp(v, b.pos[i], k)), rot: a.rot.map((v, i) => lerp(v, b.rot[i], k)), scl: lerp(a.scl, b.scl, k), cam: lerp(a.cam, b.cam, k) };
@@ -461,6 +541,9 @@ async function boot() {
       document.fonts.load('600 90px "TASA Orbiter"'),
       document.fonts.load('300 30px "Inter"'),
       document.fonts.load('600 22px "Inter"'),
+      document.fonts.load('900 90px "Cinzel"'),
+      document.fonts.load('700 30px "Cinzel"'),
+      document.fonts.load('900 90px "Cinzel Decorative"'),
     ]);
   } catch (e) {}
   try { await document.fonts.ready; } catch (e) {}
