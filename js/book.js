@@ -36,7 +36,19 @@ try {
    =========================================================================== */
 const PAGE_W = 1.55, PAGE_H = 2.26, OVER = 0;     // taller codex proportion (~0.686), flush cover
 const TEX_W = 864, TEX_H = 1260;                  // aspect matches PAGE_W/PAGE_H so the art isn't stretched
-const N_LEAVES = 6, N_FLIP = 5, CURL = 0.24, GUTTER = 0.012;
+const N_LEAVES = 6, N_FLIP = 5, CURL = 0.30, GUTTER = 0.012;   // crisper fold (was 0.24)
+// --- page-turn depth model (see apply) -------------------------------------
+// A deep, MONOTONE z-ladder so the two piles occupy DISJOINT z-bands and every
+// settled page is a perfectly flat plane — overlap becomes impossible by
+// construction (was: 0.005 pitch with a baked gutter warp ~0.012 → z-fight).
+const SHEET = 0.05;          // z-pitch between stacked pages (10x the old 0.005)
+const RIGHT_TOP = 0.10;      // top of the closed / right reading pile
+const LEFT_TOP  = -0.15;     // top of the settled left pile (a clear valley below right-bottom -0.10)
+const BACK_Z    = -0.42;     // back inside page, beneath the whole left pile
+const COVER_Z   = 0.16;      // cover closed, on very top
+const COVER_OPEN_Z = -0.40;  // cover folded open, backing the (deeper) left pile
+const LIFT   = 0.42;         // tall camera-facing arc as a page turns (was 0.07)
+const LIFT_Y = 0.30;         // up-and-over y-rise — a real peel
 
 /* ===========================================================================
    MAGAZINE PAGE SYSTEM — varied layouts, real whitespace, 3 themes
@@ -347,9 +359,9 @@ function makeFace(p) {
 /* ===========================================================================
    leaf material — two-sided content + scroll-driven curl
    =========================================================================== */
-function leafMaterial(frontTex, backTex, pageW, gutter) {
-  const mat = new THREE.MeshStandardMaterial({ map: frontTex, roughness: 0.93, metalness: 0, side: THREE.DoubleSide, envMapIntensity: 0.34 });
-  mat.polygonOffset = true; mat.polygonOffsetFactor = -1; mat.polygonOffsetUnits = -1;
+function leafMaterial(frontTex, backTex, pageW, gutter, idx) {
+  const mat = new THREE.MeshStandardMaterial({ map: frontTex, roughness: 0.93, metalness: 0, side: THREE.DoubleSide, envMapIntensity: 0.40 });
+  mat.polygonOffset = true; mat.polygonOffsetFactor = -1; mat.polygonOffsetUnits = -(1 + (idx || 0));   // UNIQUE per leaf — deterministic tie-break
   const u = { uCurl: { value: 0 }, uPageW: { value: pageW }, uBackMap: { value: backTex }, uGutter: { value: gutter || 0 } };
   mat.onBeforeCompile = (sh) => {
     sh.uniforms.uCurl = u.uCurl; sh.uniforms.uPageW = u.uPageW; sh.uniforms.uBackMap = u.uBackMap; sh.uniforms.uGutter = u.uGutter;
@@ -374,10 +386,10 @@ function leafMaterial(frontTex, backTex, pageW, gutter) {
   };
   return { mat, u };
 }
-function leaf(frontTex, backTex, w, gutter) {
+function leaf(frontTex, backTex, w, gutter, idx) {
   w = w || PAGE_W;
   const geo = new THREE.PlaneGeometry(w, PAGE_H + (w > PAGE_W ? OVER : 0), 40, 1); geo.translate(w / 2, 0, 0);
-  const { mat, u } = leafMaterial(frontTex, backTex, w, gutter);
+  const { mat, u } = leafMaterial(frontTex, backTex, w, gutter, idx);
   const pivot = new THREE.Group(); pivot.add(new THREE.Mesh(geo, mat));
   return { pivot, u };
 }
@@ -386,7 +398,7 @@ function leaf(frontTex, backTex, w, gutter) {
    scene
    =========================================================================== */
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(33, 1, 0.1, 100);
+const camera = new THREE.PerspectiveCamera(33, 1, 0.5, 100);   // near 0.1→0.5 → ~5x depth precision at z≈5.7 (kills flat-region z-fight)
 camera.position.set(0, 0, 7.4);   // looks straight down -Z → world (0,0) is screen centre
 
 renderer.setClearAlpha(0);
@@ -397,10 +409,10 @@ const pmrem = new THREE.PMREMGenerator(renderer);
 scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
 
 scene.add(new THREE.HemisphereLight(0xc4d4ff, 0x0a0c16, 0.5));
-const key = new THREE.DirectionalLight(0xfff4e8, 2.0); key.position.set(3.4, 5.4, 4.6); scene.add(key);
+const key = new THREE.DirectionalLight(0xfff4e8, 2.0); key.position.set(3.0, 3.2, 5.2); scene.add(key);   // lower elevation → grazing highlight rakes the curling fold
 const fill = new THREE.DirectionalLight(0xbcccff, 0.5); fill.position.set(4, 0.5, 2.5); scene.add(fill);
 const rim = new THREE.DirectionalLight(0xff7a3a, 0.9); rim.position.set(-5, 1.4, -1.5); scene.add(rim);
-const edge = new THREE.PointLight(0xff7a3a, 7, 16, 2); edge.position.set(-1.6, 0.3, 1.8); scene.add(edge);
+const edge = new THREE.PointLight(0xff7a3a, 9, 16, 2); edge.position.set(-0.2, 0.6, 2.4); scene.add(edge);   // orange streak pulled to the spine valley
 
 const book = new THREE.Group(); scene.add(book);
 let frontCover, leaves = [], coverU;
@@ -408,18 +420,18 @@ let frontCover, leaves = [], coverU;
 // Sleek magazine: no centre spine, no chunky page-block "support", no gutter
 // crease — just a flush cover over a thin stack of clean leaves.
 function buildBook(T) {
-  // every sheet (covers + leaves) gets the SAME tiny gutter dip so the whole
-  // stack curves toward the spine together — a subtle crease with no page
-  // intersecting another (which was the left-side glitch). Visual crease/bump
-  // is carried mostly by the drawn gutter shading in paper().
-  const back = leaf(T.backInside, T.backOut, PAGE_W, GUTTER); back.pivot.position.set(0, 0, -0.02); book.add(back.pivot);
+  // Every STACKING sheet gets gutter 0 → at rest it is a perfectly FLAT plane
+  // (the old baked gutter warp ~0.012 was bigger than the 0.005 page gap and
+  // z-fought). Pages live on a deep monotone z-ladder (RIGHT_TOP..-0.15 by
+  // SHEET) and each gets a UNIQUE idx → unique polygon-offset tie-break.
+  const back = leaf(T.backInside, T.backOut, PAGE_W, 0, 90); back.pivot.position.set(0, 0, BACK_Z); book.add(back.pivot);
 
-  const zTop = 0.024, zStep = 0.005;
   for (let i = 0; i < N_LEAVES; i++) {
-    const lf = leaf(T.leaves[i].front, T.leaves[i].back, PAGE_W, GUTTER);
-    lf.pivot.position.set(0, 0, zTop - i * zStep); book.add(lf.pivot); leaves.push(lf);
+    const lf = leaf(T.leaves[i].front, T.leaves[i].back, PAGE_W, 0, i);
+    lf.pivot.position.set(0, 0, RIGHT_TOP - i * SHEET); book.add(lf.pivot); leaves.push(lf);   // 0.10,0.05,0.00,-0.05,-0.10,-0.15
   }
-  const fc = leaf(T.cover, T.title, PAGE_W, GUTTER); fc.pivot.position.set(0, 0, 0.042); book.add(fc.pivot); frontCover = fc; coverU = fc.u;
+  // front cover — keeps a token gutter (never stacks against another sheet)
+  const fc = leaf(T.cover, T.title, PAGE_W, GUTTER, 80); fc.pivot.position.set(0, 0, COVER_Z); book.add(fc.pivot); frontCover = fc; coverU = fc.u;
 }
 
 /* ===========================================================================
@@ -434,7 +446,7 @@ const ease = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
 // closes and slides to the LEFT while the reserve CTA appears on the right
 const FIT_ASPECT = 1.18;   // below this aspect, dolly back so the book fits (see apply)
 const HERO = { pos: [1.95, -0.05, 0], rot: [0.16, -0.62, 0.06], scl: 1.14, cam: 7.2 };
-const READ = { pos: [0, 0, 0], rot: [-0.30, 0, 0], scl: 1.2, cam: 5.7 };
+const READ = { pos: [0, 0, 0], rot: [-0.42, -0.16, 0.03], scl: 1.18, cam: 5.7 };   // oblique 3/4 tilt → reveals the stepped fore-edges + the spine valley in parallax
 const CLOSED_LEFT = { pos: [-1.62, 0.0, 0], rot: [0.12, -0.5, 0.05], scl: 0.92, cam: 6.6 };
 function mix(a, b, k) {
   return { pos: a.pos.map((v, i) => lerp(v, b.pos[i], k)), rot: a.rot.map((v, i) => lerp(v, b.rot[i], k)), scl: lerp(a.scl, b.scl, k), cam: lerp(a.cam, b.cam, k) };
@@ -478,7 +490,7 @@ function apply(p, t) {
   if (coverU !== undefined) {
     const coverOpen = ease(smooth(0.22, 0.40, p)) * (1 - closeK);
     frontCover.pivot.rotation.y = -Math.PI * coverOpen;
-    frontCover.pivot.position.z = lerp(0.042, -0.030, coverOpen);
+    frontCover.pivot.position.z = lerp(COVER_Z, COVER_OPEN_Z, coverOpen);   // 0.16 → -0.40 : backs the deep left pile
   }
 
   // leaves turn (and re-stack so the latest is on top) during reading, then fold
@@ -490,14 +502,25 @@ function apply(p, t) {
   // close. (Earlier F1=0.85 let the host page finish at ~0.89, i.e. it was
   // still mid-turn — nearly flat, grazing — when the close began, so it
   // overlapped the already-flat INDEX/yield page and the text garbled.)
-  const F0 = 0.42, F1 = 0.78, per = (F1 - F0) / N_FLIP;
-  const zTop = 0.024, zStep = 0.005, LEFT_BASE = -0.030;
+  // STRICTLY one active page at a time: the flip windows ABUT EXACTLY (divisor
+  // is `per`, not per*1.5), so at most one leaf is ever mid-turn — a leaf reaches
+  // pr=1 (settled, FLAT, curl=0) at the same p the next reaches pr=0. Settled
+  // pages sit on a deep, DISJOINT z-ladder (right 0.10..-0.10, left -0.35..-0.15),
+  // so two flat pages are never coplanar; the single turning page rides a tall
+  // camera-facing arc (LIFT) + y-rise (LIFT_Y) high above BOTH piles and drops
+  // into its own slot. No overlap by construction. Last flip done by F1=0.80,
+  // leaving a clean fully-open rest before the close ramps at 0.86.
+  const F0 = 0.42, F1 = 0.80, per = (F1 - F0) / N_FLIP;   // per = 0.076, non-overlapping
   for (let i = 0; i < N_FLIP; i++) {
-    const pr = clamp((p - (F0 + i * per)) / (per * 1.5), 0, 1);
-    const open = ease(pr) * (1 - closeK);
-    leaves[i].pivot.rotation.y = -Math.PI * open;
-    leaves[i].pivot.position.z = lerp(zTop - i * zStep, LEFT_BASE + (i + 1) * zStep, open) + Math.sin(Math.PI * pr) * 0.07 * (1 - closeK);
-    leaves[i].u.uCurl.value = Math.sin(Math.PI * pr) * CURL * (1 - closeK);
+    const pr    = clamp((p - (F0 + i * per)) / per, 0, 1);          // full 0..1 inside its own slice
+    const open  = ease(pr) * (1 - closeK);
+    const zRight = RIGHT_TOP - i * SHEET;                           //  0.10 .. -0.10
+    const zLeft  = LEFT_TOP - (N_FLIP - 1 - i) * SHEET;             // -0.35 (leaf0) .. -0.15 (leaf4 lands on top)
+    const bell   = Math.sin(Math.PI * pr) * (1 - closeK);          // EXACTLY 0 at pr=0 and pr=1 → flat at rest
+    leaves[i].pivot.rotation.y = -Math.PI * open;                  // 0 (right) → -PI (left)
+    leaves[i].pivot.position.z = lerp(zRight, zLeft, open) + bell * LIFT;   // arc toward camera, crest clears both piles
+    leaves[i].pivot.position.y = bell * LIFT_Y;                    // up-and-over peel
+    leaves[i].u.uCurl.value    = bell * CURL;                      // bows only in flight
   }
 
   // hero text (left) dissolves as the book heads to centre; the reserve CTA
