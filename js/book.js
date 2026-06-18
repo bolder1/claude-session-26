@@ -47,40 +47,42 @@ const LEFT_TOP  = -0.15;     // top of the settled left pile (a clear valley bel
 const BACK_Z    = -0.42;     // back inside page, beneath the whole left pile
 const COVER_Z   = 0.16;      // cover closed, on very top
 const COVER_OPEN_Z = -0.40;  // cover folded open, backing the (deeper) left pile
-const LIFT   = 0.42;         // tall camera-facing arc as a page turns (was 0.07)
-const LIFT_Y = 0.30;         // up-and-over y-rise — a real peel
+const LIFT   = 0.12;         // gentle, low peel (was a tall 0.42 arc — toned down to a real-book turn)
+const LIFT_Y = 0.05;         // barely a rise — subtle, not theatrical
 
 /* ===========================================================================
    MAGAZINE PAGE SYSTEM — varied layouts, real whitespace, 3 themes
    =========================================================================== */
-const DISP = '"TASA Orbiter","Inter",sans-serif';
-const SANS = '"Inter",sans-serif';
+const DISP = '"Cinzel", serif';                  // Roman inscriptional caps — titles, folios
+const SANS = '"EB Garamond", Georgia, serif';    // calligraphic body — the tome's hand
+// parchment grimoire palette — aged vellum, sepia ink, gilt accents.
+// gold = the leaf used for frames/folios/flourishes; rune = the arcane glow.
 const THEMES = {
-  light:  { a:'#f6f3ec', b:'#ece5d8', ink:'#1b1c24', sub:'#5b5c69', hair:'rgba(27,28,36,.16)', acc:'#cf4a1c', faint:'rgba(27,28,36,.34)' },
-  dark:   { a:'#141d34', b:'#0a0e1c', ink:'#eef1f8', sub:'#9aa4c0', hair:'rgba(180,196,236,.18)', acc:'#ff8a4d', faint:'rgba(234,238,247,.34)' },
-  orange: { a:'#ef5a2a', b:'#db4a1d', ink:'#fff4ec', sub:'rgba(255,244,236,.86)', hair:'rgba(255,244,236,.34)', acc:'#fff4ec', faint:'rgba(255,244,236,.6)' },
+  light:  { a:'#efe3c6', b:'#d9c39a', ink:'#3a2c18', sub:'#6a5230', hair:'rgba(120,86,40,.34)', acc:'#9c6a1c', gold:'#b58a32', rune:'#7c5cff', faint:'rgba(90,66,30,.42)', edge:'rgba(74,52,22,.5)' },   // aged parchment
+  dark:   { a:'#2a2238', b:'#150f24', ink:'#ece2cf', sub:'#bca989', hair:'rgba(210,180,120,.22)', acc:'#d9b25a', gold:'#e6c873', rune:'#9d86ff', faint:'rgba(236,226,207,.34)', edge:'rgba(0,0,0,.5)' },        // night vellum
+  orange: { a:'#7c2016', b:'#55110b', ink:'#f7e7d0', sub:'rgba(247,231,208,.86)', hair:'rgba(247,231,208,.34)', acc:'#f0d27e', gold:'#f0d27e', rune:'#ffd9a8', faint:'rgba(247,231,208,.6)', edge:'rgba(28,4,2,.55)' },   // illuminated vermilion leaf
 };
 const M = 120;                                   // generous outer margin
 
 const PAGES = [
-  { theme:'light',  layout:'opener',    no:'01', kick:'What you’re working with', title:'The\nPremise', foot:'i · the premise' },
-  { theme:'orange', layout:'stat',      big:'70%', kick:'Read the label', cap:'is where it stops.', note:'The last thirty percent — taste, judgment, the call only you can make — is the whole job.', foot:'ii · the label' },
-  { theme:'light',  layout:'editorial', kick:'Three ingredients', title:'No context.\nNo memory.\nNo taste.', body:'It has never seen your product, your users, or your taste. An hour into a chat it has forgotten how the chat began. It hands you seventy percent, every time.', foot:'iii · the premise' },
-  { theme:'dark',   layout:'quote',     quote:'Brief it like a junior. Judge it like a director.', by:'— the one rule everything else hangs on', foot:'iv · the method' },
-  { theme:'light',  layout:'opener',    no:'02', kick:'The whole job, three moves', title:'The\nMethod', foot:'v · the method' },
-  { theme:'light',  layout:'moves',     kick:'Stop making pixels', title:'Direct them instead.', steps:['Brief','Produce','Judge'], take:'Your brief is the product.', foot:'vi · the method' },
-  { theme:'dark',   layout:'editorial', kick:'Move 02', title:'Let it\nproduce.', body:'At a speed you can’t match. Screenshots become critiques; briefs become working React, rendering while you watch. The first output is a sketch, never a comp.', foot:'vii · the method' },
-  { theme:'light',  layout:'list',      no:'03', kick:'The yield', title:'Before the\ncoffee’s cold.', items:['Screenshot → working prototype','Spend tokens like a director','Give your intern a memory','Put Claude inside Figma','A week of research in an afternoon'], foot:'viii · the yield' },
-  { theme:'light',  layout:'opener',    no:'04', kick:'Two hours, seven acts', title:'The\nRunning\nOrder', foot:'ix · the order' },
-  { theme:'light',  layout:'feature',   kick:'Your host', title:'Surajit Dutta', body:'Product designer · miniOrange. Everything here came off real work — IAM, IGA, PayOps. Every demo runs live; if it breaks, you watch me debug it.', stats:[['42','ranked reqs'],['9','screens'],['0','slides']], foot:'x · your host' },
-  { theme:'orange', layout:'stat',      big:'20', kick:'Last call', cap:'seats. one of them is yours.', note:'Reserve on the right — pick your slot and we’ll print your pass.', foot:'xi · last call' },
+  { theme:'light',  layout:'opener',    no:'I',  kick:'What you summon', title:'The\nFamiliar', foot:'i · the premise' },
+  { theme:'orange', layout:'stat',      big:'70%', kick:'Read the runes', cap:'is where the spell ends.', note:'The last thirty parts — taste, judgement, the call only a master can make — is the true craft.', foot:'ii · the law' },
+  { theme:'light',  layout:'editorial', kick:'Three absences', title:'No sight.\nNo memory.\nNo taste.', body:'It has never seen your realm, your people, or your craft. An hour into the working it forgets how the spell began. It yields seven parts in ten, every time.', foot:'iii · the premise' },
+  { theme:'dark',   layout:'quote',     quote:'Brief it like an apprentice. Judge it like a master.', by:'— the one charm every other spell hangs upon', foot:'iv · the casting' },
+  { theme:'light',  layout:'opener',    no:'II', kick:'The whole craft, three passes', title:'The\nCasting', foot:'v · the casting' },
+  { theme:'light',  layout:'moves',     kick:'Stop drawing glyphs', title:'Command them instead.', steps:['Brief','Conjure','Judge'], take:'Your incantation is the work.', foot:'vi · the casting' },
+  { theme:'dark',   layout:'editorial', kick:'Pass the second', title:'Let it\nconjure.', body:'At a speed no hand can match. A sketch becomes a verdict; a few plain words become living craft, taking shape as you watch. The first vision is a draft, never the deed.', foot:'vii · the casting' },
+  { theme:'light',  layout:'list',      no:'III', kick:'The yield', title:'Before the\ncandle gutters.', items:['A screenshot → a working charm','Spend your tokens like a master','Grant your intern a memory','Set Claude inside Figma','A week of study in an afternoon'], foot:'viii · the yield' },
+  { theme:'light',  layout:'opener',    no:'IV', kick:'Two hours, seven rites', title:'The\nRunning\nOrder', foot:'ix · the order' },
+  { theme:'light',  layout:'feature',   kick:'Your conjurer', title:'Surajit Dutta', body:'Keeper of the craft · miniOrange. Everything here came off true work — IAM, IGA, PayOps. Every demo is cast live; if the spell breaks, you watch the master mend it.', stats:[['42','rites ranked'],['9','sigils'],['0','scrolls']], foot:'x · the conjurer' },
+  { theme:'orange', layout:'stat',      big:'20', kick:'Last call', cap:'seats at the table. One is yours.', note:'Claim your place on the right — choose your seat and we shall pen your pass.', foot:'xi · the summons' },
 ];
 const COVER   = { theme:'dark', layout:'cover' };
 const TITLEPG = { theme:'light', layout:'title' };
 const ENDPAGE = { theme:'dark', layout:'end' };
 const BACKOUT = { theme:'dark', layout:'backcover' };
 
-const CAPTIONS = [['01','the premise'],['✦','the label'],['02','the method'],['✦','let it produce'],['03','the yield'],['✦','last call']];
+const CAPTIONS = [['I','the familiar'],['✦','the law'],['II','the casting'],['✦','let it conjure'],['III','the yield'],['✦','the summons']];
 
 /* ---- canvas helpers ------------------------------------------------------- */
 function ls(ctx, v) { try { ctx.letterSpacing = v; } catch (e) {} }
@@ -98,39 +100,80 @@ function lines(ctx, str, x, y, lh, f, color) { ctx.font = f; ctx.fillStyle = col
 function rule(ctx, x1, y, x2, color) { ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x1, y); ctx.lineTo(x2, y); ctx.stroke(); }
 
 function paper(ctx, T) {
-  const g = ctx.createLinearGradient(0, 0, TEX_W * 0.2, TEX_H);
+  // ---- aged parchment ground ----
+  const g = ctx.createLinearGradient(0, 0, TEX_W * 0.3, TEX_H);
   g.addColorStop(0, T.a); g.addColorStop(1, T.b);
   ctx.fillStyle = g; ctx.fillRect(0, 0, TEX_W, TEX_H);
-  if (T !== THEMES.orange) {
-    const rg = ctx.createRadialGradient(TEX_W * 0.32, TEX_H * 0.28, 40, TEX_W * 0.32, TEX_H * 0.28, TEX_W);
-    rg.addColorStop(0, T === THEMES.dark ? 'rgba(120,150,230,.10)' : 'rgba(255,253,247,.6)'); rg.addColorStop(1, 'rgba(0,0,0,0)');
+
+  // mottled age stains — a few soft foxing blobs
+  const stain = T === THEMES.dark ? '12,7,24' : (T === THEMES.orange ? '40,6,2' : '96,68,28');
+  [[.26, .22, 260, .05], [.74, .34, 220, .06], [.4, .82, 300, .05], [.84, .72, 180, .05], [.16, .58, 200, .045]].forEach(s => {
+    const rg = ctx.createRadialGradient(TEX_W * s[0], TEX_H * s[1], 0, TEX_W * s[0], TEX_H * s[1], s[2]);
+    rg.addColorStop(0, 'rgba(' + stain + ',' + s[3] + ')'); rg.addColorStop(1, 'rgba(' + stain + ',0)');
     ctx.fillStyle = rg; ctx.fillRect(0, 0, TEX_W, TEX_H);
-  }
-  // faint gutter shading on both inner edges so the centre crease reads
+  });
+
+  // fibre speckle
+  ctx.fillStyle = T === THEMES.dark ? 'rgba(220,200,160,.05)' : 'rgba(74,52,22,.055)';
+  for (let i = 0; i < 240; i++) ctx.fillRect((i * 97) % TEX_W, (i * 173) % TEX_H, 1.5, 1.5);
+
+  // gutter shading on both inner edges (the binding crease)
   for (const left of [true, false]) {
-    const x0 = left ? 0 : TEX_W - 58;
-    const g2 = ctx.createLinearGradient(left ? 0 : TEX_W, 0, left ? 58 : TEX_W - 58, 0);
-    g2.addColorStop(0, 'rgba(12,10,22,.17)'); g2.addColorStop(1, 'rgba(12,10,22,0)');
-    ctx.fillStyle = g2; ctx.fillRect(x0, 0, 58, TEX_H);
+    const g2 = ctx.createLinearGradient(left ? 0 : TEX_W, 0, left ? 66 : TEX_W - 66, 0);
+    g2.addColorStop(0, T.edge); g2.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g2; ctx.fillRect(left ? 0 : TEX_W - 66, 0, 66, TEX_H);
   }
-  // a hair of light right at the binding (the gutter "bump")
-  ctx.fillStyle = T === THEMES.dark ? 'rgba(190,205,255,.10)' : 'rgba(255,250,242,.14)';
-  ctx.fillRect(3, 0, 2, TEX_H); ctx.fillRect(TEX_W - 5, 0, 2, TEX_H);
+
+  // aged edge vignette
+  const vg = ctx.createRadialGradient(TEX_W / 2, TEX_H * 0.46, TEX_H * 0.32, TEX_W / 2, TEX_H * 0.5, TEX_H * 0.84);
+  vg.addColorStop(0.5, 'rgba(0,0,0,0)'); vg.addColorStop(1, T.edge);
+  ctx.fillStyle = vg; ctx.fillRect(0, 0, TEX_W, TEX_H);
+
+  // ---- gilt double frame + corner flourishes ----
+  ctx.strokeStyle = goldGrad(ctx, 56, 0, TEX_W - 56, 0); ctx.lineWidth = 3;
+  ctx.strokeRect(54, 54, TEX_W - 108, TEX_H - 108);
+  ctx.strokeStyle = goldGrad(ctx, 66, 0, TEX_W - 66, 0); ctx.lineWidth = 1.2;
+  ctx.strokeRect(64, 64, TEX_W - 128, TEX_H - 128);
+  const fm = 88;
+  fleuron(ctx, fm, fm, 28, 0);
+  fleuron(ctx, TEX_W - fm, fm, 28, Math.PI / 2);
+  fleuron(ctx, TEX_W - fm, TEX_H - fm, 28, Math.PI);
+  fleuron(ctx, fm, TEX_H - fm, 28, -Math.PI / 2);
+
+  // ---- a faint glowing rune in the foot margin ----
+  rune(ctx, TEX_W / 2, TEX_H - 80, 11, T);
+  ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
+}
+function rune(ctx, x, y, s, T) {
+  ctx.save();
+  ctx.shadowColor = T.rune; ctx.shadowBlur = 16;
+  ctx.strokeStyle = T.rune; ctx.lineWidth = 1.7; ctx.lineCap = 'round'; ctx.globalAlpha = 0.8;
+  ctx.beginPath();
+  ctx.moveTo(x, y - s); ctx.lineTo(x, y + s);
+  ctx.moveTo(x - s * 0.72, y - s * 0.45); ctx.lineTo(x + s * 0.72, y + s * 0.45);
+  ctx.moveTo(x + s * 0.72, y - s * 0.45); ctx.lineTo(x - s * 0.72, y + s * 0.45);
+  ctx.moveTo(x, y - s); ctx.lineTo(x - s * 0.5, y - s * 1.5);
+  ctx.moveTo(x, y - s); ctx.lineTo(x + s * 0.5, y - s * 1.5);
+  ctx.stroke();
+  ctx.restore();
 }
 function masthead(ctx, T, right) {
   ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
-  ctx.fillStyle = T.faint; ctx.font = '600 19px ' + SANS; ls(ctx, '2.5px');
-  ctx.fillText('CLAUDE SESSION ’26', M, 84);
-  if (right) { ctx.textAlign = 'right'; ctx.fillText(String(right).toUpperCase(), TEX_W - M, 84); ctx.textAlign = 'left'; }
-  ls(ctx, '0px'); rule(ctx, M, 108, TEX_W - M, T.hair);
+  ctx.fillStyle = T.acc; ctx.font = '600 19px ' + DISP; ls(ctx, '3px');
+  ctx.fillText('LIBER CLAUDE', M, 86);
+  if (right) { ctx.textAlign = 'right'; ctx.fillStyle = T.faint; ctx.fillText(String(right).toUpperCase(), TEX_W - M, 86); ctx.textAlign = 'left'; }
+  ls(ctx, '0px');
+  ctx.strokeStyle = goldGrad(ctx, M, 0, TEX_W - M, 0); ctx.lineWidth = 1.4;
+  ctx.beginPath(); ctx.moveTo(M, 108); ctx.lineTo(TEX_W - M, 108); ctx.stroke();
 }
 function folio(ctx, T, label) {
-  rule(ctx, M, TEX_H - 96, TEX_W - M, T.hair);
-  ctx.fillStyle = T.faint; ctx.font = '500 18px ' + SANS; ls(ctx, '2px'); ctx.textAlign = 'left';
+  ctx.strokeStyle = goldGrad(ctx, M, 0, TEX_W - M, 0); ctx.lineWidth = 1.4;
+  ctx.beginPath(); ctx.moveTo(M, TEX_H - 96); ctx.lineTo(TEX_W - M, TEX_H - 96); ctx.stroke();
+  ctx.fillStyle = T.faint; ctx.font = '500 17px ' + DISP; ls(ctx, '2.5px'); ctx.textAlign = 'left';
   ctx.fillText(String(label).toUpperCase(), M, TEX_H - 62); ls(ctx, '0px');
-  ctx.fillStyle = T.acc; ctx.beginPath(); ctx.arc(TEX_W - M, TEX_H - 68, 5, 0, 7); ctx.fill();
+  ctx.fillStyle = T.gold; ctx.beginPath(); ctx.arc(TEX_W - M, TEX_H - 68, 4, 0, 7); ctx.fill();
 }
-function kicker(ctx, T, txt, y) { ctx.fillStyle = T.acc; ctx.font = '600 22px ' + SANS; ls(ctx, '2.5px'); ctx.fillText(String(txt).toUpperCase(), M, y); ls(ctx, '0px'); }
+function kicker(ctx, T, txt, y) { ctx.fillStyle = T.acc; ctx.font = '600 21px ' + DISP; ls(ctx, '3px'); ctx.fillText(String(txt).toUpperCase(), M, y); ls(ctx, '0px'); }
 
 /* ---- layouts -------------------------------------------------------------- */
 function L_opener(ctx, T, p) {
@@ -324,18 +367,18 @@ function L_cover(ctx) {
 }
 function L_title(ctx, T) {
   paper(ctx, T); masthead(ctx, T, 'colophon');
-  ctx.fillStyle = T.acc; ctx.font = '600 22px ' + SANS; ls(ctx, '3px'); ctx.fillText('A LIVE FIELD GUIDE TO', M, 320); ls(ctx, '0px');
-  lines(ctx, 'Running your\nmost forgetful\nhire.', M, 404, 78, '700 72px ' + DISP, T.ink);
-  ctx.fillStyle = T.sub; ctx.font = '300 27px ' + SANS;
-  wrap(ctx, 'Two hours. Seven acts. Forty-eight seats. No slides — the terminal is the deck.', M, TEX_H * 0.72, TEX_W * 0.62, 40);
+  ctx.fillStyle = T.acc; ctx.font = '600 22px ' + DISP; ls(ctx, '3px'); ctx.fillText('A GRIMOIRE FOR', M, 320); ls(ctx, '0px');
+  lines(ctx, 'Directing your\nmost forgetful\nfamiliar.', M, 404, 78, '700 72px ' + DISP, T.ink);
+  ctx.fillStyle = T.sub; ctx.font = '400 27px ' + SANS;
+  wrap(ctx, 'Two hours. Seven rites. Twenty places. No scrolls — the terminal is the altar.', M, TEX_H * 0.72, TEX_W * 0.62, 40);
   folio(ctx, T, 'miniOrange · Surajit Dutta');
 }
 function L_end(ctx, T) {
   paper(ctx, T);
-  ctx.fillStyle = T.ink; ctx.font = '700 72px ' + DISP; ctx.fillText('The end.', M, TEX_H * 0.42);
-  ctx.fillStyle = T.sub; ctx.font = '300 30px ' + SANS;
-  wrap(ctx, 'Now go brief your intern. New task, new chat — context is currency.', M, TEX_H * 0.5, TEX_W * 0.62, 44);
-  folio(ctx, T, 'shipped with Claude');
+  ctx.fillStyle = T.ink; ctx.font = '700 72px ' + DISP; ctx.fillText('Finis.', M, TEX_H * 0.42);
+  ctx.fillStyle = T.sub; ctx.font = '400 30px ' + SANS;
+  wrap(ctx, 'Now go and command your familiar. New chat, new spell — context is your currency.', M, TEX_H * 0.5, TEX_W * 0.62, 44);
+  folio(ctx, T, 'shipped by candlelight');
 }
 function L_back(ctx) {
   const g = ctx.createLinearGradient(0, 0, TEX_W, TEX_H); g.addColorStop(0, '#0d1530'); g.addColorStop(1, '#0a0f22');
@@ -446,7 +489,7 @@ const ease = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
 // closes and slides to the LEFT while the reserve CTA appears on the right
 const FIT_ASPECT = 1.18;   // below this aspect, dolly back so the book fits (see apply)
 const HERO = { pos: [1.95, -0.05, 0], rot: [0.16, -0.62, 0.06], scl: 1.14, cam: 7.2 };
-const READ = { pos: [0, 0, 0], rot: [-0.42, -0.16, 0.03], scl: 1.18, cam: 5.7 };   // oblique 3/4 tilt → reveals the stepped fore-edges + the spine valley in parallax
+const READ = { pos: [0, 0, 0], rot: [-0.22, -0.07, 0.01], scl: 1.18, cam: 5.7 };   // mostly face-on, a gentle tilt for subtle thickness (was a dramatic 3/4 -0.42)
 const CLOSED_LEFT = { pos: [-1.62, 0.0, 0], rot: [0.12, -0.5, 0.05], scl: 0.92, cam: 6.6 };
 function mix(a, b, k) {
   return { pos: a.pos.map((v, i) => lerp(v, b.pos[i], k)), rot: a.rot.map((v, i) => lerp(v, b.rot[i], k)), scl: lerp(a.scl, b.scl, k), cam: lerp(a.cam, b.cam, k) };
@@ -560,11 +603,11 @@ function loop() {
 async function boot() {
   try {
     await Promise.all([
-      document.fonts.load('700 90px "TASA Orbiter"'),
-      document.fonts.load('600 90px "TASA Orbiter"'),
-      document.fonts.load('300 30px "Inter"'),
-      document.fonts.load('600 22px "Inter"'),
+      document.fonts.load('400 32px "EB Garamond"'),
+      document.fonts.load('600 32px "EB Garamond"'),
+      document.fonts.load('italic 400 32px "EB Garamond"'),
       document.fonts.load('900 90px "Cinzel"'),
+      document.fonts.load('600 24px "Cinzel"'),
       document.fonts.load('700 30px "Cinzel"'),
       document.fonts.load('900 90px "Cinzel Decorative"'),
     ]);
