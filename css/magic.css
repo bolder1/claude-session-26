@@ -1,0 +1,107 @@
+/* ==========================================================================
+   magic.css — "Liber Claude" enchantments layered over the midnight book.
+   Four touches: (1) a magic-wand cursor, (2) a sparkle trail that follows it,
+   (3) drifting gold embers, (4) a wax seal + ribbon on the reserve invitation.
+   Every layer is pointer-events:none and layout-safe; gated to fine-pointer,
+   motion-allowed devices so touch + reduced-motion users get a calm page.
+   The glowing page-runes live in book.js (drawn into the parchment).
+   ========================================================================== */
+
+:root {
+  --magic-gold:  #ffe9a8;
+  --magic-gold-2:#b58a32;
+  --magic-ember: #ff9a4d;
+  --magic-rune:  #b9a6ff;   /* the violet arcane glow, echoing the page sigils */
+}
+
+/* ---- 1 · the magic-wand cursor (only where a real pointer exists) ---- */
+@media (hover: hover) and (pointer: fine) {
+  .book.magic-on { cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cline%20x1%3D%228%22%20y1%3D%228%22%20x2%3D%2227%22%20y2%3D%2227%22%20stroke%3D%22%232a2238%22%20stroke-width%3D%223.6%22%20stroke-linecap%3D%22round%22%2F%3E%3Cline%20x1%3D%228%22%20y1%3D%228%22%20x2%3D%2227%22%20y2%3D%2227%22%20stroke%3D%22%23b58a32%22%20stroke-width%3D%221.3%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M8%201.4%20L9.5%206.1%20L14.2%207.6%20L9.5%209.1%20L8%2013.8%20L6.5%209.1%20L1.8%207.6%20L6.5%206.1%20Z%22%20fill%3D%22%23ffe9a8%22%2F%3E%3Ccircle%20cx%3D%228%22%20cy%3D%227.6%22%20r%3D%221.5%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E") 8 8, auto; }
+  /* keep the wand over interactive things too, with a sensible fallback */
+  .book.magic-on a, .book.magic-on button, .book.magic-on input,
+  .book.magic-on .bk-seat, .book.magic-on label {
+    cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cline%20x1%3D%228%22%20y1%3D%228%22%20x2%3D%2227%22%20y2%3D%2227%22%20stroke%3D%22%232a2238%22%20stroke-width%3D%223.6%22%20stroke-linecap%3D%22round%22%2F%3E%3Cline%20x1%3D%228%22%20y1%3D%228%22%20x2%3D%2227%22%20y2%3D%2227%22%20stroke%3D%22%23b58a32%22%20stroke-width%3D%221.3%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M8%201.4%20L9.5%206.1%20L14.2%207.6%20L9.5%209.1%20L8%2013.8%20L6.5%209.1%20L1.8%207.6%20L6.5%206.1%20Z%22%20fill%3D%22%23ffe9a8%22%2F%3E%3Ccircle%20cx%3D%228%22%20cy%3D%227.6%22%20r%3D%221.5%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E") 8 8, pointer; }
+}
+
+/* ---- 2 · the sparkle trail (JS spawns .magic-spark into this fixed layer) ---- */
+.magic-trail {
+  position: fixed; inset: 0; z-index: 90; pointer-events: none; overflow: hidden;
+  contain: strict;
+}
+.magic-spark {
+  position: fixed; top: 0; left: 0; width: 11px; height: 11px;
+  margin: -5.5px 0 0 -5.5px; will-change: transform, opacity; opacity: 0;
+  background: radial-gradient(circle, #fff 0%, var(--magic-gold) 38%, rgba(181,138,50,0) 72%);
+  clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%);
+  animation: magic-spark var(--life, .72s) cubic-bezier(.25,.6,.35,1) forwards;
+}
+.magic-spark.is-rune { background: radial-gradient(circle, #fff 0%, var(--magic-rune) 42%, rgba(120,92,255,0) 74%); }
+@keyframes magic-spark {
+  0%   { opacity: 0;   transform: translate(0,0) scale(.25) rotate(0deg); }
+  18%  { opacity: 1;   transform: translate(calc(var(--dx,0px) * .35), calc(var(--dy,8px) * .35)) scale(1) rotate(40deg); }
+  100% { opacity: 0;   transform: translate(var(--dx,0px), var(--dy,8px)) scale(.4) rotate(150deg); }
+}
+
+/* ---- 3 · drifting gold embers (JS appends .magic-ember-dot here) ---- */
+.magic-ambient {
+  position: fixed; inset: 0; z-index: 6; pointer-events: none; overflow: hidden;
+  contain: strict;
+}
+.magic-ember-dot {
+  position: absolute; bottom: -18px; width: var(--s, 4px); height: var(--s, 4px);
+  border-radius: 50%; background: radial-gradient(circle, #fff, var(--magic-gold) 40%, var(--magic-ember) 75%, rgba(255,154,77,0) 100%);
+  opacity: 0; will-change: transform, opacity;
+  animation: magic-rise var(--dur, 14s) linear var(--delay, 0s) infinite;
+}
+.magic-ember-dot.is-rune { background: radial-gradient(circle, #fff, var(--magic-rune) 45%, rgba(120,92,255,0) 100%); }
+@keyframes magic-rise {
+  0%   { opacity: 0;             transform: translate3d(0, 0, 0) scale(.7); }
+  10%  { opacity: var(--peak, .7); }
+  50%  { transform: translate3d(var(--sway, 24px), -52vh, 0) scale(1); }
+  90%  { opacity: var(--peak, .7); }
+  100% { opacity: 0;             transform: translate3d(0, -104vh, 0) scale(.6); }
+}
+
+/* ---- 4 · the wax seal + ribbon (sits on the reserve invitation) ---- */
+.magic-seal {
+  position: absolute; top: -40px; right: 14px; z-index: 5;
+  width: 60px; height: 60px; pointer-events: none;
+  filter: drop-shadow(0 8px 14px rgba(0,0,0,.55));
+}
+/* ribbon tails fall from behind the wax */
+.magic-seal__ribbon { position: absolute; top: 30px; left: 50%; width: 46px; height: 64px; transform: translateX(-50%); z-index: 0; }
+.magic-seal__ribbon::before, .magic-seal__ribbon::after {
+  content: ""; position: absolute; top: 0; width: 17px; height: 60px;
+  background: linear-gradient(180deg, #b5371c, #7c1d10);
+  box-shadow: inset 1px 0 0 rgba(255,255,255,.18), inset -1px 0 0 rgba(0,0,0,.3);
+  /* notched (swallow-tail) end */
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 78%, 0 100%);
+}
+.magic-seal__ribbon::before { left: 2px;  transform: rotate(8deg);  transform-origin: top center; }
+.magic-seal__ribbon::after  { right: 2px; transform: rotate(-8deg); transform-origin: top center; }
+/* the wax blob */
+.magic-seal__wax {
+  position: absolute; inset: 0; z-index: 1; border-radius: 48% 52% 51% 49% / 50% 49% 51% 50%;
+  background: radial-gradient(circle at 38% 30%, #e0795c 0%, #b8311c 42%, #8a2113 74%, #61160c 100%);
+  box-shadow: inset 0 3px 6px rgba(255,255,255,.32), inset 0 -6px 12px rgba(0,0,0,.5), 0 1px 0 rgba(0,0,0,.3);
+  display: grid; place-items: center;
+}
+/* a faint pressed ring inside the wax */
+.magic-seal__wax::before {
+  content: ""; position: absolute; inset: 7px; border-radius: 50%;
+  border: 1.4px solid rgba(97,22,12,.55); box-shadow: inset 0 0 6px rgba(0,0,0,.4);
+}
+/* the embossed sigil */
+.magic-seal__sigil {
+  position: relative; font-family: "Cinzel", serif; font-weight: 900; font-size: 30px; line-height: 1;
+  color: #5e160c; text-shadow: 0 1px 0 rgba(255,210,190,.4), 0 -1px 1px rgba(0,0,0,.45);
+}
+
+@media (max-width: 760px) { .magic-seal { top: -28px; right: 12px; width: 56px; height: 56px; } .magic-seal__sigil { font-size: 26px; } }
+
+/* respect the quiet folk: no trail, no embers, no wand for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .magic-trail, .magic-ambient { display: none !important; }
+  .book.magic-on { cursor: auto; }
+  .magic-seal { filter: none; }   /* the seal stays — it's static — but drop the heavy shadow */
+}

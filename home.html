@@ -28,6 +28,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cinzel+Decorative:wght@700;900&family=EB+Garamond:ital,wght@0,400..800;1,400..600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/field.css?v=8">
   <link rel="stylesheet" href="css/book.css?v=13">
+  <link rel="stylesheet" href="css/magic.css?v=1">
 
   <script async src="https://ga.jspm.io/npm:es-module-shims@1.10.0/dist/es-module-shims.js"></script>
   <script type="importmap">
@@ -97,6 +98,11 @@
             <a class="bk-cta" href="/register">Reserve your spot <span aria-hidden="true">↗</span></a>
           </div>
         </div>
+        <!-- the invitation is sealed: wax seal + ribbon (decorative) -->
+        <div class="magic-seal" aria-hidden="true">
+          <span class="magic-seal__ribbon"></span>
+          <span class="magic-seal__wax"><span class="magic-seal__sigil">C</span></span>
+        </div>
       </aside>
 
       <!-- ACT 4 · reading caption (names the open spread) -->
@@ -129,5 +135,7 @@
   <!-- show the cold-open replay cue only when scrolled to the very top (independent of WebGL) -->
   <script>(function(){var c=document.getElementById('bk-loader-cue');if(!c)return;function u(){c.classList.toggle('is-on',(window.scrollY||window.pageYOffset||0)<30);}u();addEventListener('scroll',u,{passive:true});addEventListener('resize',u,{passive:true});})();</script>
   <script type="module" src="js/book.js?v=28"></script>
+  <!-- the enchantments: wand cursor, sparkle trail, drifting embers -->
+  <script src="js/magic.js?v=1" defer></script>
 </body>
 </html>
