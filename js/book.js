@@ -75,7 +75,7 @@ const PAGES = [
   { theme:'light',  layout:'list',      no:'III', kick:'The yield', title:'Before the\ncandle gutters.', items:['A screenshot → a working charm','Spend your tokens like a master','Grant your intern a memory','Set Claude inside Figma','A week of study in an afternoon'], foot:'viii · the yield' },
   { theme:'light',  layout:'opener',    no:'IV', kick:'Two hours, seven rites', title:'The\nRunning\nOrder', foot:'ix · the order' },
   { theme:'light',  layout:'feature',   kick:'Your conjurer', title:'Surajit Dutta', body:'Keeper of the craft · miniOrange. Everything here came off true work — IAM, IGA, PayOps. Every demo is cast live; if the spell breaks, you watch the master mend it.', stats:[['42','rites ranked'],['9','sigils'],['0','scrolls']], foot:'x · the conjurer' },
-  { theme:'orange', layout:'stat',      big:'20', kick:'Last call', cap:'seats at the table. One is yours.', note:'Claim your place on the right — choose your seat and we shall pen your pass.', foot:'xi · the summons' },
+  { theme:'orange', layout:'stat',      big:'20', kick:'Last call', cap:'places at the table. One is yours.', note:'Claim your place on the right — choose your place and we shall pen your pass.', foot:'xi · the summons' },
 ];
 const COVER   = { theme:'dark', layout:'cover' };
 const TITLEPG = { theme:'light', layout:'title' };
@@ -384,8 +384,8 @@ function L_back(ctx) {
   const g = ctx.createLinearGradient(0, 0, TEX_W, TEX_H); g.addColorStop(0, '#0d1530'); g.addColorStop(1, '#0a0f22');
   ctx.fillStyle = g; ctx.fillRect(0, 0, TEX_W, TEX_H);
   ctx.fillStyle = '#aab4d0'; ctx.font = '300 32px ' + SANS;
-  wrap(ctx, 'Brief it like a junior. Judge it like a director. New task, new chat — context is currency.', M, TEX_H * 0.46, TEX_W - M * 2, 46);
-  ctx.fillStyle = '#ff8a4d'; ctx.font = '600 20px ' + SANS; ls(ctx, '2px'); ctx.fillText('SHIPPED WITH CLAUDE', M, TEX_H - 96); ls(ctx, '0px');
+  wrap(ctx, 'Brief it like an apprentice. Judge it like a master. New spell, new chat — context is your currency.', M, TEX_H * 0.46, TEX_W - M * 2, 46);
+  ctx.fillStyle = '#ff8a4d'; ctx.font = '600 20px ' + SANS; ls(ctx, '2px'); ctx.fillText('SHIPPED BY CANDLELIGHT', M, TEX_H - 96); ls(ctx, '0px');
 }
 
 const LAYOUTS = { opener:L_opener, editorial:L_editorial, stat:L_stat, quote:L_quote, moves:L_moves, list:L_list, feature:L_feature };
