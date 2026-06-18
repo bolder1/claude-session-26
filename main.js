@@ -314,7 +314,7 @@ try {
         decal.bind(surf.skeleton, surf.bindMatrix);
       });
 
-      // shopping bag -> headphones, same blueprint material, same swing.
+      // shopping bag -> a laptop bag, same blueprint material, same swing.
       // The bag is 100% skinned to a single bone, so a rigid attach to that
       // bone reproduces its motion exactly.
       let bag = null;
@@ -342,42 +342,42 @@ try {
         const bone = bag.skeleton.bones[+Object.entries(acc).sort((a, b) => b[1] - a[1])[0][0]];
         const mat = bag.material; // the blue blueprint-grid look, reused as-is
 
-        const R = 0.2, TUBE = 0.028, CUP_R = 0.1, CUP_H = 0.075;
+        // a slim LAPTOP BAG, hung from a top handle the hand grips. Group origin
+        // sits at the handle apex (the grip); the body hangs below.
+        const BW = 0.36, BH = 0.27, BD = 0.085;     // body: wide + flat (a laptop fits)
+        const HR = 0.072, HT = 0.013;               // top-handle arch radius + tube
+        const TOP = -HR;                            // body/flap top edge (just under the handle)
         const hp = new THREE.Group();
-        // headband — half torus arching over the top
-        hp.add(new THREE.Mesh(new THREE.TorusGeometry(R, TUBE, 12, 40, Math.PI), mat));
+        // main body
+        const body = new THREE.Mesh(new THREE.BoxGeometry(BW, BH, BD), mat);
+        body.position.set(0, TOP - BH / 2, 0);
+        hp.add(body);
+        // front flap over the top third of the face
+        const flap = new THREE.Mesh(new THREE.BoxGeometry(BW + 0.014, BH * 0.42, 0.018), mat);
+        flap.position.set(0, TOP - BH * 0.2, BD / 2 + 0.004);
+        hp.add(flap);
+        // clasp / buckle on the flap
+        const clasp = new THREE.Mesh(new THREE.BoxGeometry(0.055, 0.036, 0.022), mat);
+        clasp.position.set(0, TOP - BH * 0.4, BD / 2 + 0.013);
+        hp.add(clasp);
+        // two grommets where the handle meets the body
         [-1, 1].forEach((s) => {
-          // ear cup
-          const cupGeo = new THREE.CylinderGeometry(CUP_R, CUP_R, CUP_H, 24);
-          cupGeo.rotateZ(Math.PI / 2);
-          const cup = new THREE.Mesh(cupGeo, mat);
-          cup.position.set(s * (R + CUP_H * 0.2), -0.03, 0);
-          hp.add(cup);
-          // outer shell dome
-          const domeGeo = new THREE.SphereGeometry(CUP_R * 0.86, 20, 12, 0, Math.PI * 2, 0, Math.PI / 2);
-          domeGeo.rotateZ(s * -Math.PI / 2);
-          const dome = new THREE.Mesh(domeGeo, mat);
-          dome.position.set(s * (R + CUP_H * 0.72), -0.03, 0);
-          hp.add(dome);
-          // cushion ring on the inner face
-          const padGeo = new THREE.TorusGeometry(CUP_R * 0.68, 0.022, 10, 24);
-          padGeo.rotateY(Math.PI / 2);
-          const pad = new THREE.Mesh(padGeo, mat);
-          pad.position.set(s * (R - CUP_H * 0.25), -0.03, 0);
-          hp.add(pad);
+          const g = new THREE.Mesh(new THREE.CylinderGeometry(0.016, 0.016, 0.03, 14), mat);
+          g.rotation.z = Math.PI / 2; g.position.set(s * HR * 0.62, TOP + 0.004, 0);
+          hp.add(g);
         });
+        // top handle — a flat arch; the hand grips its apex (at the group origin)
+        const handle = new THREE.Mesh(new THREE.TorusGeometry(HR, HT, 8, 30, Math.PI), mat);
+        handle.position.y = TOP;
+        hp.add(handle);
         hp.traverse((m) => { if (m.isMesh) m.frustumCulled = false; });
-        // held FROM THE MIDDLE: raise so the headphone's centre (not the band
-        // top) sits in the palm where the bag handle used to be — the cups hang
-        // evenly below the grip instead of the whole thing dangling off the top
+        // place the handle where the hand held the original bag, body hanging
+        // below; attach to the bone so it swings with the arm (tuned live)
         hp.rotation.y = Math.PI / 2;
-        hp.position.set(c.x, bb.max.y - R + 0.125, c.z);
+        hp.position.set(c.x, bb.max.y - 0.075, c.z);   // handle apex sits in the palm (same grip the headphone used)
         root.add(hp);
         root.updateMatrixWorld(true);
         bone.attach(hp);
-        // grip the CENTRE: slide the headphone half a cup-offset along its band
-        // axis so the hand holds the headband's apex (midpoint between the two
-        // cups), not an ear-cup end — tuned live against the deployed scene
         hp.position.add(new THREE.Vector3(0.215, -0.03, 0).applyQuaternion(hp.quaternion).multiplyScalar(0.5));
         bag.visible = false;
       }

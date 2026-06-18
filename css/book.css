@@ -58,7 +58,8 @@
   transition: transform .5s cubic-bezier(.2,.7,.2,1);
 }
 .bk-nav.is-on { transform: translate(-50%, 0); }
-.bk-nav__mark { width: 22px; height: 22px; display: block; }
+.bk-nav__mark { height: 19px; display: flex; align-items: center; }
+.bk-nav__logo { height: 19px; width: auto; display: block; }
 .bk-nav__title { font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); }
 .bk-nav__title b { color: var(--ink); }
 .bk-nav__cta { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; color: #fff3ea; background: var(--orange); padding: 8px 14px; border-radius: 30px; font-weight: 600; }
@@ -138,7 +139,7 @@
 .bk-reserve__h { font-family: var(--font-display); font-weight: 600; font-size: clamp(20px, 2.2vw, 26px); line-height: 1.05; letter-spacing: -.02em; margin: 6px 0 14px; color: var(--ink); }
 .bk-reserve__h .or { color: var(--orange); font-style: italic; font-weight: 420; }
 .bk-reserve .bk-cta { margin-top: 18px; }
-.bk-reg--footer { padding-top: clamp(36px, 6vw, 64px); }
+.bk-reg.bk-reg--footer { padding-top: clamp(8px, 2vw, 20px); }   /* tight: no big gap before the footer */
 @media (max-width: 760px) {
   .bk-panel--left { left: 50%; right: auto; top: clamp(11%, 14vh, 17%); max-width: 90vw; text-align: center;
     transform: translateX(-50%) translateY(calc(var(--out, 0) * -26px)); }
@@ -248,10 +249,13 @@
   .bk-ticket__stub { flex-basis: 116px; padding: 22px 10px; }
 }
 
-.bk-footer { margin-top: clamp(56px, 8vw, 96px); border-top: 1px solid var(--line); padding: 22px 0 40px; }
+.bk-footer { margin-top: clamp(12px, 2vw, 22px); border-top: 1px solid var(--line); padding: 18px 0 28px; }
 .bk-footer__row { display: flex; justify-content: space-between; gap: 12px 28px; flex-wrap: wrap; font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
 .bk-footer__sig { color: var(--orange-d); }
 .bk-footer__row b { color: var(--ink); }
+.bk-footer__brand { display: inline-flex; align-items: center; gap: 9px; }
+.bk-footer__logo { height: 17px; width: auto; display: block; }
+.bk-card__logo { height: 14px; width: auto; display: block; opacity: .92; }
 
 /* reveal helper for the registration block */
 .book .fg-reveal { opacity: 0; transform: translateY(22px); }

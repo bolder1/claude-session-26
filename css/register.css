@@ -15,6 +15,7 @@
 }
 .reg-head__back { text-decoration: none; color: var(--mute); }
 .reg-head__back b { color: var(--ink); font-weight: 600; }
+.reg-head__logo { height: 13px; width: auto; display: inline-block; vertical-align: -2px; }
 .reg-head__back:hover { color: var(--ink); }
 .reg-head__reg { display: flex; align-items: center; gap: 9px; }
 
