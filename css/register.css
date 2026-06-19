@@ -165,26 +165,22 @@
 .reg-field input:focus { outline: none; background: #f6ecd2; box-shadow: inset 0 0 0 2px var(--verm); }
 .reg-field input:focus-visible { outline: 2px solid var(--gold-d); outline-offset: 2px; }
 
-/* ---------- the sealed pass ---------- */
-.reg-step--pass .reg-title { max-width: 20ch; }
+/* ---------- the sealed pass (final step — fully centered, big ticket) ---------- */
+.reg-step--pass { text-align: center; }
+.reg-step--pass .fg-folio-no { display: inline-block; }
+.reg-step--pass .reg-title { max-width: 22ch; margin-left: auto; margin-right: auto; }
+.reg-step--pass .reg-sub { margin-left: auto; margin-right: auto; }
+.reg-step--pass .countdown { margin-left: auto; margin-right: auto; }
+.reg-step--pass .homework { margin-left: auto; margin-right: auto; }
+.reg-step--pass .homework__head { text-align: center; }
+.reg-step--pass .homework__item { text-align: left; }
 .ticket-stage { position: relative; display: flex; flex-direction: column; align-items: center; }
-.ticket-3d { width: 100%; max-width: 640px; aspect-ratio: 1280 / 600; cursor: grab; touch-action: none; }
+.ticket-3d { width: 100%; max-width: 1040px; aspect-ratio: 1280 / 600; cursor: grab; touch-action: none; }
 .ticket-3d:active { cursor: grabbing; }
 .ticket-3d canvas { width: 100% !important; height: 100% !important; display: block; }
 .ticket-actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; justify-content: center; margin-top: 24px; }
 /* the wax seal is drawn INTO the pass front-canvas (js/register.js drawWaxSeal),
    so it rides the 3D rotation/bob instead of floating as a detached DOM overlay */
-
-/* ---------- sigil (badge) ---------- */
-.badge-block { margin-top: clamp(48px, 7vw, 84px); border-top: 2px solid var(--gold-d); padding-top: clamp(26px, 4vw, 40px); }
-.badge-row { display: flex; align-items: center; gap: clamp(20px, 4vw, 40px); flex-wrap: wrap; margin-top: 16px; }
-.badge-wrap { width: clamp(120px, 22vw, 168px); flex: 0 0 auto; }
-.badge-wrap svg { width: 100%; height: auto; display: block; }
-.badge-ring { transform-origin: center; animation: badgeSpin 16s linear infinite; }
-@keyframes badgeSpin { to { transform: rotate(360deg); } }
-.badge-info { flex: 1; min-width: 240px; }
-.badge-info__name { font-family: var(--DISP); font-weight: 700; font-size: clamp(24px, 3.2vw, 34px); letter-spacing: .01em; margin: 0; color: var(--ink); }
-.badge-info__desc { font-size: 16px; line-height: 1.55; color: var(--ink-2); margin: 10px 0 0; max-width: 52ch; }
 
 /* ---------- countdown + rites ---------- */
 .wait-block { margin-top: clamp(48px, 7vw, 84px); border-top: 2px solid var(--gold-d); padding-top: clamp(26px, 4vw, 40px); }
@@ -223,6 +219,5 @@
 
 @media (prefers-reduced-motion: reduce) {
   .reg-step.is-current { animation: none; }
-  .badge-ring { animation: none; }
   .seat, .reg-cta { transition: none; }
 }

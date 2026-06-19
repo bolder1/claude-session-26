@@ -137,7 +137,6 @@
     if (s) { s.mine = true; s.el.classList.remove('is-selected'); s.el.classList.add('is-mine'); s.el.setAttribute('aria-pressed', 'true'); s.el.setAttribute('aria-label', 'Place ' + state.seat + ', your place'); }
     save();
     buildTicket3D();
-    buildBadge();
     startCountdown();
     goto('pass');
     const head = $('#pass-headline');
@@ -338,27 +337,6 @@
     a.download = 'claude-session-26-' + (state.seat || 'pass').toLowerCase() + '.png';
     a.href = frontCanvas.toDataURL('image/png'); a.click();
   });
-
-  /* ======================================================================
-     BADGE
-     ====================================================================== */
-  function buildBadge() {
-    const wrap = $('#badge-wrap'); if (!wrap) return;
-    wrap.innerHTML =
-      '<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">' +
-      '<defs><linearGradient id="bgrad" x1="0" y1="0" x2="160" y2="160"><stop stop-color="#e6c068"/><stop offset="1" stop-color="#9c6a1c"/></linearGradient>' +
-      '<radialGradient id="bcore" cx=".5" cy=".35" r=".8"><stop stop-color="#f6ecd2"/><stop offset="1" stop-color="#e0cfa8"/></radialGradient></defs>' +
-      '<circle class="badge-ring" cx="80" cy="80" r="74" fill="none" stroke="url(#bgrad)" stroke-width="2.5" stroke-dasharray="5 9" stroke-linecap="round"/>' +
-      '<circle cx="80" cy="80" r="61" fill="url(#bcore)" stroke="url(#bgrad)" stroke-width="3"/>' +
-      '<text x="80" y="40" text-anchor="middle" font-family="Cinzel, serif" font-weight="700" font-size="11" fill="#9c6a1c">✦ \'26 ✦</text>' +
-      '<path d="M80 60 l5 14 15 1 -12 10 4 15 -12 -8 -12 8 4 -15 -12 -10 15 -1z" fill="none" stroke="#6f4fe0" stroke-width="2" stroke-linejoin="round"/>' +
-      '<text x="80" y="118" text-anchor="middle" font-family="Cinzel, serif" font-weight="900" font-size="12" letter-spacing="3" fill="#3a2c18">SWORN</text>' +
-      '<text x="80" y="134" text-anchor="middle" font-family="Cinzel, serif" font-size="9" letter-spacing="2" fill="#6a5230">PLACE ' + (state.seat || '—') + '</text>' +
-      '</svg>';
-    $('#badge-name').textContent = 'Keeper of the front bench';
-    $('#badge-desc').textContent = 'Sworn to ' + (state.name || 'a nameless caster') + ' — ' + (state.designation || 'caster') + ', place ' + state.seat + '. Redeemable at the door for exactly zero rupees and a seat by the candle.';
-    if (hasGsap && !REDUCE) gsap.from('#badge-wrap svg', { scale: 0.4, opacity: 0, rotate: -30, duration: 0.8, delay: 0.3, ease: 'back.out(1.8)', transformOrigin: 'center' });
-  }
 
   /* ======================================================================
      CONFETTI
