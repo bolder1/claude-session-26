@@ -175,11 +175,18 @@ function kicker(ctx, T, txt, y) { ctx.fillStyle = T.acc; ctx.font = '600 21px ' 
 
 /* ---- layouts -------------------------------------------------------------- */
 function L_opener(ctx, T, p) {
+  // Centred chapter divider, laid out in three non-overlapping bands so the
+  // giant numeral never collides with the kick/title (the old layout overlaid
+  // the title on top of a 460px numeral). Bands: kick ~0.27 · numeral ~0.50 ·
+  // title ~0.64+ — all clear of each other and the folio.
   masthead(ctx, T, 'chapter');
-  ctx.textAlign = 'right'; ctx.fillStyle = T.hair; ctx.font = '600 460px ' + DISP;
-  ctx.fillText(p.no, TEX_W - M + 30, TEX_H * 0.62); ctx.textAlign = 'left';
-  kicker(ctx, T, p.kick, TEX_H * 0.6);
-  let y = TEX_H * 0.66; lines(ctx, p.title, M, y, 96, '700 96px ' + DISP, T.ink);
+  kicker2(ctx, T, p.kick, TEX_H * 0.27);
+  ctx.textAlign = 'center';
+  ctx.fillStyle = T.hair; ctx.font = '600 300px ' + DISP;
+  ctx.fillText(p.no, TEX_W / 2, TEX_H * 0.50);
+  let y = TEX_H * 0.64; ctx.fillStyle = T.ink; ctx.font = '700 92px ' + DISP;
+  for (const l of String(p.title).split('\n')) { ctx.fillText(l, TEX_W / 2, y); y += 94; }
+  ctx.textAlign = 'left';
   folio(ctx, T, p.foot);
 }
 function L_editorial(ctx, T, p) {
