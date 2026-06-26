@@ -82,8 +82,6 @@ const TITLEPG = { theme:'light', layout:'title' };
 const ENDPAGE = { theme:'dark', layout:'end' };
 const BACKOUT = { theme:'dark', layout:'backcover' };
 
-const CAPTIONS = [['I','the familiar'],['✦','the law'],['II','the casting'],['✦','let it conjure'],['III','the yield'],['✦','the summons']];
-
 /* ---- canvas helpers ------------------------------------------------------- */
 function ls(ctx, v) { try { ctx.letterSpacing = v; } catch (e) {} }
 function cv() { const c = document.createElement('canvas'); c.width = TEX_W; c.height = TEX_H; return c; }
@@ -197,8 +195,11 @@ function L_stat(ctx, T, p) {
   masthead(ctx, T, 'figure');
   ctx.textAlign = 'center';
   kicker2(ctx, T, p.kick, TEX_H * 0.3);
-  ctx.fillStyle = T.ink; ctx.font = '700 300px ' + DISP; ctx.fillText(p.big, TEX_W / 2, TEX_H * 0.56);
-  ctx.fillStyle = T.ink; ctx.font = '400 40px ' + DISP; ctx.fillText(p.cap, TEX_W / 2, TEX_H * 0.66);
+  // big number + caption sized to stay well within the folio rules (≤ TEX_W-M)
+  // so the centred figure never reaches a page edge / the spine.
+  ctx.fillStyle = T.ink; ctx.font = '700 250px ' + DISP; ctx.fillText(p.big, TEX_W / 2, TEX_H * 0.55);
+  ctx.fillStyle = T.ink; ctx.font = '400 34px ' + DISP;
+  wrapCentre(ctx, p.cap, TEX_W / 2, TEX_H * 0.645, TEX_W - M * 2, 44);
   ctx.fillStyle = T.hair; ctx.fillRect(TEX_W / 2 - 40, TEX_H * 0.71, 80, 3);
   ctx.fillStyle = T.sub; ctx.font = '300 27px ' + SANS;
   wrapCentre(ctx, p.note, TEX_W / 2, TEX_H * 0.76, TEX_W - M * 2.4, 40);
@@ -489,7 +490,11 @@ const ease = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
 // closes and slides to the LEFT while the reserve CTA appears on the right
 const FIT_ASPECT = 1.18;   // below this aspect, dolly back so the book fits (see apply)
 const HERO = { pos: [1.95, -0.05, 0], rot: [0.16, -0.62, 0.06], scl: 1.14, cam: 7.2 };
-const READ = { pos: [0, 0, 0], rot: [-0.22, -0.07, 0.01], scl: 1.18, cam: 5.7 };   // mostly face-on, a gentle tilt for subtle thickness (was a dramatic 3/4 -0.42)
+const READ = { pos: [0, 0, 0], rot: [-0.18, 0, 0], scl: 1.18, cam: 5.7 };   // FACE-ON while reading: zero yaw/roll so the spine sits at world x=0 and the
+                                                                            // two pages project to disjoint screen halves. Any yaw made the nearer
+                                                                            // (shallower-z) page overlap a strip of the deeper page at the spine,
+                                                                            // clipping centred content (the 70% / 20 stat pages). Slight x-tilt kept
+                                                                            // for thickness; that only affects vertical projection, never the spine.
 const CLOSED_LEFT = { pos: [-1.62, 0.0, 0], rot: [0.12, -0.5, 0.05], scl: 0.92, cam: 6.6 };
 function mix(a, b, k) {
   return { pos: a.pos.map((v, i) => lerp(v, b.pos[i], k)), rot: a.rot.map((v, i) => lerp(v, b.rot[i], k)), scl: lerp(a.scl, b.scl, k), cam: lerp(a.cam, b.cam, k) };
@@ -497,14 +502,11 @@ function mix(a, b, k) {
 
 const panelL = document.getElementById('panel-left');
 const panelR = document.getElementById('panel-right');
-const capEl = document.getElementById('bk-caption');
-const capNo = capEl.querySelector('.bk-caption__no');
-const capTx = capEl.querySelector('.bk-caption__txt');
 const rail = document.getElementById('bk-rail-fill');
 const nav = document.getElementById('bk-nav');
 const seclabel = document.querySelector('.bk-seclabel');
 
-let pSmooth = 0, lastCap = -1;
+let pSmooth = 0;
 function progress() { const total = stage.offsetHeight - innerHeight; return clamp(-stage.getBoundingClientRect().top / total, 0, 1); }
 
 function apply(p, t) {
@@ -573,10 +575,6 @@ function apply(p, t) {
   const reserveIn = smooth(0.87, 0.99, p);
   panelR.style.opacity = reserveIn.toFixed(3); panelR.style.setProperty('--in', reserveIn.toFixed(3));
   if (seclabel) seclabel.style.opacity = (smooth(0.12, 0.30, p) * (1 - closeK)).toFixed(3);
-
-  const cap = smooth(0.34, 0.40, p) * (1 - smooth(0.80, 0.86, p));
-  capEl.style.opacity = cap.toFixed(3);
-  if (cap > 0.1) { const idx = clamp(Math.round((p - F0) / per), 0, CAPTIONS.length - 1); if (idx !== lastCap) { capNo.textContent = CAPTIONS[idx][0]; capTx.textContent = CAPTIONS[idx][1]; lastCap = idx; } }
 
   pin.style.setProperty('--aura', (0.2 + 0.34 * smooth(0.12, 0.36, p) * (1 - 0.5 * closeK)).toFixed(3));
   rail.style.width = (p * 100).toFixed(2) + '%';
