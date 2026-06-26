@@ -70,7 +70,7 @@ const PAGES = [
   { theme:'light',  layout:'editorial', kick:'Three absences', title:'No sight.\nNo memory.\nNo taste.', body:'It has never seen your realm, your people, or your craft. An hour into the working it forgets how the spell began. It yields seven parts in ten, every time.', foot:'iii · the premise' },
   { theme:'dark',   layout:'quote',     quote:'Brief it like an apprentice. Judge it like a master.', by:'— the one charm every other spell hangs upon', foot:'iv · the casting' },
   { theme:'light',  layout:'opener',    no:'II', kick:'The whole craft, three passes', title:'The\nCasting', foot:'v · the casting' },
-  { theme:'light',  layout:'moves',     kick:'Stop drawing glyphs', title:'Command them instead.', steps:['Brief','Conjure','Judge'], take:'Your incantation is the work.', foot:'vi · the casting' },
+  { theme:'light',  layout:'moves',     kick:'Stop drawing glyphs', title:'Command them\ninstead.', steps:['Brief','Conjure','Judge'], take:'Your incantation is the work.', foot:'vi · the casting' },
   { theme:'dark',   layout:'editorial', kick:'Pass the second', title:'Let it\nconjure.', body:'At a speed no hand can match. A sketch becomes a verdict; a few plain words become living craft, taking shape as you watch. The first vision is a draft, never the deed.', foot:'vii · the casting' },
   { theme:'light',  layout:'list',      no:'III', kick:'The yield', title:'Before the\ncandle gutters.', items:['A screenshot → a working charm','Spend your tokens like a master','Grant your intern a memory','Set Claude inside Figma','A week of study in an afternoon'], foot:'viii · the yield' },
   { theme:'light',  layout:'opener',    no:'IV', kick:'Two hours, seven rites', title:'The\nRunning\nOrder', foot:'ix · the order' },

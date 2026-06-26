@@ -30,8 +30,8 @@
   }
 
   /* ---------- steps ---------- */
-  const STEP_ORDER = ['seat', 'you', 'pass'];
-  let currentStep = 'seat';
+  const STEP_ORDER = ['you', 'pass'];
+  let currentStep = 'you';
   function goto(step) {
     currentStep = step;
     document.querySelectorAll('.reg-step').forEach((s) => s.classList.toggle('is-current', s.dataset.step === step));
@@ -45,71 +45,16 @@
   document.querySelectorAll('.reg-progress__dot').forEach((d) => {
     d.addEventListener('click', () => {
       const target = d.dataset.goto;
-      if (target === 'you' && !state.seat) return;
       if (target === 'pass' && !state.registered) return;
       goto(target);
     });
   });
   document.querySelectorAll('[data-back]').forEach((b) => b.addEventListener('click', () => goto(b.dataset.back)));
 
-  /* ======================================================================
-     STEP 1 — SEAT MAP
-     ====================================================================== */
-  const seatMapEl = $('#seat-map');
-  const seats = new Map();
-  let selectedSeat = null;
   const saved = loadSaved();
 
-  function buildSeatMap() {
-    ROWS.forEach((row) => {
-      const rowEl = document.createElement('div'); rowEl.className = 'seat-row';
-      const lab = document.createElement('span'); lab.className = 'seat-row__label'; lab.textContent = row;
-      rowEl.appendChild(lab);
-      for (let c = 1; c <= COLS; c++) {
-        if (c === 3) { const aisle = document.createElement('span'); aisle.className = 'seat-aisle'; rowEl.appendChild(aisle); }
-        const id = row + c;
-        const btn = document.createElement('button');
-        btn.className = 'seat'; btn.dataset.seat = id; btn.type = 'button';
-        btn.setAttribute('aria-label', 'Place ' + id);
-        btn.setAttribute('aria-pressed', 'false');
-        btn.addEventListener('click', () => onSeatClick(id));
-        rowEl.appendChild(btn);
-        seats.set(id, { el: btn, taken: false, mine: false });
-      }
-      const lab2 = lab.cloneNode(true); rowEl.appendChild(lab2);
-      seatMapEl.appendChild(rowEl);
-    });
-    const ids = [...seats.keys()].filter((id) => id !== (saved && saved.seat));
-    shuffle(ids).slice(0, INITIAL_TAKEN).forEach((id) => setTaken(id, true));
-    if (saved && saved.seat) { const s = seats.get(saved.seat); if (s) { s.mine = true; s.el.classList.add('is-mine'); s.el.setAttribute('aria-pressed', 'true'); s.el.setAttribute('aria-label', 'Place ' + saved.seat + ', your place'); } }
-    updateSeatStats();
-  }
-  function onSeatClick(id) {
-    const s = seats.get(id);
-    if (!s || s.taken || s.mine || state.registered) return;
-    if (selectedSeat && seats.get(selectedSeat)) { const p = seats.get(selectedSeat).el; p.classList.remove('is-selected'); p.setAttribute('aria-pressed', 'false'); }
-    selectedSeat = id; state.seat = id;
-    s.el.classList.add('is-selected'); s.el.setAttribute('aria-pressed', 'true');
-    const cta = $('#cta-seat'); cta.disabled = false; cta.textContent = 'Seal place ' + id + ' →';
-    const yl = $('#you-seat-label'); if (yl) yl.textContent = id;
-    if (hasGsap && !REDUCE) gsap.fromTo(s.el, { scale: 0.8 }, { scale: 1, duration: 0.4, ease: 'back.out(3)' });
-  }
-  function setTaken(id, silent) {
-    const s = seats.get(id); if (!s || s.taken || s.mine) return;
-    s.taken = true; s.el.classList.add('is-taken'); s.el.disabled = true; s.el.setAttribute('aria-label', 'Place ' + id + ', spoken for');
-  }
-  function freeCount() { let f = 0; seats.forEach((s) => { if (!s.taken && !s.mine) f++; }); return f; }
-  function updateSeatStats() {
-    const left = freeCount(); const el = $('#seats-left'); if (!el) return;
-    el.textContent = left;
-    const bar = $('#seats-bar'); if (bar) bar.style.width = ((TOTAL - left) / TOTAL * 100) + '%';
-  }
-  function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
-
-  $('#cta-seat').addEventListener('click', () => { if (state.seat) goto('you'); });
-
   /* ======================================================================
-     STEP 2 — YOUR DETAILS
+     STEP 1 — YOUR DETAILS
      ====================================================================== */
   const inpName = $('#inp-name'), inpEmail = $('#inp-email'), inpDesig = $('#inp-designation');
   function validateYou() {
@@ -133,17 +78,15 @@
       fontsRedrawDone = true;
       document.fonts.ready.then(() => { if (state.registered) buildTicket3D(); });
     }
-    const s = seats.get(state.seat);
-    if (s) { s.mine = true; s.el.classList.remove('is-selected'); s.el.classList.add('is-mine'); s.el.setAttribute('aria-pressed', 'true'); s.el.setAttribute('aria-label', 'Place ' + state.seat + ', your place'); }
     save();
     buildTicket3D();
     startCountdown();
     goto('pass');
     const head = $('#pass-headline');
-    if (head) head.textContent = firstName(state.name) + ", your place is sealed. Place " + state.seat + '.';
+    if (head) head.textContent = firstName(state.name) + ", your pass is sealed.";
     if (fresh) {
       if (!REDUCE) setTimeout(confettiBurst, 450);
-      toast('Sealed. <b>' + state.seat + '</b> is yours.');
+      toast('Sealed. Your pass awaits.');
     }
   }
   function firstName(n) { return (n || 'Caster').split(/\s+/)[0]; }
@@ -243,8 +186,8 @@
     x.save(); x.translate(STUB_X + 54, TICKET_H / 2); x.rotate(-Math.PI / 2);
     x.fillStyle = 'rgba(156,106,28,0.9)'; x.font = "700 34px Cinzel, serif"; x.textAlign = 'center'; x.fillText('✦ SEALED ✦', 0, 0); x.restore();
     x.textAlign = 'center';
-    x.fillStyle = '#6a5230'; x.font = '400 18px "Cinzel", serif'; x.fillText('PLACE', STUB_X + 168, 232);
-    x.fillStyle = '#3a2c18'; x.font = "900 104px Cinzel, serif"; x.fillText(data.seat, STUB_X + 168, 350);
+    x.fillStyle = '#6a5230'; x.font = '400 18px "Cinzel", serif'; x.fillText('ADMIT', STUB_X + 168, 248);
+    x.fillStyle = '#3a2c18'; x.font = "900 92px Cinzel, serif"; x.fillText('ONE', STUB_X + 168, 338);
     x.fillStyle = '#7a6038'; x.font = '400 15px "Cinzel", serif';
     x.fillText('BOUND TO BEARER', STUB_X + 168, 420); x.fillText('(NO SCALPING SPELLS)', STUB_X + 168, 446); x.textAlign = 'left';
     drawWaxSeal(x, STUB_X, TICKET_H - 92, 46);
@@ -397,13 +340,11 @@
   /* ======================================================================
      BOOT
      ====================================================================== */
-  buildSeatMap();
-  if (saved && saved.seat && saved.name) {
-    state.seat = saved.seat; state.name = saved.name; state.email = saved.email || ''; state.designation = saved.designation || 'Caster';
+  if (saved && saved.name) {
+    state.name = saved.name; state.email = saved.email || ''; state.designation = saved.designation || 'Caster';
     if (inpName) inpName.value = state.name;
     if (inpEmail) inpEmail.value = state.email;
     if (inpDesig) inpDesig.value = state.designation;
-    const yl = $('#you-seat-label'); if (yl) yl.textContent = state.seat;
     finalize(false);
   }
 })();

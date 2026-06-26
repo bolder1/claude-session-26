@@ -47,52 +47,19 @@
   </header>
 
   <nav class="reg-progress" aria-label="Registration steps">
-    <button class="reg-progress__dot is-active" data-goto="seat" type="button"><i></i><span>The place</span></button>
-    <span class="reg-progress__line" aria-hidden="true"></span>
-    <button class="reg-progress__dot" data-goto="you" type="button"><i></i><span>The caster</span></button>
+    <button class="reg-progress__dot is-active" data-goto="you" type="button"><i></i><span>The caster</span></button>
     <span class="reg-progress__line" aria-hidden="true"></span>
     <button class="reg-progress__dot" data-goto="pass" type="button"><i></i><span>The pass</span></button>
   </nav>
 
   <main class="reg-main">
 
-    <!-- STEP 1 · SEAT -->
-    <section class="reg-step is-current" data-step="seat">
+    <!-- STEP 1 · YOU -->
+    <section class="reg-step is-current" data-step="you">
       <div class="reg-step__head">
         <div class="fg-folio-no">I</div>
-        <p class="fg-kick">Choose your place at the table</p>
-        <h1 class="reg-title">Claim your place at the <span class="it">table.</span></h1>
-        <p class="reg-sub">The table seats twenty. The front benches see the casting closest — the conjurer's hands, the wax, the live spells.</p>
-      </div>
-      <div class="seat-stage">
-        <div class="seat-stats">
-          <div class="seat-stats__big"><span id="seats-left">—</span><em>places left</em></div>
-          <div class="seat-stats__bar"><i id="seats-bar"></i></div>
-          <div class="seat-legend">
-            <span class="seat-legend__item"><i class="seat-demo seat-demo--free"></i>Open</span>
-            <span class="seat-legend__item"><i class="seat-demo seat-demo--taken"></i>Spoken for</span>
-            <span class="seat-legend__item"><i class="seat-demo seat-demo--mine"></i>Yours</span>
-          </div>
-        </div>
-        <div class="screen-arc" aria-hidden="true">
-          <svg viewBox="0 0 600 50" preserveAspectRatio="none"><path d="M10 45 Q300 -18 590 45" fill="none" stroke="#a3380f" stroke-width="3" stroke-linecap="round"/></svg>
-          <span class="screen-arc__label">The Altar · where the spells are cast</span>
-        </div>
-        <div class="seat-map" id="seat-map" role="group" aria-label="Seat map"></div>
-        <p class="seat-hint" id="seat-hint">The front bench sees the conjurer's hands.</p>
-      </div>
-      <div class="reg-actions">
-        <a class="reg-back" href="/home">← Back to the tome</a>
-        <button class="reg-cta" id="cta-seat" type="button" disabled>Choose a place to continue</button>
-      </div>
-    </section>
-
-    <!-- STEP 2 · YOU -->
-    <section class="reg-step" data-step="you">
-      <div class="reg-step__head">
-        <div class="fg-folio-no">II</div>
         <p class="fg-kick">Name the caster</p>
-        <h1 class="reg-title">Who sits at place <span class="or" id="you-seat-label">—</span>?</h1>
+        <h1 class="reg-title">Claim your <span class="it">pass.</span></h1>
         <p class="reg-sub">Three quick things — they're inked straight onto your sealed pass.</p>
       </div>
       <div class="reg-form">
@@ -115,7 +82,7 @@
         </label>
       </div>
       <div class="reg-actions">
-        <button class="reg-back" data-back="seat" type="button">← Change place</button>
+        <a class="reg-back" href="/home">← Back to the tome</a>
         <button class="reg-cta" id="cta-you" type="button" disabled>Name + craft to continue</button>
       </div>
     </section>
@@ -123,7 +90,7 @@
     <!-- STEP 3 · PASS -->
     <section class="reg-step reg-step--pass" data-step="pass">
       <div class="reg-step__head">
-        <div class="fg-folio-no">III</div>
+        <div class="fg-folio-no">II</div>
         <p class="fg-kick">It is sealed</p>
         <h1 class="reg-title" id="pass-headline">Your place is sealed.</h1>
         <p class="reg-sub">Your sealed pass — turn it in your hand; the wax is real enough. No, you can't scalp a spell.</p>
@@ -161,7 +128,7 @@
   <canvas id="confetti" aria-hidden="true"></canvas>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="js/register.js?v=12" defer></script>
+  <script src="js/register.js?v=13" defer></script>
   <script src="js/magic.js?v=2" defer></script>
 </body>
 </html>
